@@ -1,0 +1,1 @@
+const {poolPromise} = require('./db.js'); poolPromise.then(p => p.request().query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'HappyHours' AND IS_NULLABLE = 'NO'")).then(r => console.dir(r.recordset)).catch(console.error).finally(()=>process.exit());

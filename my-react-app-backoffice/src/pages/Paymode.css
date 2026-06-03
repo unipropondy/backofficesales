@@ -1,0 +1,169 @@
+
+/* PAGE */
+.payment-page1 {
+  font-family: Arial;
+  padding: 10px 20px;
+}
+
+/* HEADER */
+.payment-header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 5px;   /* 🔥 reduce space */
+}
+.payment-title1 {
+  font-size: 24px;
+  margin: 0;           /* 🔥 IMPORTANT */
+}
+
+/* BOX */
+.payment-box1 {
+  width: 90%;
+  margin: 10px auto;   /* 🔥 was 30px → now tight */
+
+  border-radius: 10px;
+  padding: 15px;
+ 
+}
+
+/* TABLE */
+.payment-table1 {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0px;   /* 🔥 reduce */
+}
+.payment-table1 th,
+.payment-table1 td {
+  border: 1px solid #aaa;
+  padding: 10px;
+}
+
+.payment-table1 th {
+  background: #6d477d;
+  color: white;
+}
+
+/* NO DATA */
+.payment-noData1 {
+  text-align: center;
+  padding: 20px;
+}
+
+/* BUTTON */
+.payment-btn1 {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.payment-new1 { background: purple; }
+.payment-save1 { background: green; }
+.payment-exit1 { background: brown; }
+.payment-scan1 { background: blue; }
+
+/* BUTTON POSITION */
+.payment-bottomBtns1 {
+  position: absolute;
+  top: -30px;   /* 🔥 increase negative value → move UP */
+  right: 25px;
+}
+
+/* MODAL */
+.payment-modalOverlay1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-modal1 {
+  width: 800px;
+  background: #f3f3f3;
+  padding: 25px;
+}
+
+/* TITLE */
+.payment-modalTitle1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* ROW */
+.payment-modalRow1 {
+  display: flex;
+  align-items: center;
+  gap: 40px;   /* 🔥 increase gap */
+  margin-bottom: 20px;
+}
+
+/* FIELD */
+.payment-field1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-field1 input {
+  width: 160px;
+  height: 28px;
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+
+  border: 1px solid #999;   /* 🔥 thinner border */
+  outline: none;            /* 🔥 remove default thick outline */
+}
+/* CHECKBOX */
+.payment-checkbox1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* IMAGE BOX */
+.payment-imageBox1 {
+  width: 60px;
+  height: 60px;
+  border: 2px dashed #ccc;
+  overflow: hidden;
+}
+
+.payment-imageBox1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ACTIONS */
+.payment-modalActions1 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+/* BOX */
+.payment-box1 {
+  width: 900px;
+  margin: 10px auto;
+  padding: 15px;
+  position: relative;
+}
+
+/* BUTTON ROW FIX */
+.payment-bottomBtns1 {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.payment-box1 {
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.payment-table1 {
+  margin-top: 0;
+}

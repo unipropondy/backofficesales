@@ -1,0 +1,293 @@
+/* =========================================
+   🔥 HAPPY HOURS PREMIUM DESIGN SYSTEM (Beige & Orange Style)
+   ========================================= */
+
+:root {
+  --hh-primary: #ff7f27;
+  --hh-primary-hover: #e66b1d;
+  --hh-secondary: #6d645e;
+  --hh-accent: #ff7f27;
+  --hh-success: #27ae60;
+  --hh-danger: #ff4d4d;
+  --hh-bg-main: #fdf8f4;
+  --hh-card-bg: #ffffff;
+  --hh-border: #dcd1c5;
+  --hh-table-header: #f2ece4;
+  --hh-text-main: #333;
+  --hh-text-muted: #666;
+  --hh-radius: 12px;
+  --hh-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Main Container */
+.happyhours-main-full {
+  min-height: 100vh;
+  background: var(--hh-bg-main);
+  transition: all 0.3s ease;
+  font-family: 'Cambria', serif;
+  padding: 15px 30px;
+  text-align: justify;
+}
+
+.happyhours-main-full.sidebar-open {
+  padding-left: 260px;
+}
+
+.happyhours-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.hh-premium-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hh-premium-header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+/* Action Buttons */
+.hh-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.hh-btn {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+}
+
+.hh-btn-primary { 
+  background: var(--hh-primary); 
+  color: white; 
+  box-shadow: 0 4px 10px rgba(255, 127, 39, 0.3);
+}
+.hh-btn-primary:hover { background: var(--hh-primary-hover); transform: translateY(-1px); }
+
+.hh-btn-outline { 
+  background: white; 
+  border: 1px solid var(--hh-border); 
+  color: var(--hh-text-main); 
+}
+.hh-btn-outline:hover { background: #fdfaf7; }
+
+.hh-btn-danger { 
+  background: #ff4d4d; 
+  color: white; 
+  border: none; 
+}
+.hh-btn-danger:hover { background: #e04343; }
+
+/* Form Card */
+.hh-form-card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: var(--hh-shadow);
+  border: 1px solid var(--hh-border);
+  margin-bottom: 15px;
+}
+
+.hh-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.hh-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hh-field-group label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+}
+
+.hh-input {
+  height: 28px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 11px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.hh-input:focus {
+  outline: none;
+  border-color: var(--hh-primary);
+}
+
+.hh-input-with-btn {
+  display: flex;
+  gap: 4px;
+}
+
+.hh-lookup-trigger {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2ece4;
+  border: 1px solid #e0d6cc;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6d645e;
+}
+
+.hh-lookup-trigger:hover { background: #e0d6cc; }
+
+/* Days Checklist */
+.hh-days-card {
+  background: #fdfaf7;
+  border: 1px solid #f0e6dc;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.hh-days-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6d645e;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hh-days-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.hh-day-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #333;
+  cursor: pointer;
+}
+
+.hh-day-item input {
+  accent-color: var(--hh-primary);
+}
+
+/* Table Section */
+.hh-table-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: var(--hh-shadow);
+  overflow: hidden;
+  border: 1px solid var(--hh-border);
+}
+
+.hh-table-meta {
+  padding: 8px 15px;
+  background: #fdfaf7;
+  border-bottom: 1px solid #f0e6dc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hh-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hh-table th {
+  background: #f2ece4;
+  color: #6d645e;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e0d6cc;
+}
+
+.hh-table td {
+  padding: 6px 12px;
+  border-bottom: 1px solid #f0e6dc;
+  font-size: 11px;
+  color: #333;
+}
+
+.hh-table tr:hover td {
+  background: #fdfaf7;
+}
+
+/* Footer / Apply Promo */
+.hh-promo-footer {
+  padding: 15px;
+  background: #f2ece4;
+  border-top: 1px solid #e0d6cc;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Modals & Popups */
+.hh-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.hh-modal-content {
+  background: white;
+  width: 550px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.hh-modal-header {
+  background: #f2ece4;
+  color: #6d645e;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0d6cc;
+}
+
+.hh-modal-body {
+  padding: 15px;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,83 @@
+.login-page {
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;   /* ✅ right side */
+  align-items: center;         /* ✅ vertical center */
+
+  padding-right: 50px;         /* ✅ right gap */
+
+  /* FULL BACKGROUND IMAGE */
+  background-image: url("../assets/ezgif.com-gif-maker-1-copy.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* SMALL LOGIN CARD */
+.login-card {
+  width: 300px;          /* ✅ small size */
+  padding: 22px;
+  margin-right: 100px;
+  background: rgb(255, 255, 255);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+/* title */
+.login-title {
+  font-size: 22px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 18px;
+  color: #bc9102;
+}
+
+.login-form input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 50px;
+  border: 1px solid #0e0c0c;
+  outline: none;
+  font-size: 14px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-image: url("../assets/ezgif.com-gif-maker-1-copy.webp");
+   margin-bottom: 12px;
+  border-radius: 50px;
+  background: #bc9102;
+  color: rgb(250, 250, 250);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #bc9102;
+}
+
+.login-logo {
+  width: 250px;          /* small size */
+  height: 90px;
+  object-fit: cover;
+  border-radius: 20%;   /* round image */
+  display: block;
+  margin: 0 auto 15px;  /* center + bottom gap */
+}
+
+ /* .login-logo {
+  width: 60px;
+  height: 60px;
+} */

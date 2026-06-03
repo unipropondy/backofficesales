@@ -1,0 +1,40 @@
+# dependencies
+/node_modules
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+Thumbs.db
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# cache
+.cache/
+coverage/
+
+# temp
+tmp/
+temp/
+
+# IDEs
+.vscode/
+.idea/
+
+# uploads
+uploads/
+
+# archives
+*.zip

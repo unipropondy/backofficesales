@@ -1,0 +1,166 @@
+/* REMOVE GLOBAL SCROLL */
+body {
+  overflow: hidden;
+}
+
+/* WRAPPER */
+.ms-wrapper1 {
+  display: flex;
+  justify-content: center;
+
+  align-items: flex-start;   /* 🔥 change from center */
+  padding-top: 10px;         /* 🔥 control top position */
+}
+
+/* BOX */
+.ms-box1 {
+  width: 720px;            /* 🔥 slightly reduced */
+  background: white;
+  border: 1px solid #bbb;
+  padding: 10px;
+
+  max-height: 90vh;        /* 🔥 fit screen */
+  overflow: hidden;
+}
+
+/* HEADER */
+.ms-top1 {
+  background: #6d477d;
+  padding: 8px 0;
+  text-align: center;
+  position: relative;
+}
+
+.ms-top1 h2 {
+  color: white;
+  margin: 0;
+  font-size: 18px;         /* 🔥 reduced */
+}
+
+/* BUTTONS (FIXED POSITION) */
+.ms-btns1 {
+  position: absolute;
+  right: 10px;
+  top: 50px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-save1 {
+  background: #28a745;
+  color: white;
+  padding: 5px 12px;
+  border: none;
+  font-size: 12px;
+}
+
+.btn-close1 {
+  background: #dc3545;
+  color: white;
+  padding: 5px 12px;
+  border: none;
+  font-size: 12px;
+}
+
+/* FORM */
+.ms-form1 {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* ROW */
+.f-row1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;      /* 🔥 reduced spacing */
+}
+
+.f-row1 label {
+  width: 150px;
+  font-size: 12px;
+}
+
+/* INPUTS */
+.f-row1 input,
+.f-row1 select {
+  width: 260px;
+  height: 20px;           /* 🔥 compact */
+  border: 1px solid #999;
+  font-size: 12px;
+}
+
+/* SPLIT (TOP ROW) */
+.split-two1 {
+  display: flex;
+  width: 220px;
+  gap: 6px;
+}
+
+/* SPLIT ROW (CITY / STATE etc) */
+.f-row1.split1 {
+  display: flex;
+  gap: 15px;
+}
+
+.f-row1.split1 div {
+  display: flex;
+  align-items: center;
+  width: 48%;
+}
+
+.f-row1.split1 input {
+  flex: 1;
+}
+
+/* TEXTAREA */
+textarea {
+  width: 360px;
+  height: 35px;           /* 🔥 reduced */
+  border: 1px solid #999;
+  font-size: 12px;
+}
+
+/* POPUP */
+.msg-overlay1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.msg-box1 {
+  background: #fff;
+  width: 320px;
+  padding: 18px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.msg-box1 h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.msg-box1 p {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.msg-actions1 button {
+  margin-top: 12px;
+  padding: 6px 16px;
+  background: #6d477d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.f-row1.split1 div:last-child input {
+  width: 200px;
+  margin-left: -66px;   /* 🔥 keep alignment */
+}

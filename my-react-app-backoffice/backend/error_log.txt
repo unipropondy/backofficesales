@@ -1,0 +1,347 @@
+
+[2026-04-24T04:14:38.578Z] ERROR: Failed to connect to 26.14.83.241:5899 in 15000ms
+STACK: ConnectionError: Failed to connect to 26.14.83.241:5899 in 15000ms
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\connection-pool.js:85:17
+    at Connection.onConnect (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:874:9)
+    at Object.onceWrapper (node:events:623:26)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T04:15:00.136Z] ERROR: Failed to connect to 26.14.83.241:5899 in 15000ms
+STACK: ConnectionError: Failed to connect to 26.14.83.241:5899 in 15000ms
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\connection-pool.js:85:17
+    at Connection.onConnect (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:874:9)
+    at Object.onceWrapper (node:events:623:26)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T04:15:14.037Z] ERROR: Failed to connect to 26.14.83.241:5899 in 15000ms
+STACK: ConnectionError: Failed to connect to 26.14.83.241:5899 in 15000ms
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\connection-pool.js:85:17
+    at Connection.onConnect (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:874:9)
+    at Object.onceWrapper (node:events:623:26)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T04:16:54.234Z] ERROR: Failed to connect to 26.14.83.241:5899 in 15000ms
+STACK: ConnectionError: Failed to connect to 26.14.83.241:5899 in 15000ms
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\connection-pool.js:85:17
+    at Connection.onConnect (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:874:9)
+    at Object.onceWrapper (node:events:623:26)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T05:41:08.340Z] ERROR: Validation failed for parameter 'start'. Out of range.
+STACK: RequestError: Validation failed for parameter 'start'. Out of range.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T05:41:26.202Z] ERROR: Validation failed for parameter 'start'. Out of range.
+STACK: RequestError: Validation failed for parameter 'start'. Out of range.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-24T09:58:21.545Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T09:59:24.411Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:00:35.702Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:05:20.329Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:05:26.281Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:05:32.106Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:07:36.738Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:07:49.747Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:08:22.687Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-24T10:10:16.582Z] Dish Movement ERROR: Conversion failed when converting from a character string to uniqueidentifier.
+
+[2026-04-25T03:44:35.028Z] ERROR: Invalid object name 'OrderDetail'.
+STACK: RequestError: Invalid object name 'OrderDetail'.
+    at handleError (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:384:15)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at RequestTokenHandler.onErrorMessage (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\token\handler.js:285:21)
+    at Readable.<anonymous> (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\token\token-stream-parser.js:19:33)
+    at Readable.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushObjectMode (node:internal/streams/readable:536:3)
+    at Readable.push (node:internal/streams/readable:391:5)
+    at nextAsync (node:internal/streams/from:194:22)
+
+[2026-04-25T03:44:39.283Z] ERROR: Invalid object name 'OrderDetail'.
+STACK: RequestError: Invalid object name 'OrderDetail'.
+    at handleError (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:384:15)
+    at Connection.emit (node:events:508:28)
+    at Connection.emit (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1013:18)
+    at RequestTokenHandler.onErrorMessage (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\token\handler.js:285:21)
+    at Readable.<anonymous> (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\token\token-stream-parser.js:19:33)
+    at Readable.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushObjectMode (node:internal/streams/readable:536:3)
+    at Readable.push (node:internal/streams/readable:391:5)
+    at nextAsync (node:internal/streams/from:194:22)
+
+[2026-04-27T09:49:41.234Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:49:47.159Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:50:05.923Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:51:02.414Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:54:47.377Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:56:49.191Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:58:07.356Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T09:59:57.382Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T10:07:00.060Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T10:07:24.070Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T10:07:32.111Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T10:07:51.420Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T10:08:32.715Z] ERROR: Validation failed for parameter 'start'. Invalid date.
+STACK: RequestError: Validation failed for parameter 'start'. Invalid date.
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:449:19
+    at Array.forEach (<anonymous>)
+    at Request.userCallback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\mssql\lib\tedious\request.js:446:46)
+    at Request.callback (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\request.js:239:14)
+    at C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\node_modules\tedious\lib\connection.js:1657:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:11)
+
+[2026-04-27T13:30:13.972Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:31:23.873Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:31:31.984Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:31:55.102Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:31:57.892Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:32:32.666Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:34:09.707Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:34:43.208Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:34:54.377Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:35:16.822Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:35:37.387Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:35:38.363Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:36:15.183Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:36:32.039Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:36:33.050Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:36:37.619Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:36:47.652Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:38:03.950Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:38:04.426Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:38:44.464Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:40:58.637Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:41:00.720Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:42:43.326Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:45:03.653Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:46:28.319Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:48:26.004Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:48:40.973Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-04-27T13:50:04.954Z] Dish Movement ERROR: Invalid column name 'IsActive'.
+
+[2026-05-14T07:04:07.841Z] Dish Movement ERROR: Failed to connect to 26.14.83.241:5899 in 15000ms
+
+[2026-05-15T05:06:50.339Z] Dish Movement ERROR: The column 'Createdon' was specified multiple times for 'AllMovements'.
+
+[2026-05-15T05:06:53.440Z] Dish Movement ERROR: The column 'Createdon' was specified multiple times for 'AllMovements'.
+
+[2026-05-15T05:10:41.102Z] Dish Movement ERROR: The column 'Createdon' was specified multiple times for 'AllMovements'.
+
+[2026-05-15T05:13:40.273Z] Dish Movement ERROR: The column 'Createdon' was specified multiple times for 'AllMovements'.
+
+[2026-05-18T10:56:42.486Z] Dish Movement ERROR: Timeout: Request failed to complete in 15000ms
+
+[2026-05-19T06:08:01.563Z] UNCAUGHT EXCEPTION: C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\routes\consolesalesroutes.js:321
+            const metaQuery = `
+                  ^
+
+SyntaxError: Identifier 'metaQuery' has already been declared
+    at wrapSafe (node:internal/modules/cjs/loader:1735:18)
+    at Module._compile (node:internal/modules/cjs/loader:1778:20)
+    at Object..js (node:internal/modules/cjs/loader:1936:10)
+    at Module.load (node:internal/modules/cjs/loader:1525:32)
+    at Module._load (node:internal/modules/cjs/loader:1327:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\Downloads\my-react-app-backoffice\my-react-app-backoffice\backend\server.js:33:28)
+
+[2026-05-26T11:17:47.394Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/consoleSales'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js:33:28)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-05-26T11:19:07.662Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/consoleSales'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js:33:28)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-05-26T11:19:35.791Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/consoleSales'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js:33:28)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)

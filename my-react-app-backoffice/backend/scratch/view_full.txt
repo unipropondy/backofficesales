@@ -1,0 +1,70 @@
+
+
+        
+CREATE VIEW [dbo].[vw_DishInventoryMovement]                             
+AS                              
+Select TranType = 'PURCHASE', TranDate = PH.TranDate , TranNo=Convert(varchar(100),PD.TranNo), CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                               
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, ID = PD.ItemID , Code=PD.Itemcode, Name=PD.Itemdesc,                          
+PQty = Convert(decimal(18,2),isnull(PD.Qty, 0)),PRQty= 0, SQty= 0, SRQty = 0 , QtyOnHand =0, OpeningStock = 0, ClosingStock = 0, PD.UnitPrice ,                              
+PH.Createdon          
+from [dbo].Purchasedetail PD , [dbo].purchaseHeader PH , [dbo].DishMaster DM, [dbo].DishGroupMaster DGM , [dbo].CategoryMaster CM where PD.TranId = PH.Tranid and                               
+PD.ItemID = DM.DishID and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId and  PD.TranType ='PURINV'                              
+                              
+Union all                              
+Select TranType = 'PURCHASE RETURN', TranDate = PH.TranDate , TranNo=Convert(varchar(100),PD.TranNo), CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                               
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, ID = PD.ItemID, Code=PD.Itemcode, Name=PD.Itemdesc,                         
+PQty = 0,PRQty= Convert(decimal(18,2),isnull(PD.Qty, 0)), SQty= 0, SRQty = 0,  QtyOnHand =0, OpeningStock = 0, ClosingStock = 0, PD.UnitPrice ,                              
+PH.Createdon                              
+from [dbo].Purchasedetail PD ,[dbo]. purchaseHeader PH , [dbo].DishMaster DM,[dbo]. DishGroupMaster DGM ,[dbo]. CategoryMaster CM where PD.TranId = PH.Tranid and                               
+PD.ItemID = DM.DishID and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId and PD.TranType ='PURRET'                              
+Union all                              
+Select TranType = 'SALES', TranDate = CONVERT(date,RI.InvoiceDate), TranNo=Convert(varchar(100),RI.BillNumber) ,                  
+ CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                               
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, VD.IsActive,                   
+ID = VD.DishID, Code= VD.DishCode, Name=VD.Dishname,                         
+PQty = 0,PRQty= 0, SQty= Convert(decimal(18,2),isnull(Quantity, 0)), SRQty = 0,                  
+ QtyOnHand =0, OpeningStock = 0, ClosingStock = 0, UnitPrice = ActualAmount      ,                              
+RI.Createdon                       
+                        
+from [dbo].[Vw_DishwiseSales]  VD , [dbo].[vw_RestaurantInvoice] RI ,  [dbo].DishGroupMaster DGM ,    
+ [dbo].CategoryMaster CM where VD.Orderid = RI.OrderId and                               
+VD.DishId = VD.DishId and VD.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId and VD.Exflag in ('N')                   
+and RI.statusCode = (                              
+Select PickListNumber  from picklistmaster Where Tablename ='RestaurantOrder'  and FieldName='StatusCode' and                   
+picklistvalue='Paid' )                              
+and RI.TotalAmount > 0                               
+Union all                              
+Select TranType = 'SALES RETURN', TranDate = CONVERT(date, RI.InvoiceDate) , TranNo=Convert(varchar(100),RI.BillNumber) , CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                               
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, ID = VD.DishID,Code= VD.DishCode, Name=VD.Dishname,                         
+PQty = 0,PRQty= 0, SQty= 0, SRQty = Convert(decimal(18,2),isnull(Quantity, 0)),  QtyOnHand =0, OpeningStock = 0, ClosingStock = 0, UnitPrice = ActualAmount                     ,                              
+RI.Createdon       
+                         
+from [dbo].vw_dishwisesales  VD  , [dbo]. vw_RestaurantInvoice RI , [dbo].DishMaster DM, [dbo].DishGroupMaster DGM , [dbo].CategoryMaster CM  where VD.Orderid = RI.OrderId and                         
+VD.DishId = DM.DishId and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId and VD.Exflag in ('E', 'R') and RI.statusCode = (                              
+Select PickListNumber  from picklistmaster Where Tablename ='RestaurantOrder' and FieldName='StatusCode' and picklistvalue='Paid' )                              
+and RI.TotalAmount <> 0                              
+Union all                            
+Select TranType = 'OPENING STOCK', TranDate = CONVERT(date,  SL.stockdate + 1) ,TranNo ='0',CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                            
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, ID = SL.DishID,                          
+Code=DM.DishCode , Name=DM.Name,PQty = 0,PRQty= 0, SQty= 0, SRQty = 0, QtyOnHand = 0,                  
+ OpeningStock = Convert(decimal(18,2),isnull(SL.QuantityOnHand, 0)),ClosingStock = 0,  UnitPrice=DM.CurrentCost,                              
+SL.stockdate as  Createdon                                        
+from [dbo].stocklock SL, [dbo].DishMaster DM, [dbo].DishGroupMaster DGM ,[dbo]. CategoryMaster CM  where                             
+SL.DishId = DM.DishId and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId               
+--Order By SL.stockdate                         
+Union all                        
+Select TranType = 'CLOSING STOCK', TranDate = CONVERT(date,  SL.stockdate) ,TranNo ='0',CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                            
+DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, ID = SL.DishID,                            
+Code=DM.DishCode , Name=DM.Name,PQty = 0,PRQty= 0, SQty= 0, SRQty = 0, QtyOnHand = 0,                   
+OpeningStock =0, ClosingStock = Convert(decimal(18,2),isnull(SL.QuantityOnHand, 0)), UnitPrice=DM.CurrentCost  ,                              
+SL.stockdate as  Createdon                                                        
+from [dbo]. stocklock SL, [dbo].DishMaster DM,[dbo]. DishGroupMaster DGM , [dbo].CategoryMaster CM  where                             
+SL.DishId = DM.DishId and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId           
+--Order By SL.stockdate   Desc                       
+--Union all                              
+--Select TranType = 'DISH', TranDate =  Createdon, TranNo ='0',CategoryId = CM.CategoryId, CategoryName = CM.CategoryName ,                          
+--DishGroupId = DGM.DishGroupId, DishGroupName = DGM.DishGroupName, DM.IsActive, DM.DishID,                         
+-- Code=DM.InventoryCode, Name=[Description],PQty = 0,PRQty= 0, SQty= 0, SRQty = 0,QtyOnHand = Convert(decimal(18,2),isnull(QuantityOnHand, 0)),                         
+--OpeningStock =0, ClosingStock = 0,  UnitPrice=Price                          
+--from DishMaster DM ,  DishGroupMaster DGM , CategoryMaster CM  where DM.Isactive = 1 and                         
+--SL.DishId = DM.DishId and DM.DishGroupId = DGM.DishGroupId and DGM.CategoryId = CM.CategoryId 

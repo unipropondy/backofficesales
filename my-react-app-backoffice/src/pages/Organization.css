@@ -1,0 +1,1446 @@
+/* Organization.css - Complete Working Version with Reduced Sizes */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #eef2f5;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.organization {
+    padding: 0px 1px;
+    background-color: #f4f7f6;
+    width: 103%;
+    min-height: calc(110vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: "Segoe UI", sans-serif;
+    /* Add negative margin or adjust padding to move card up */
+    margin-top: -20px;
+    /* Adjust this value as needed */
+}
+
+/* If you have a specific card class inside .organization, use this */
+.organization .card {
+    margin-top: -11px;
+    /* Move card upward */
+    /* OR */
+    transform: translateY(-8px);
+    /* Alternative way */
+}
+
+.organization.sidebar-open {
+    padding-left: 200px;
+}
+
+.organization-card {
+    width: 76%;
+    max-width: 950px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+}
+
+
+.organization-header {
+    padding: 4px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+.organization-header h1 {
+    font-size: 22px;
+    margin: 0;
+    color: #333;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    padding: 2px 10px;
+    border-radius: 6px;
+}
+
+
+.organization-header h1:hover {
+    color: #6f4a7e;
+    background: rgba(111, 74, 126, 0.05);
+    transform: translateX(3px);
+}
+
+
+.organization-actions-top {
+    display: flex;
+    gap: 8px;
+}
+
+.org-btn-save {
+    min-width: 80px;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.org-btn-save:hover:not(:disabled) {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.org-btn-close {
+    min-width: 80px;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.org-btn-close:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+.organization-tabs {
+    display: flex;
+    
+    /* border-bottom: 1px solid #e0e0e0; */
+    padding: 0 10px;
+}
+
+.org-tab {
+    padding: 8px 18px;
+    border: none;
+    background: #6f4a7e !important;
+    cursor: pointer;
+    font-size: 11px;
+    color: white !important;
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
+    margin-right: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    top: 1px;
+}
+
+.org-tab.active {
+    background: #8b5e9e !important;
+    color: white !important;
+    border-bottom: 3px solid #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+.org-tab:hover:not(.active) {
+    background: #4e3458 !important;
+    transform: translateY(-1.5px);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.organization-tab-content {
+    padding: 8px 12px;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ========== MAIN GRID LAYOUT ========== */
+.org-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.org-full-row {
+    grid-column: span 2;
+}
+
+/* ========== INPUT GROUP STYLES ========== */
+.org-input-group {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100%;
+    margin-bottom: 0;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+
+.org-input-group:hover {
+    background: rgba(111, 74, 126, 0.04);
+}
+
+
+/* ========== LABELS - FIXED WIDTH FOR ALIGNMENT ========== */
+.org-input-group label {
+    width: 130px !important;
+    min-width: 130px !important;
+    font-size: 11px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* ========== RIGHT COLUMN LABELS ========== */
+.move-left-label {
+    width: 80px !important;
+    min-width: 80px !important;
+    text-align: left !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* ========== ALL INPUT BOXES - SAME WIDTH ========== */
+.org-input-group input:not(.org-prefix-input):not(.org-number-input) {
+    flex: 0 0 180px !important;
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    height: 26px;
+    padding: 2px 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 11px;
+    background: #fff;
+    outline: none;
+}
+
+/* Number inputs */
+.org-input-group input[type="number"] {
+    flex: 0 0 70px !important;
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+    text-align: right;
+    height: 26px;
+}
+
+.org-input-group input:focus {
+    border-color: #6f4a7e;
+    box-shadow: 0 0 0 2px rgba(111, 74, 126, 0.1);
+}
+
+/* ========== CHECKBOX ROWS ========== */
+.org-checkbox-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100%;
+}
+
+.org-checkbox-row label {
+    width: 130px !important;
+    min-width: 130px !important;
+    font-size: 11px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    text-align: left;
+}
+
+.org-checkbox-row input[type="checkbox"] {
+    width: 14px !important;
+    height: 14px !important;
+    margin: 0 !important;
+    cursor: pointer;
+    flex: 0 0 14px !important;
+}
+
+/* ========== RADIO GROUPS ========== */
+.org-radio-group {
+    display: flex !important;
+    gap: 15px !important;
+    align-items: center !important;
+    flex: 0 0 180px !important;
+}
+
+.org-radio-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    cursor: pointer !important;
+}
+
+.org-radio-label input[type="radio"] {
+    width: 12px !important;
+    height: 12px !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+/* ========== PREFIX AND NUMBER INPUTS ========== */
+.org-prefix-input {
+    width: 60px !important;
+    flex: 0 0 60px !important;
+    text-align: center;
+    font-size: 11px !important;
+    height: 26px !important;
+}
+
+.org-number-input {
+    width: 75px !important;
+    flex: 0 0 75px !important;
+    text-align: right;
+    font-size: 11px !important;
+    height: 26px !important;
+}
+
+/* ========== TRANSACTION TAB - 3 COLUMN ========== */
+.org-form-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px 12px;
+    padding: 4px 2px;
+    align-items: center;
+    width: 100%;
+}
+
+.org-form-grid-3col .org-input-group {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.org-form-grid-3col .org-input-group label {
+    width: 100px;
+    min-width: 90px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.org-form-grid-3col input {
+    font-size: 10px !important;
+    height: 24px !important;
+    padding: 0 5px !important;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background: #fff;
+    flex: 1;
+    min-width: 0;
+
+}
+
+.org-form-grid-3col input.org-prefix-input {
+    width: 50px !important;
+    flex: 0 0 50px !important;
+    text-align: left !important;
+    /* idha podu */
+}
+
+.org-form-grid-3col input.org-number-input {
+    width: 60px !important;
+    flex: 0 0 60px !important;
+    text-align: left;
+}
+
+
+
+
+/* ========== LEGACY SECTION ========== */
+.org-legacy-section {
+    grid-column: span 3;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 6px 0 4px 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px 10px;
+    position: relative;
+    background: #fefefe;
+}
+
+.org-section-header {
+    grid-column: span 3;
+    font-size: 10px;
+    font-weight: 700;
+    color: #6f4a7e;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    border-left: 2px solid #6f4a7e;
+    padding-left: 6px;
+}
+
+.org-form-divider {
+    grid-column: span 3;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 6px 0;
+    width: 100%;
+}
+
+/* ========== SETTINGS HEADER - TRANSPARENT MATCHING ========== */
+.org-settings-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: transparent;
+    padding: 10px 0px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e0e6ed;
+    border-radius: 0;
+}
+
+
+.org-settings-header .org-filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.org-settings-header label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a4382;
+    white-space: nowrap;
+}
+
+.org-settings-header input,
+.org-settings-header select {
+    height: 32px;
+    border: 1px solid #c0d5f0;
+    padding: 0 10px;
+    font-size: 12px;
+    background: white;
+    border-radius: 6px;
+    color: #333;
+}
+
+.org-settings-header input {
+    width: 200px;
+}
+
+.org-settings-header select {
+    width: 130px;
+}
+
+
+.org-lookup-btn {
+    background: #1a4382;
+    border: none;
+    height: 32px;
+    width: 44px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.org-lookup-btn:hover {
+    background: #143566;
+}
+
+
+/* ========== SETTINGS TABLE - COMPACT ========== */
+.org-settings-grid-wrapper {
+    max-height: 450px;
+    overflow-y: auto;
+    border: 1px solid #e0e6ed;
+    border-radius: 4px;
+}
+
+
+.org-settings-grid {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.org-settings-grid th {
+    background: #1a4382;
+    color: white;
+    padding: 10px 15px;
+    text-align: left;
+    font-weight: 600;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: 12px;
+}
+
+.org-settings-grid th:last-child {
+    border-right: none;
+}
+
+
+.org-settings-grid td {
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    font-size: 11.5px;
+    color: #444;
+}
+
+.org-settings-grid td:last-child {
+    border-right: none;
+}
+
+
+.org-clickable-row {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.org-clickable-row:hover {
+    background-color: #f1f5f9;
+}
+
+/* ========== SETTINGS TAB - FIX ALIGNMENT ========== */
+.org-settings-stack {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 5px 20px !important;
+    /* Reduced vertical gap */
+}
+
+
+.org-settings-stack .org-input-group,
+.org-settings-stack .org-checkbox-row {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: px !important;
+    margin: 4px 0 !important;
+    /* Reduced from 8px */
+    width: 100% !important;
+}
+
+/* Move only the checkbox slightly left */
+/* Move checkbox slightly down */
+.org-settings-stack .org-checkbox-row input[type="checkbox"] {
+    margin-left: -9px !important;
+    transform: translateX(-89px) translateY(7px); /* Add translateY to move down */
+    /* OR */
+    transform: translateX(-89px);
+    margin-top: 2px !important; /* Move down */
+    position: relative;
+    top: 6px; /* Alternative way to move down */
+}
+
+
+
+
+.org-settings-stack .org-input-group label,
+.org-settings-stack .org-checkbox-row label {
+    width: 120px !important;
+    min-width: 120px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    color: #333 !important;
+    padding-top: 8px !important;
+    /* Center label with input box height */
+}
+
+
+
+
+.org-settings-stack input:not(.org-prefix-input):not(.org-number-input):not([type="checkbox"]) {
+    width: 200px !important;
+    flex: 0 0 200px !important;
+    height: 30px !important;
+    font-size: 10px !important;
+    padding: 2px 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    text-align: left !important;
+}
+.org-settings-stack .org-input-group:has(label:contains("Max. Discount")) input,
+.org-settings-stack .org-input-group:has(label:contains("Cust Display 1")) input,
+.org-settings-stack .org-input-group:has(label:contains("Name Text Length")) input,
+.org-settings-stack .org-input-group:has(label:contains("Default Discount")) input,
+.org-settings-stack .org-input-group:has(label:contains("Cust Display 2")) input,
+.org-settings-stack .org-input-group:has(label:contains("Additional Order #")) input {
+    margin-left: -9px !important;
+    transform: translateX(-5px);
+}
+
+
+.org-settings-stack input,
+.org-settings-stack select {
+    margin-left: -11px !important;
+    position: relative;
+    left: -5px;
+}
+.org-settings-stack .org-input-group:not(:has(label:contains("Other Language Length"))) input,
+.org-settings-stack .org-input-group:not(:has(input[id*="OtherLanguage"])) input {
+    margin-left: -12px !important;
+    transform: translateX(-5px);
+}
+.org-settings-stack input[id*="OtherLanguage"],
+.org-settings-stack input[name*="OtherLanguage"] {
+    margin-left: 0 !important;
+    left: 0 !important;
+}
+.org-settings-stack input[type="number"] {
+    width: 75px !important;
+    flex: 0 0 75px !important;
+    text-align: left !important;
+    padding: 2px 8px !important;
+}
+
+
+.org-settings-stack .org-checkbox-row input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 !important;
+    margin-left: 0px !important;
+    /* Reset to 0 for natural alignment with 120px label */
+    cursor: pointer;
+}
+
+
+
+.org-settings-stack .org-prefix-input {
+    width: 220px !important;
+    max-width: 220px !important;
+    text-align: left !important;
+}
+
+.org-settings-stack .org-number-input {
+    width: 100px !important;
+    max-width: 100px !important;
+    text-align: left !important;
+}
+
+
+
+
+
+
+/* Helper text alignment */
+.org-settings-helper {
+    font-size: 10px !important;
+    color: #777 !important;
+    margin-left: 8px !important;
+    display: inline-block;
+}
+
+
+/* ========== SERVICE TAB ========== */
+.service-tab-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 15px !important;
+    width: 100% !important;
+    padding: 5px !important;
+}
+
+.service-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    min-height: 30px !important;
+}
+
+.service-label {
+    width: 120px !important;
+    min-width: 120px !important;
+    font-size: 10.5px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+/* Text inputs */
+.service-input {
+    width: 140px !important;
+    flex: 0 0 140px !important;
+    height: 26px !important;
+    font-size: 10.5px !important;
+    padding: 2px 8px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+}
+
+/* Number inputs */
+.service-number {
+    width: 70px !important;
+    flex: 0 0 70px !important;
+    height: 26px !important;
+    font-size: 10.5px !important;
+    text-align: left !important;
+    padding: 2px 8px !important;
+}
+
+
+/* Checkboxes */
+.service-checkbox {
+    width: 14px !important;
+    height: 14px !important;
+    margin: 0 !important;
+    flex: 0 0 14px !important;
+}
+
+/* Radio groups */
+.service-radio-group {
+    display: flex !important;
+    gap: 12px !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+}
+
+.service-radio-group label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 10.5px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+}
+
+.service-radio-group input[type="radio"] {
+    width: 12px !important;
+    height: 12px !important;
+    margin: 0 !important;
+}
+
+/* ========== TRANSACTION TAB - FIX ALL INPUTS SAME WIDTH ========== */
+.org-form-grid-3col input,
+.org-form-grid-3col .org-prefix-input,
+.org-form-grid-3col .org-number-input {
+    width: 75px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    flex: 0 0 90px !important;
+    height: 28px !important;
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    text-align: left !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+}
+
+
+.org-form-grid-3col input[type="text"],
+.org-form-grid-3col input[type="number"] {
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    text-align: left !important;
+}
+
+.org-form-grid-3col .org-prefix-input {
+    width: 90px !important;
+    min-width: 90px !important;
+    text-align: left !important;
+}
+
+
+.org-form-grid-3col .org-number-input {
+    width: 90px !important;
+    min-width: 90px !important;
+    text-align: left !important;
+}
+
+.org-form-grid-3col .org-input-group label {
+    width: 130px !important;
+    min-width: 130px !important;
+    font-size: 10.5px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+.org-form-grid-3col .org-input-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-bottom: 1px !important;
+}
+
+
+.org-form-grid-3col {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2px 15px !important;
+}
+
+
+/* ========== TRANSACTION TAB - REMOVE PARAMETERS SECTION BORDER ========== */
+.org-legacy-section {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.org-section-header {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+/* ========== ADDITIONAL SETTINGS CONTAINER - REDUCED SIZE ========== */
+.additional-settings-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: auto;
+    padding: 0;
+}
+
+.additional-settings-card {
+    width: 100%;
+    max-width: 100%;
+    background: transparent;
+    border-radius: 0;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+
+/* ========== MODERN EDIT MODAL STYLES - REDUCED HEIGHT & EQUAL BOXES ========== */
+.modern-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: modernFadeIn 0.3s ease;
+}
+
+
+@keyframes modernFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modern-modal {
+    width: 450px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modernSlideUp 0.3s ease;
+}
+
+@keyframes modernSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modern-modal-header {
+    background: linear-gradient(135deg, #6f4a7e 0%, #8b5e9e 100%);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #5a3a66;
+}
+
+.modern-modal-title h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.modern-modal-close {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.modern-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.modern-modal-body {
+    padding: 15px 18px;
+}
+
+.modern-field {
+    margin-bottom: 12px;
+}
+
+.modern-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.modern-field-value {
+    padding: 6px 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    border: 1px solid #e0e0e0;
+}
+
+.modern-field input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.modern-field input:focus {
+    outline: none;
+    border-color: #6f4a7e;
+    box-shadow: 0 0 0 2px rgba(111, 74, 126, 0.1);
+}
+
+/* Value Type Badges - Equal size boxes */
+.modern-value-badges {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.modern-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.modern-badge .badge-letter {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6f4a7e;
+}
+
+.modern-badge .badge-text {
+    font-size: 9px;
+    font-weight: 500;
+    color: #666;
+}
+
+.modern-badge.active {
+    background: #6f4a7e;
+    border-color: #6f4a7e;
+}
+
+.modern-badge.active .badge-letter,
+.modern-badge.active .badge-text {
+    color: white;
+}
+
+.modern-badge:hover:not(.active) {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.modern-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 12px 0;
+}
+
+.modern-checkbox-field {
+    padding: 3px 0;
+}
+
+.modern-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    width: fit-content;
+    border: 1px solid #e0e0e0;
+}
+
+.modern-checkbox input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #6f4a7e;
+}
+
+.modern-checkbox span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+}
+
+.modern-guid-field {
+    padding: 6px 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #999;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+/* Modal Footer - Compact buttons */
+.modern-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #fafafa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.modern-btn-new {
+    padding: 8px 20px;
+    min-width: 80px;
+    background: #6c757d;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.modern-btn-new:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.modern-btn-save {
+    padding: 8px 20px;
+    min-width: 80px;
+    background: #28a745;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.modern-btn-save:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.modern-btn-delete {
+    padding: 8px 20px;
+    min-width: 80px;
+    background: #dc3545;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.modern-btn-exit {
+    padding: 8px 20px;
+    min-width: 80px;
+    background: #6f4a7e;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.modern-btn-exit:hover {
+    background: #5a3a66;
+    transform: translateY(-1px);
+}
+
+.btn-shortcut {
+    font-size: 9px;
+    opacity: 0.8;
+    font-weight: normal;
+}
+
+/* Locked numeric input style - Read only */
+.locked-numeric-input {
+    background: #f5f5f5 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    border-color: #e0e0e0 !important;
+}
+
+/* Locked GUID field style */
+.locked-guid-field {
+    background: #f5f5f5 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+}
+
+/* Remove card look - keep width same */
+.organization-card {
+    width: 100% !important;
+    max-width: 110% !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 10px;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}
+
+/* Body background change pannanum na */
+body {
+    background: #eef2f5;
+}
+
+/* Tab content background transparent */
+.organization-tab-content {
+    background: transparent !important;
+}
+
+/* Header Popup Styles */
+.header-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.header-popup {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 450px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    border-bottom: 1px solid #e0e0e0;
+    background: linear-gradient(135deg, #6f4a7e 0%, #8b5fa8 100%);
+}
+
+.header-popup-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.header-popup-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.2s;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-popup-close:hover {
+    transform: scale(1.1);
+}
+
+.header-popup-body {
+    padding: 20px 18px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.header-popup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.header-popup-row:last-child {
+    border-bottom: none;
+}
+
+.header-popup-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 13px;
+    flex: 0 0 35%;
+}
+
+.header-popup-value {
+    color: #666;
+    font-size: 13px;
+    flex: 1;
+    word-break: break-word;
+    padding-left: 16px;
+}
+
+/* ========== HEADER POPUP STYLES ========== */
+.header-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.header-popup {
+    background: #fff;
+    border-radius: 8px;
+    width: 320px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header-popup-header {
+    background: linear-gradient(135deg, #6f4a7e, #8b5e9e);
+    color: #fff;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.header-popup-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.header-popup-close:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.header-popup-body {
+    padding: 12px 16px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.header-popup-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #333;
+}
+
+.header-popup-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.header-popup-value {
+    font-weight: 400;
+    color: #111;
+    text-align: right;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========== ORG MODAL OVERLAY (Legacy) ========== */
+.org-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.org-modal {
+    width: 500px;
+    max-width: 95%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 15px-40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}

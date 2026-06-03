@@ -1,0 +1,46 @@
+.home {
+  width: 100%;
+  height: 100%; /* FULL PARENT */
+
+  background-size: cover; /* full screen cover */
+  background-position: center; /* center */
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative; /* ✅ IMPORTANT for logout icon */
+}
+
+/* Logout icon */
+.logout-icon {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: white;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.logout-icon:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Card style */
+.home-card {
+  background: rgba(63, 63, 63, 0.6);
+  padding: 30px 50px;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.3);
+}
+
+.home-card h1 {
+  font-size: 34px;
+  margin: 0;
+}

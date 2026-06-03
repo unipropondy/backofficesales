@@ -1,0 +1,80 @@
+/* Topbar toggle button */
+.topbar {
+  height: 50px;
+  background: #4b1a5a; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0 15px;                
+  position: relative;
+  z-index: 2500; 
+}
+
+/* Left open/close icon */
+.icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* RIGHT logout icon */
+.logout-icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+  height: 100vh;
+  background: #4b1a5a; 
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  transition: 0.3s;
+  overflow-y: auto;
+  z-index: 2100; 
+  /* ✅ Hide scrollbar while keeping functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.sidebar.open {
+  width: 220px;
+}
+
+.sidebar.close {
+  width: 0;
+  padding: 0;
+}
+
+/* Menu links */
+.menu {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14.5px; /* Clean & Compact */
+}
+
+.menu:hover {
+  background: #fc00fc;
+}
+
+/* Organization Page Scoped Adjustments - KEEP THESE */
+.page-organization .menu {
+  font-size: 13.5px; /* Clean & Compact */
+  padding: 10px 12px; /* Restored slightly more padding */
+  margin-bottom: 6px;
+}

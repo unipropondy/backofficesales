@@ -1,0 +1,1 @@
+const {poolPromise} = require('./db.js'); poolPromise.then(p => p.request().query("SELECT TOP 5 * FROM DishPriceList")).then(r => console.dir(r.recordset)).catch(console.error).finally(()=>process.exit());

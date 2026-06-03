@@ -1,0 +1,428 @@
+/* Aggressive background reset for Barcode page */
+body, 
+#root, 
+.main-content, 
+.Barcode-page {
+  background-color: #f4f7f6 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.Barcode-page {
+  min-height: calc(100vh - 50px); /* Account for topbar */
+  width: 100%;
+  padding: 5px 20px 20px 20px; /* Reduced top padding */
+  font-family: "Segoe UI", sans-serif;
+  overflow: visible; /* ✅ Allow page-level scrolling instead of internal */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center !important; /* Horizontally Center EVERYTHING */
+  position: relative;
+  margin: 0;
+  transition: all 0.3s ease; /* ✅ Smooth transition for re-centering */
+}
+
+/* ✅ Shift and re-center main content when sidebar is open */
+.Barcode-page.sidebar-open {
+  padding-left: 220px; 
+}
+
+/* ================= HEADER ================= */
+.Barcode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 550px;
+  margin-top: 10px; /* Targeted top spacing */
+  margin-bottom: 15px; /* Tighter gap to table */
+  position: relative; /* 🔥 For close button positioning */
+}
+
+.Barcode-header h2 {
+  margin: 0;
+  font-size: 26px; 
+  font-weight: 600;
+  color: #333;
+}
+
+/* ================= TABLE ================= */
+.Barcode-table {
+  width: 100%;
+  max-width: 600px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+  border: 1px solid #ddd;
+}
+
+.Barcode-table th {
+  background: #6f4a7e; 
+  color: #fff; 
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid #777;
+  font-size: 14px; 
+}
+
+.Barcode-table td {
+  padding: 10px 12px;
+  border: 1px solid #eee;
+  background: white; 
+  font-size: 14px; 
+}
+
+.Barcode-table tr:hover {
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+/* ================= NEW BUTTON ================= */
+.Barcode-new-btn {
+  background: linear-gradient(135deg, #6f4a7e, #5a3c65) !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 24px !important;
+  border-radius: 6px !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px; 
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(111, 74, 126, 0.2) !important;
+}
+
+.Barcode-new-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(111, 74, 126, 0.3) !important;
+}
+
+
+
+/* ================= MODAL OVERLAY ================= */
+.Barcode-modal-overlay {
+  position: fixed;
+  top: 50px; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 50px);
+  background: rgba(0, 0, 0, 0.15); 
+  border-radius: 0; 
+  backdrop-filter: none; 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding-top: 0; 
+  z-index: 2200; 
+  animation: fadeIn 0.3s ease-out;
+  pointer-events: auto; 
+  overflow: visible; 
+  transition: all 0.3s ease; 
+}
+
+/* ✅ Shift and re-center modal ONLY when sidebar is open */
+.Barcode-modal-overlay.sidebar-open {
+  left: 230px; 
+  right: 0;
+  width: auto;
+}
+
+/* ================= DIMMED BACKGROUND ================= */
+.Barcode-list-container.dimmed {
+  opacity: 0.6;
+  pointer-events: none; 
+  transition: opacity 0.3s ease;
+}
+
+/* ================= CARD (MODAL CONTENT) ================= */
+.Barcode-card {
+  width: 100%;
+  max-width: 500px;
+  background: white !important;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid #e0e0e0 !important;
+  position: relative;
+  z-index: 2300; 
+  animation: slideDown 0.3s ease-out;
+  pointer-events: auto; 
+  margin-bottom: 0;
+  transform: translateY(2%); 
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ================= FORM HEADER ================= */
+.Barcode-form-header {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 25px;
+  width: 100% !important;
+}
+
+.Barcode-form-header h2 {
+  font-size: 22px; 
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ================= BUTTONS ================= */
+.Barcode-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.Barcode-save-btn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; 
+}
+
+.Barcode-cancel-btn {
+  background: linear-gradient(135deg, #ef5350, #c62828);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px; 
+}
+
+.Barcode-delete-btn {
+  background: linear-gradient(135deg, #455a64, #263238);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.Barcode-delete-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #263238, #1a237e);
+}
+
+/* ================= GRID ================= */
+.Barcode-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ================= FORM ROW ================= */
+.Barcode-form-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.Barcode-form-row label {
+  width: 110px; 
+  font-size: 14px; 
+  font-weight: 500;
+  color: #555;
+}
+
+.Barcode-form-row input {
+  flex: 1;
+  height: 34px; 
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff; 
+  font-size: 14px; 
+  transition: 0.2s;
+}
+
+.Barcode-form-row input:focus {
+  outline: none;
+  border-color: #6f4a7e;
+  background: white;
+}
+
+/* ================= INPUT GROUP ================= */
+.Barcode-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+/* ================= LOV BUTTON ================= */
+.Barcode-lov-btn {
+  height: 32px;
+  width: 36px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(135deg, #6f4a7e, #5a3c65);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.Barcode-lov-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ================= POPUP OVERLAY ================= */
+.Barcode-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Move to top */
+  padding-top: 60px; /* Space from top */
+  z-index: 3000; /* Highest priority: above everything else */
+}
+
+/* ================= POPUP BOX ================= */
+.Barcode-popup-box {
+  background: white;
+  width: 500px; /* More compact */
+  max-width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 15px; /* Tighter padding */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= POPUP HEADER ================= */
+.Barcode-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.Barcode-popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.Barcode-popup-header button {
+  background: #eee;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ================= POPUP SEARCH ================= */
+.Barcode-popup-search-container {
+  margin-bottom: 12px;
+}
+
+.Barcode-popup-search-container input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.Barcode-popup-search-container input:focus {
+  border-color: #6f4a7e;
+  box-shadow: 0 0 5px rgba(111, 74, 126, 0.2);
+}
+
+/* ================= POPUP TABLE ================= */
+/* ================= POPUP TABLE WRAPPER ================= */
+.Barcode-popup-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.Barcode-popup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.Barcode-popup-table th {
+  background: #6f4a7e; /* Purple background */
+  color: #fff; /* White text */
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.Barcode-popup-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+.Barcode-popup-table tr:hover {
+  background: #f4f7ff;
+  cursor: pointer;
+}
+
+/* ================= EMPTY STATE ================= */
+.Barcode-popup-table td[colspan] {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

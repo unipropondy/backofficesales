@@ -1,0 +1,227 @@
+.modifier-container {
+  padding: 20px;
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.new-btn {
+  float: right;
+  padding: 8px 14px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.modifier-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.modifier-table th{
+  background:#6f4a7d;
+  color:white;
+  padding:12px;
+  /* border-bottom:3px solid #dcdcdc;;   header strong line */
+  border:1px solid #d0d0d0; 
+}
+
+.modifier-table tr{
+  border-bottom:1px solid #cfcfcf;
+}
+
+.modifier-table thead tr{
+  border-bottom:3px solid #555;   /* header line */
+}
+
+.modifier-table td {
+  padding: 10px;
+  /* text-align: center; */
+   /* border-bottom: 1px solid #dcdcdc;   line */
+    border:1px solid #d0d0d0; 
+}
+
+/* Modal */
+
+.modal-overlay-md {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box-md h2{
+margin-bottom:20px;
+}
+
+.modifier-form{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.form-row{
+display:grid;
+grid-template-columns:160px 1fr;
+align-items:center;
+margin-bottom:10px;
+}
+
+.form-row label{
+font-weight:600;
+font-size:15px;
+}
+
+.form-row input,
+.form-row select{
+padding:8px;
+border:1px solid #ccc;
+border-radius:4px;
+width:100%;
+}
+
+.checkbox-row{
+display:flex;
+align-items:center;
+gap:20px;
+margin-top:10px;
+}
+
+.label{
+width:140px;
+font-weight:500;
+}
+
+.checkbox-row label{
+font-weight:500;
+}
+
+.modal-box-md {
+width:520px;
+background:#fff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.checkbox-area{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.yesno{
+color:#a00000;
+font-weight:600;
+}
+
+.change-price{
+display:flex;
+align-items:center;
+gap:8px;
+border:1px solid #ccc;
+padding:6px 10px;
+border-radius:4px;
+background:#f8f8f8;
+}
+
+
+.amount-input{
+width:80px;
+padding:4px;
+}
+
+.form-grid input,
+.form-grid select {
+  padding: 8px;
+}
+
+.checkbox-group{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.checkbox-group label{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:500;
+}
+
+.checkbox-group input{
+margin:0;
+}
+
+.modal-buttons-md{
+display:flex;
+justify-content:flex-end;
+gap:12px;
+margin-top:25px;
+}
+
+
+.save-btn-md{
+background:#1f8f3a;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:5px;
+cursor:pointer;
+font-weight:600;
+}
+
+.cancel-btn-md{
+background:#e11414;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:5px;
+cursor:pointer;
+font-weight:600;
+}
+
+.price-section{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.price-box{
+display:flex;
+align-items:center;
+gap:10px;
+border:1px solid #ccc;
+padding:8px 12px;
+border-radius:6px;
+background:#f7f7f7;
+}
+
+.amount-input{
+width:80px;
+padding:5px;
+}
+
+.price-box input{
+width:80px;
+padding:5px;
+}
+

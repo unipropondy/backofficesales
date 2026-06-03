@@ -1,0 +1,162 @@
+/* ================= PAGE ================= */
+.vendor-page1 {
+  padding: 15px;
+  font-family: Arial;
+}
+
+/* TITLE */
+.vendor-title1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* BUTTON */
+.vendor-btn-right1 {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.vendor-new-btn1 {
+  padding: 6px 14px;
+  background: #6d477d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* ================= TABLE ================= */
+.vendor-table1 {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.2px solid #999;   /* 🔥 slightly stronger outer */
+}
+
+.vendor-table1 th {
+  background: #6d477d;
+  color: white;
+  padding: 8px;
+}
+
+/* 🔥 DATA + HEADER LINES */
+.vendor-table1 th,
+.vendor-table1 td {
+  border: 1px solid #aaa;     /* 🔥 balanced visibility */
+  padding: 8px;
+  font-size: 13px;
+}
+
+/* NO DATA CENTER */
+.vendor-table1 td[colspan] {
+  text-align: center;
+  padding: 12px;
+}
+
+/* ================= MODAL OVERLAY ================= */
+
+.vendor-modal-overlay1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* PERFECT CENTER */
+}
+
+/* ================= MODAL BOX ================= */
+
+.vendor-modal1 {
+  background: white;
+
+  width: 460px;          /* balanced width */
+  max-height: 85vh;      /* prevents cut */
+
+  padding: 16px 18px;
+  border-radius: 8px;
+
+  overflow-y: auto;      /* 🔥 scroll inside */
+
+  position: relative;  /* 🔥 important */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ================= ROW ================= */
+
+.vendor-row1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;   /* compact */
+  gap: 10px;
+}
+
+.vendor-row1 label {
+  width: 140px;
+  font-size: 13px;
+}
+
+/* ================= INPUT ================= */
+
+.vendor-form1 input,
+.vendor-form1 select {
+  width: 220px;   /* not too big */
+  height: 26px;
+
+  padding: 4px 6px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+/* CHECKBOX */
+.vendor-form1 input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* ================= BUTTONS ================= */
+
+.vendor-buttons-top1 {
+  position: absolute;   /* 🔥 only buttons move */
+  top: 8px;             /* 🔥 move UP */
+  right: 12px;
+
+  display: flex;
+  gap: 10px;
+}
+.vendor-save1 {
+  background: green;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+
+.vendor-cancel1 {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+
+/* ================= SUCCESS ================= */
+
+.vendor-top-msg1 {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d4edda;
+  color: #155724;
+  padding: 8px 16px;
+  border-radius: 6px;
+}

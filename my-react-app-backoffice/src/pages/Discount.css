@@ -1,0 +1,251 @@
+/* MAIN CONTAINER */
+.discount-container1 {
+  padding: 20px 30px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-family: 'Cambria', serif;
+  transition: all 0.3s ease;
+  background-color: #fbf9f4; /* Light cream background */
+}
+
+.discount-container1.sidebar-open {
+  padding-left: 260px;
+  /* shift content when sidebar is open */
+}
+
+/* HEADER */
+.discount-header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  /* 🔥 IMPORTANT */
+  padding-bottom: 0;
+  /* 🔥 IMPORTANT */
+}
+
+.discount-title1 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 0;
+  /* 🔥 removes top gap */
+  margin-bottom: 5px;
+  /* control gap below */
+}
+
+/* BUTTON */
+.discount-new-btn1 {
+  background: transparent;
+  color: #ef7f22; /* Orange text */
+  padding: 6px 18px;
+  border: 1px solid #ef7f22; /* Orange border */
+  cursor: pointer;
+  border-radius: 20px; /* Pill shape */
+  font-weight: 600;
+  transition: 0.3s;
+}
+ 
+.discount-new-btn1:hover {
+  background: #ef7f22;
+  color: white;
+}
+
+/* TABLE */
+.discount-table1 {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+ 
+.discount-table1 th {
+  background: #f2eadb; /* Beige header */
+  color: #7b7167; /* Grey-brown text */
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 11px; /* Smaller font size */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+ 
+.discount-table1 td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #f2f2f2;
+  text-align: center;
+  color: #333;
+  font-size: 13px; /* Smaller font size */
+}
+ 
+.discount-table1 tr:hover {
+  background: #fdfdfd;
+}
+
+/* MODAL */
+.discount-overlay1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM */
+/* FORM BOX */
+.discount-form-box1 {
+  background: #f5f5f5;
+  padding: 20px;
+  width: 620px;
+  border-radius: 8px;
+}
+
+/* ROW */
+.discount-form-row1 {
+  display: grid;
+  grid-template-columns: 140px 1fr 100px 1fr;
+  /* 🔥 reduced from 120px */
+  gap: 8px;
+  /* slightly tighter */
+  align-items: center;
+  margin-bottom: 10px;
+
+}
+
+/* INPUT */
+.discount-form-row1 input[type="text"],
+.discount-form-row1 input[type="date"],
+.discount-form-row1 input {
+  padding: 6px;
+  width: 100%;
+  max-width: 160px;
+}
+
+/* LABEL */
+.discount-form-row1 label1 {
+  font-size: 14px;
+}
+
+
+
+.discount-form-row1 input:nth-child(4) {
+  margin-left: -15px;
+  /* 🔥 pulls input box left */
+}
+
+.discount-form-row1 label:nth-child(3) {
+  margin-left: 10px;
+  /* 👉 right move */
+}
+
+/* CHECKBOX FIX */
+/* ADD THIS */
+.discount-form-row1 input[type="checkbox"] {
+  transform: scale(1.2);
+  position: relative;
+  left: -52px;
+  /* 🔥 controlled shift */
+}
+
+/* COLOR BOX */
+.discount-color-box1 {
+  width: 80px;
+  height: 40px;
+  border: 1px solid #ccc;
+}
+
+/* COLOR ACTIONS */
+.discount-color-actions1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.discount-btn-row1 {
+  position: absolute;
+  /* 🔥 move out of normal flow */
+  top: 15px;
+  /* 🔥 top space */
+  right: 15px;
+  /* 🔥 right corner */
+
+  display: flex;
+  gap: 10px;
+  /* 🔥 spacing between buttons */
+}
+
+.discount-form-box1 {
+  position: relative;
+  /* 🔥 parent reference */
+}
+
+.discount-save-btn1 {
+  background: green;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+}
+
+.discount-exit-btn1 {
+  background: crimson;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+}
+
+/* PREVIEW BOX */
+.discount-preview-box1 {
+  width: 130px;
+  height: 70px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  background: #fff;
+}
+
+/* BUTTON STYLE (LIKE YOUR IMAGE) */
+.discount-color-btn1 {
+  background: linear-gradient(#cfe3f5, #9fc2e6);
+  border: 1px solid #7aa7d9;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #7aa7d9;
+}
+
+/* BUTTON GROUP */
+.discount-color-btns1 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #7aa7d9;
+}
+
+.discount-custom-picker1 {
+  position: absolute;
+  top: 40%;
+  /* 🔥 move UP (reduce value) */
+  left: 62%;
+  /* 🔥 move LEFT (reduce value) */
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.discount-table1 td:nth-child(1) {
+  text-align: left;
+  padding-left: 10px;
+  /* 🔥 spacing from left */
+}

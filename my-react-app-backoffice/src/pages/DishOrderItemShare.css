@@ -1,0 +1,212 @@
+.dishorderitemshare-page {
+  background-color: #fdf8f4;
+  min-height: 100vh;
+  padding: 15px 30px;
+  font-family: 'Cambria', serif;
+  color: #333;
+  transition: all 0.3s ease;
+  text-align: justify;
+}
+
+.dishorderitemshare-page.dishorderitemshare-sidebar-open {
+  padding-left: 260px;
+}
+
+.dishorderitemshare-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dishorderitemshare-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dishorderitemshare-page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin: 0;
+}
+
+.dishorderitemshare-btn-orange-new {
+  background-color: #ff7f27;
+  color: white;
+  border: none;
+  padding: 6px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 127, 39, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dishorderitemshare-btn-orange-new:hover {
+  background-color: #e66b1d;
+  transform: translateY(-1px);
+}
+
+.dishorderitemshare-btn-new {
+  background-color: #ff7f27;
+  color: white;
+  border: none;
+  padding: 6px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 127, 39, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dishorderitemshare-btn-new:hover {
+  background-color: #e66b1d;
+  transform: translateY(-1px);
+}
+
+.dishorderitemshare-table-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #dcd1c5;
+}
+
+.dishorderitemshare-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dishorderitemshare-custom-table th {
+  background-color: #f2ece4;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6d645e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #e0d6cc;
+}
+
+.dishorderitemshare-custom-table td {
+  padding: 8px 12px;
+  border: 1px solid #f0e6dc;
+  font-size: 11px;
+  color: #333;
+}
+
+.dishorderitemshare-custom-table tr:hover {
+  background-color: #fdfaf7;
+  cursor: pointer;
+}
+
+/* CUSTOM CHECKBOX */
+.dishorderitemshare-custom-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #ff7f27;
+  cursor: pointer;
+}
+
+.dishorderitemshare-text-center {
+  text-align: center !important;
+}
+
+/* MODAL STYLES */
+.dishorderitemshare-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.dishorderitemshare-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 380px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.dishorderitemshare-modal-header {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.dishorderitemshare-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.dishorderitemshare-form-field {
+  margin-bottom: 15px;
+}
+
+.dishorderitemshare-form-field label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 11px;
+  color: #555;
+}
+
+.dishorderitemshare-form-field input[type="text"],
+.dishorderitemshare-form-field input[type="number"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.dishorderitemshare-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.dishorderitemshare-btn-save-orange {
+  background: #ff7f27;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.dishorderitemshare-btn-cancel-grey {
+  background: #eee;
+  color: #666;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.dishorderitemshare-btn-delete-red {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+  margin-right: auto;
+}
