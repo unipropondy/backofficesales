@@ -4,6 +4,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "mssql": "^12.5.5",
     "mysql2": "^3.20.0",
     "react-color": "^2.19.3",
     "react-datepicker": "^9.1.0",
