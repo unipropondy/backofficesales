@@ -42,7 +42,7 @@ const dayEndReportRoutes = require("./routes/dayendreportroutes");
 const serverMasterRoutes = require("./routes/serverMasterRoutes");
 const dishGroupRoutes = require("./routes/dishGroupRoutes");
 const dishOrderItemShareRoutes = require("./routes/dishOrderItemShareRoutes");
-const salesReportRoutes = require("./routes/salesReportRoutes");
+const salesReportRoutes = require("./routes/salesreportRoutes");
 
 app.use("/api/barcode", barcodeRoutes);
 app.use("/api/dishorderitemshare", dishOrderItemShareRoutes);
