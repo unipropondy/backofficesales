@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RewardPoints.css";
 
@@ -28,7 +29,7 @@ function RewardPoints() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/rewardpoints");
+      const res = await axios.get(`${API_BASE_URL}/api/rewardpoints`);
 
       const mapped = res.data.map(r => ({
         startMonth: r.FromDate ? new Date(r.FromDate) : null,
@@ -108,7 +109,7 @@ function RewardPoints() {
 
       if (editIndex === null) {
         // 🔥 INSERT
-        const res = await axios.post("http://localhost:3001/rewardpoints", payload);
+        const res = await axios.post(`${API_BASE_URL}/api/rewardpoints`, payload);
         console.log("POST RESPONSE:", res.data);
 
         alert("Saved Successfully ✅");

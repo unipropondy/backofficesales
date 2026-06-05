@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 import "./About.css";
 
 function About() {
@@ -66,7 +67,7 @@ return ()=>clearTimeout(timer);
 const fetchCategory = async () => {
 
    try {
-    const res = await axios.get("http://localhost:3000/category");
+    const res = await axios.get(`${API_BASE_URL}/category`);
     setEntries(res.data);
   } catch (err) {
     console.error("Category load error:", err);
@@ -78,7 +79,7 @@ const fetchModifier = async () => {
 
   try {
 
-    const res = await axios.get("http://localhost:3000/modifier");
+    const res = await axios.get(`${API_BASE_URL}/modifier`);
     setModifiers(res.data);
 
   } catch (err) {
@@ -93,7 +94,7 @@ const fetchKitchen = async () => {
 
 try{
 
-const res = await axios.get("http://localhost:3000/kitchen");
+const res = await axios.get(`${API_BASE_URL}/kitchen`);
 setKitchens(res.data);
 
 }catch(err){
@@ -148,7 +149,7 @@ try{
 if(editIndex !== null){
 
 await axios.put(
-`http://localhost:3000/category/${form.CategoryId}`,
+`${API_BASE_URL}/category/${form.CategoryId}`,
 {
 ...form,
 BackColor: bgColor,
@@ -164,7 +165,7 @@ CategoryImage: image || ""
 else{
 
 await axios.post(
-"http://localhost:3000/category",
+`${API_BASE_URL}/category`,
 {
 ...form,
 BackColor: bgColor,

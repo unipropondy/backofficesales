@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./usergroup.css";
  
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
  
 import { useNavigate } from "react-router-dom";
  
@@ -42,7 +43,7 @@ export default function UserGroup() {
  
     try {
  
-      const res = await axios.get("http://localhost:3000/usergroup");
+      const res = await axios.get(`${API_BASE_URL}/api/usergroup`);
  
       setGroups(res.data);
  
@@ -119,7 +120,7 @@ export default function UserGroup() {
  
     try {
  
-      await axios.post("http://localhost:3000/usergroup", formData);
+      await axios.post(`${API_BASE_URL}/api/usergroup`, formData);
  
       alert("Saved");
  
