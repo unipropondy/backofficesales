@@ -1,0 +1,722 @@
+/* RESET */
+.sales html, 
+.sales body {
+  margin: 0;
+  padding: 0;
+  background: #e9ecef;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* FULL SCREEN */
+.sales .report-container {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+/* ============================================ */
+/* NEW HEADER STYLES - Date Top Right, No Title */
+/* ============================================ */
+.sales .report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #1a3a5c;
+  flex-wrap: wrap;
+}
+
+.sales .header-left {
+  flex: 1;
+}
+
+.sales .header-center {
+  flex: 2;
+  text-align: center;
+}
+
+.sales .header-right {
+  flex: 1;
+  text-align: right;
+}
+
+.sales .company-name-header {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a3a5c;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sales .company-address-header {
+  font-size: 11px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.sales .company-phone-header {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.sales .current-datetime {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a3a5c;
+  background: #f0f4f8;
+  padding: 5px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+}
+
+/* OLD HEADER STYLES - Commented but kept for reference */
+/* .sales .report-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1a3a5c;
+  margin: 0;
+  letter-spacing: 1px;
+} */
+
+/* FILTER SECTION */
+.sales .filter-section {
+  width: 100%;
+  margin-bottom: 25px;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.sales .filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.sales .secondary-filters {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #eee;
+}
+
+.sales .filter-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 150px;
+}
+
+.sales .filter-group.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 8px;
+  min-width: 250px;
+}
+
+.sales .tb-label {
+  font-weight: 600;
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+
+.sales .filter-section select,
+.sales .filter-section input[type="date"],
+.sales .filter-section input:not([type="radio"]):not([type="checkbox"]) {
+  width: 100%;
+  height: 38px;
+  font-size: 13px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #374151;
+  transition: all 0.2s;
+}
+
+.sales .filter-section select:focus,
+.sales .filter-section input:focus {
+  outline: none;
+  border-color: #1a3a5c;
+  box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+}
+
+.sales .filter-actions {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 2px;
+}
+
+.sales .find-btn,
+.sales .clear-btn {
+  height: 38px;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sales .find-btn {
+  background: #1a3a5c;
+  color: white;
+}
+
+.sales .find-btn:hover {
+  background: #0d2a44;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.sales .clear-btn {
+  background: #6b7280;
+  color: white;
+}
+
+.sales .clear-btn:hover {
+  background: #4b5563;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.sales .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.sales .checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* LOV INPUT */
+.sales .lov-input-group {
+  display: flex;
+  width: 100%;
+}
+
+.sales .lov-input-group input {
+  flex: 1;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.sales .lov-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d1d5db;
+  border-left: none;
+  background: #f3f4f6;
+  cursor: pointer;
+  border-radius: 0 6px 6px 0;
+  font-weight: bold;
+  color: #4b5563;
+  transition: background 0.2s;
+}
+
+.sales .lov-btn:hover {
+  background: #e5e7eb;
+}
+
+/* VIEW MODE SELECT */
+.sales .view-mode-select {
+  background-color: #fff !important;
+}
+
+/* DOWNLOAD BUTTON */
+.sales .download-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0 10px;
+}
+
+.sales .download-btn {
+  background: #198754;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.sales .download-btn:hover {
+  background: #157347;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* REPORT TABLE */
+.sales .report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.sales .report-table th {
+  background: linear-gradient(135deg, #1a3c5a 0%, #1a3c5a 100%);
+  color: white;
+  padding: 14px 15px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border-radius: 0 !important;  
+}
+
+.sales .report-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 12px;
+  color: #444;
+}
+
+.sales .report-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.report-table tr:last-child td {
+  border-bottom: none;
+}
+
+.sales .report-table tr:hover {
+  background-color: #fafbfd;
+}
+
+/* GRAND TOTAL */
+.sales .grand-total-container {
+  background-color: #eef2f8;
+  font-weight: 700;
+  border-top: 2px solid #1a3c5a;
+  color: #1a3c5a;
+  font-size: 13px;
+  padding: 12px 15px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .sales .report-container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .sales .filter-layout-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .sales .to-date-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Responsive for new header */
+@media (max-width: 768px) {
+  .sales .report-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .sales .header-left,
+  .sales .header-center,
+  .sales .header-right {
+    flex: auto;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .sales .header-right {
+    text-align: center;
+  }
+}
+
+/* LOV Modal Styles */
+.sales .lov-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.sales .lov-modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  max-height: 80%;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.2s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sales .lov-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #1a3a5c;
+  color: white;
+}
+
+.sales .lov-modal-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sales .lov-modal-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.sales .lov-modal-header button:hover {
+  opacity: 0.8;
+}
+
+.sales .lov-modal-body {
+  padding: 5px 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sales .lov-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: all 0.2s;
+  font-size: 13px;
+}
+
+.sales .lov-item:hover {
+  background: #f0f4f8;
+  padding-left: 20px;
+}
+
+.sales .lov-item:first-of-type {
+  color: #dc3545;
+  font-style: italic;
+}
+
+.sales .lov-item:first-of-type:hover {
+  background: #ffe6e6;
+}
+
+/* Scrollbar for LOV modal */
+.sales .lov-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sales .lov-modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sales .lov-modal-body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.sales .lov-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Grand Total Row Style */
+.grand-total-row td {
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border-top: 2px solid #000;
+}
+
+.grand-total-row td:first-child {
+  text-align: left;
+  font-weight: bold;
+}
+
+.grand-total-row td:last-child {
+  text-align: right;
+  font-weight: bold;
+}
+
+.professional-report-wrapper {
+  background: transparent;
+  padding: 20px 0;
+}
+
+/* Professional Table - Override any conflicting styles */
+.professional-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;  /* ← ADD THIS */
+}
+
+/* Table Responsive - Horizontal Scroll */
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sales-table {
+  min-width: 1200px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th,
+.sales-table td {
+  white-space: nowrap;
+  padding: 8px 12px;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .sales-table {
+    min-width: 1000px;
+  }
+}
+
+/* PROFESSIONAL REPORT STYLES */
+.professional-report-wrapper {
+  background: white;
+  padding: 40px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.prof-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+}
+
+.prof-logo-section {
+  width: 20%;
+}
+
+.prof-logo-section img {
+  max-height: 80px;
+  width: auto;
+}
+
+.prof-company-section {
+  width: 60%;
+  text-align: center;
+}
+
+.prof-company-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a3a5c;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.prof-company-address {
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.prof-date-section {
+  width: 20%;
+  text-align: right;
+  font-size: 12px;
+  color: #444;
+}
+
+.prof-date-line {
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.prof-divider {
+  border-bottom: 2px solid #1a3a5c;
+  margin-bottom: 30px;
+}
+
+.prof-title-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.prof-report-title-box {
+  background-color: #f1f4f8;
+  padding: 10px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a3a5c;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(26,58,92,0.1);
+}
+
+.professional-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 0 !important;
+  box-shadow: none !important;
+}
+
+.professional-table th {
+  background: #1a3a5c !important;
+  color: white !important;
+  padding: 14px 12px !important;
+  font-weight: 600 !important;
+  border: 1px solid #1a3a5c !important;
+  text-transform: uppercase;
+  font-size: 13px !important;
+  border-radius: 0 !important;  /* ← ADD THIS */
+}
+
+.professional-table td {
+  padding: 12px 12px !important;
+  border: 1px solid #e0e0e0 !important;
+  font-size: 13px !important;
+  color: #333 !important;
+}
+
+.professional-table tr:nth-child(even) {
+  background-color: #fafafa !important;
+}
+
+.professional-table .grand-total-row td {
+  background-color: #f8f9fa !important;
+  font-weight: 700 !important;
+  border-top: 2px solid #1a3a5c !important;
+  color: #1a3a5c !important;
+  font-size: 14px !important;
+  padding: 15px 12px !important;
+}
+
+.prof-report-footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 11px;
+  color: #888;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  font-style: italic;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prof-report-footer .powered-msg {
+  position: absolute;
+  right: 0;
+  font-style: normal;
+  color: #aaa;
+  font-size: 10px;
+}
+/* Period Info Line - Add this at the END of your CSS file */
+.sales .period-info {
+  text-align: center;
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-family: 'Segoe UI', monospace;
+}
+/* Download Button Inside Report - Icon Only */
+.sales .download-btn-inside {
+  background: #198754;
+  color: white;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.sales .download-btn-inside:hover {
+  background: #157347;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.sales .download-btn-inside svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Day Total Row Highlights */
+.sales .day-total-row td {
+  font-weight: bold !important;
+  background-color: #f1f4f8 !important;
+  border-top: 1.5px solid #1a3a5c !important;
+  border-bottom: 1.5px solid #1a3a5c !important;
+  color: #1a3a5c !important;
+}

@@ -36,8 +36,8 @@ function Layout() {
   const [open, setOpen] = useState(true);
   const location = useLocation();
 
-  // Login page la sidebar hide
   const isLoginPage = location.pathname === "/";
+  const isFullWidthPage = ["/console-sales-report"].includes(location.pathname);
   const isOrgPage = location.pathname === "/Organization";
 
   return (
@@ -47,15 +47,17 @@ function Layout() {
       <div
         className="main-content"
         style={{
-          width: "100%",
-          marginLeft: "0px",
+          marginLeft: isLoginPage ? "0px" : open ? "220px" : "0px",
+          width: isLoginPage ? "100%" : open ? "calc(100% - 220px)" : "100%",
           flex: 1,
           padding: isLoginPage ? "0" : "20px",
           background: "#ecf0f1",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          transition: "none",
+          transition: "margin-left 0.3s ease, width 0.3s ease",
+          overflowX: "hidden",
+          overflowY: "auto",
         }}
       >
         <Routes>
@@ -68,7 +70,7 @@ function Layout() {
           <Route path="/Modifier" element={<Modifier />} />
           <Route path="/Inventory" element={<Inventory />} />
           <Route path="/Settlement" element={<Settlement />} />
-          <Route path="/SalesReport" element={<SalesReport />} />
+          <Route path="/SalesReport" element={<SalesReport sidebarOpen={open} />} />
           <Route path="/SltReport" element={<SltReport />} />
           <Route path="/Member" element={<Member />} />
           <Route path="/MasterSettings" element={<MasterSettings />} />

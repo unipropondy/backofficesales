@@ -38,6 +38,7 @@ const dayEndReportRoutes = require("./routes/dayendreportroutes");
 const serverMasterRoutes = require("./routes/serverMasterRoutes");
 const dishGroupRoutes = require("./routes/dishGroupRoutes");
 const dishOrderItemShareRoutes = require("./routes/dishOrderItemShareRoutes");
+const salesReportRoutes = require("./routes/salesReportRoutes");
 
 app.use("/api/barcode", barcodeRoutes);
 app.use("/api/dishorderitemshare", dishOrderItemShareRoutes);
@@ -56,7 +57,7 @@ app.use("/api/lookup", lookupRoutes);
 app.use("/api/dayendreport", dayEndReportRoutes);
 app.use("/api/server", serverMasterRoutes);
 app.use("/api/dishgroup", dishGroupRoutes);
-
+app.use("/api/salesreport", salesReportRoutes);
 app.get("/api/ping", (req, res) => {
   res.json({ success: true, message: "Backend is reachable!" });
 });
