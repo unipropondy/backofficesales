@@ -1073,15 +1073,15 @@ router.get("/download-gst-pdf", async (req, res) => {
         <title>Sales Summary</title>
         <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Arial', sans-serif; font-size: 13px; padding: 15px; }
+  body { font-family: 'Arial', sans-serif; font-size: 11px; padding: 15px; }
   .header { font-weight: bold; margin-bottom: 15px; text-align: center; }
-  .header .company { font-size: 16px; }
-  .header .title { font-size: 14px; margin-top: 8px; }
+  .header .company { font-size: 14px; }
+  .header .title { font-size: 12px; margin-top: 8px; }
   .divider { border-top: 1px dashed #000; margin: 10px 0; }
   .grid-container { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 8px 0; }
   .grid-col { display: table-cell; vertical-align: top; padding: 5px; }
-  .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 13px; }
-  .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; }
+  .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 11px; }
+  .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 10px; }
   .data-row.bold { font-weight: bold; }
   .data-row.border-top { border-top: 1px dashed #000; padding-top: 4px; }
   .data-row.border-bottom { border-bottom: 1px dashed #000; padding-bottom: 4px; margin-bottom: 6px; }
@@ -1170,7 +1170,7 @@ router.get("/download-gst-pdf", async (req, res) => {
       </body>
       </html>`;
 
-      const pdfOptions = { format: 'A4', orientation: 'portrait', border: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' }, zoomFactor: "0.75" };
+      const pdfOptions = { format: 'A4', orientation: 'portrait', border: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' }, zoomFactor: "0.70" };
       
       pdf.create(html, pdfOptions).toStream((err, stream) => {
         if (err) return res.status(500).send(err.message);
@@ -1244,22 +1244,22 @@ router.get("/download-gst-pdf", async (req, res) => {
     <head>
       <meta charset="UTF-8">
       <title>GST Report</title>
-      <style>
+      <<style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 13px; color: #333; background: white; padding: 15px; }
+  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 11px; color: #333; background: white; padding: 15px; }
   .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
   .header-table td { border: none; padding: 0; }
   .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
   .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
   .company-cell { text-align: center; vertical-align: middle; }
-  .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-  .company-address { font-size: 11px; color: #555; margin-top: 4px; }
+  .company-name { font-size: 14px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+  .company-address { font-size: 10px; color: #555; margin-top: 4px; }
   .spacer-cell { width: 100px; }
-  .report-title { text-align: center; font-size: 16px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
-  .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 15px; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+  .report-title { text-align: center; font-size: 14px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
+  .report-subtitle { text-align: center; font-size: 10px; color: #555; margin-bottom: 15px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
   .data-table th { background-color: #1a3c5a; color: white; padding: 8px 10px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; }
-  .data-table td { border: 1px solid #e0e0e0; padding: 6px 8px; }
+  .data-table td { border: 1px solid #e0e0e0; padding: 6px 10px; }
   .data-table td:first-child { text-align: left; }
   .data-table td:not(:first-child) { text-align: right; }
   .data-table tr:nth-child(even) { background-color: #f9f9f9; }
@@ -1302,7 +1302,7 @@ router.get("/download-gst-pdf", async (req, res) => {
     const pdfOptions = {
       format: 'A4',
       orientation: 'portrait',
-      zoomFactor: "0.75",
+      zoomFactor: "0.70",
       border: {
         top: '0.8cm',
         right: '0.5cm',
@@ -1310,16 +1310,16 @@ router.get("/download-gst-pdf", async (req, res) => {
         left: '0.5cm'
       },
       footer: {
-        height: "12mm",
-        contents: {
-          default: `
-            <div style="border-top: 1px solid #eee; padding-top: 5px; font-family: 'Cambria', 'Times New Roman', serif;">
-              <div style="text-align: center; font-size: 9px; color: #888; margin-bottom: 3px;">*** System Generated Report ***</div>
-              <div style="text-align: center; font-size: 9px; color: #aaa;">Powered by Unipro</div>
-            </div>
-          `
-        }
-      },
+  height: "12mm",
+  contents: {
+    default: `
+      <div style="border-top: 1px solid #eee; padding-top: 5px; font-family: 'Cambria', 'Times New Roman', serif;">
+        <div style="text-align: center; font-size: 9px; color: #888; margin-bottom: 3px;">*** System Generated Report ***</div>
+        <div style="text-align: center; font-size: 9px; color: #aaa;">Powered by Unipro</div>
+      </div>
+    `
+  }
+},
       timeout: 300000,
       printBackground: true
     };
@@ -2203,27 +2203,27 @@ router.get("/download-pdf", async (req, res) => {
         if (row.isTotalRow) {
           tableRows += `
             <tr style="font-weight: bold; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; background-color: #f5f5f5;">
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.ItemAmount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.TotalTax.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.TotalAmount.toFixed(2)}</strong></td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">-</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ItemAmount.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalTax.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalAmount.toFixed(2)}</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">-</strong></td>
             </tr>
           `;
         } else {
           tableRows += `
             <tr>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.BillNumber || '-'}</td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.ItemAmount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.Discount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.ServiceCharge.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.TotalTax.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.TotalAmount.toFixed(2)}</strong></td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.Description || '-'}</td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.BillNumber || '-'}</td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.ItemAmount.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.Discount.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.ServiceCharge.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.TotalTax.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.TotalAmount.toFixed(2)}</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.Description || '-'}</td>
             </tr>
           `;
         }
@@ -2234,13 +2234,13 @@ router.get("/download-pdf", async (req, res) => {
         if (row.isTotalRow) {
           tableRows += `
             <tr style="font-weight: bold; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; background-color: #ffffff;">
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">&nbsp;</strong></td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.SubTotal.toFixed(2)}</strong></strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.Tax.toFixed(2)}</strong></strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.NetTotal.toFixed(2)}</strong></strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">&nbsp;</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.SubTotal.toFixed(2)}</strong></strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Tax.toFixed(2)}</strong></strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.NetTotal.toFixed(2)}</strong></strong></td>
             </tr>
           `;
         } else {
@@ -2248,21 +2248,20 @@ router.get("/download-pdf", async (req, res) => {
             currentDateVal = row.Date;
             tableRows += `
               <tr style="background-color: #ffffff; font-weight: bold;">
-                <td colspan="7" style="text-align: left; padding: 8px 10px; border: 1px solid #e0e0e0; font-size: 13px;">
-                  <strong>Date: ${row.Date}</strong>
+               <td colspan="7" style="text-align: left; padding: 8px 12px; border: 1px solid #e0e0e0; font-size: 12px;">                <strong>Date: ${row.Date}</strong>
                 </td>
               </tr>
             `;
           }
           tableRows += `
             <tr>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">&nbsp;</strong></td>
-              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.Type || '-'}</td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.SubTotal.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.Discount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.ServiceCharge.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.Tax.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.NetTotal.toFixed(2)}</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">&nbsp;</strong></td>
+              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.Type || '-'}</td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.SubTotal.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.Discount.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.ServiceCharge.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.Tax.toFixed(2)}</strong></td>
+              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.NetTotal.toFixed(2)}</strong></td>
             </tr>
           `;
         }
@@ -2275,23 +2274,23 @@ router.get("/download-pdf", async (req, res) => {
         if (row.isItemRow) {
           const cells = displayColumns.map((col, i) => {
             const width = colWidths[i] || (100 / totalColumns);
-            if (i === 0) return `<td style="text-align: left; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;">${row.Date || '-'}</td>`;
-            if (col === 'Total Sales') return `<td style="text-align: right; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;">${(row['Total Sales'] || 0).toFixed(2)}</strong></td>`;
-            return `<td style="text-align: right; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;">-</strong></td>`;
+            if (i === 0) return `<td style="text-align: left; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;">${row.Date || '-'}</td>`;
+            if (col === 'Total Sales') return `<td style="text-align: right; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;">${(row['Total Sales'] || 0).toFixed(2)}</strong></td>`;
+            return `<td style="text-align: right; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;">-</strong></td>`;
           }).join('');
           tableRows += `<tr>${cells}</tr>`;
         } else if (row.isItemTotal) {
           const cells = displayColumns.map((col, i) => {
             const width = colWidths[i] || (100 / totalColumns);
-            if (i === 0) return `<td style="text-align: left; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;"><strong>${row.Date}</strong></strong></td>`;
-            if (col === 'Total Sales') return `<td style="text-align: right; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;"><strong>${(row['Total Sales'] || 0).toFixed(2)}</strong></strong></td>`;
-            return `<td style="text-align: right; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;">-</strong></td>`;
+            if (i === 0) return `<td style="text-align: left; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;"><strong>${row.Date}</strong></strong></td>`;
+            if (col === 'Total Sales') return `<td style="text-align: right; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;"><strong>${(row['Total Sales'] || 0).toFixed(2)}</strong></strong></td>`;
+            return `<td style="text-align: right; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;">-</strong></td>`;
           }).join('');
           tableRows += `<tr style="font-weight: bold; background-color: #eef2f8;">${cells}</tr>`;
         } else if (row.isAveragesHeader) {
-          tableRows += `<tr style="background-color: #1a3c5a;"><td colspan="${totalColumns}" style="text-align: center; color: white; font-weight: bold; padding: 6px;">${row.Date}</td></tr>`;
+          tableRows += `<tr style="background-color: #1a3c5a;"><td colspan="${totalColumns}" style="text-align: center; color: white; font-weight: bold; padding: 4px;">${row.Date}</td></tr>`;
         } else if (row.isSpacer) {
-          tableRows += `<tr><td colspan="${totalColumns}" style="padding: 4px;"></strong></td></tr>`;
+          tableRows += `<tr><td colspan="${totalColumns}" style="padding: 2px;"></strong></td></tr>`;
         } else {
           tableRows += `<tr>`;
           for (let i = 0; i < displayColumns.length; i++) {
@@ -2306,9 +2305,9 @@ router.get("/download-pdf", async (req, res) => {
             } else if (val !== undefined && val !== null && val !== '') {
               displayVal = val;
             }
-            tableRows += `<td style="text-align: ${alignment}; padding: 4px 3px; border: 1px solid #e0e0e0; width: ${width}%;">${displayVal}</strong></td>`;
+            tableRows += `<td style="text-align: ${alignment}; padding: 2px 1px; border: 1px solid #e0e0e0; width: ${width}%;">${displayVal}</strong></td>`;
           }
-          tableRows += `</table>`;
+          tableRows += `</tr>`;
         }
       });
     } else {
@@ -2319,7 +2318,7 @@ router.get("/download-pdf", async (req, res) => {
               let val = row[col];
               const isNumber = typeof val === 'number';
               const alignment = idx === 0 ? 'left' : 'right';
-              return `<td style="text-align: ${alignment}; padding: 6px 8px; border: 1px solid #e0e0e0;">${isNumber ? val.toFixed(2) : (val || '-')}</strong></td>`;
+              return `<td style="text-align: ${alignment}; padding: 3px 5px; border: 1px solid #e0e0e0;">${isNumber ? val.toFixed(2) : (val || '-')}</strong></td>`;
             }).join("")}
           </tr>
         `;
@@ -2347,7 +2346,7 @@ router.get("/download-pdf", async (req, res) => {
       mappedData.forEach(row => {
         if (row.DataType === 'CATEGORY' && lastDataType !== 'CATEGORY') {
           singleTableRows += `<tr style="background:#1a3c5a;">
-            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:8px;font-size:11px;">
+            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:6px;font-size:9px;">
               🍽️ ITEM SALES
             </td>
           </tr>`;
@@ -2356,7 +2355,7 @@ router.get("/download-pdf", async (req, res) => {
         
         if (row.DataType === 'MAIN' && lastDataType !== 'MAIN') {
           singleTableRows += `<tr style="background:#1a3c5a;">
-            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:8px;font-size:11px;">
+            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:6px;font-size:9px;">
               📊 DAILY SALES ANALYSIS
             </td>
           </tr>`;
@@ -2365,40 +2364,40 @@ router.get("/download-pdf", async (req, res) => {
         
         if (row.DataType === 'AVERAGES_HEADER') {
           singleTableRows += `<tr style="background:#2a5a8a;">
-            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:6px;font-size:10px;">
+            <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:5px;font-size:8px;">
               📈 ${row.Date}
             </td>
           </tr>`;
           lastDataType = 'AVERAGES';
         }
         else if (row.DataType === 'SPACER') {
-          singleTableRows += `<tr><td colspan="19" style="padding:5px;border:none;"></strong></td></tr>`;
+          singleTableRows += `<tr><td colspan="19" style="padding:3px;border:none;"></strong></td></tr>`;
         }
         else if (row.DataType === 'CATEGORY') {
           const cells19 = allCols19.map((col, i) => {
             const w = colW19[i];
-            if (i === 0) return `<td style="text-align:left;padding:5px 4px;border:1px solid #ddd;width:${w}%;">${row.Date || '-'}</td>`;
-            if (col === 'Total Sales') return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;">${(row['Total Sales'] || 0).toFixed(2)}</strong></td>`;
-            return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;">-</strong></td>`;
+            if (i === 0) return `<td style="text-align:left;padding:3px 2px;border:1px solid #ddd;width:${w}%;">${row.Date || '-'}</td>`;
+            if (col === 'Total Sales') return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;">${(row['Total Sales'] || 0).toFixed(2)}</strong></td>`;
+            return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;">-</strong></td>`;
           }).join('');
-          singleTableRows += `<tr style="background:#f9f9f9;">${cells19}</td>`;
+          singleTableRows += `<tr style="background:#f9f9f9;">${cells19}</tr>`;
         }
         else if (row.DataType === 'CATEGORY_TOTAL') {
           const cells19 = allCols19.map((col, i) => {
             const w = colW19[i];
-            if (i === 0) return `<td style="text-align:left;padding:5px 4px;border:1px solid #ddd;width:${w}%;font-weight:bold;background:#eef2f8;"><strong>${row.Date}</strong></strong></td>`;
-            if (col === 'Total Sales') return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;font-weight:bold;background:#eef2f8;"><strong>${(row['Total Sales'] || 0).toFixed(2)}</strong></strong></td>`;
-            return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;background:#eef2f8;">-</strong></td>`;
+            if (i === 0) return `<td style="text-align:left;padding:3px 2px;border:1px solid #ddd;width:${w}%;font-weight:bold;background:#eef2f8;"><strong>${row.Date}</strong></strong></td>`;
+            if (col === 'Total Sales') return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;font-weight:bold;background:#eef2f8;"><strong>${(row['Total Sales'] || 0).toFixed(2)}</strong></strong></td>`;
+            return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;background:#eef2f8;">-</strong></td>`;
           }).join('');
           singleTableRows += `<tr style="font-weight:bold;background:#eef2f8;">${cells19}<tr>`;
         }
         else if (row.DataType === 'AVERAGES') {
           const cells19 = allCols19.map((col, i) => {
             const w = colW19[i];
-            if (i === 0) return `<td style="text-align:left;padding:5px 4px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${row.Date}</td>`;
-            if (col === 'Total Sales' && row.Value !== undefined) return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${typeof row.Value === 'number' ? row.Value.toFixed(2) : row.Value}</strong></td>`;
-            if (col === 'No of Bills' && row.Value !== undefined) return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${typeof row.Value === 'number' ? row.Value.toFixed(2) : row.Value}</strong></td>`;
-            return `<td style="text-align:right;padding:5px 4px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">-</strong></td>`;
+            if (i === 0) return `<td style="text-align:left;padding:3px 2px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${row.Date}</td>`;
+            if (col === 'Total Sales' && row.Value !== undefined) return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${typeof row.Value === 'number' ? row.Value.toFixed(2) : row.Value}</strong></td>`;
+            if (col === 'No of Bills' && row.Value !== undefined) return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">${typeof row.Value === 'number' ? row.Value.toFixed(2) : row.Value}</strong></td>`;
+            return `<td style="text-align:right;padding:3px 2px;border:1px solid #ddd;width:${w}%;background:#f5f5f5;">-</strong></td>`;
           }).join('');
           singleTableRows += `<tr style="background:#f5f5f5;">${cells19}</tr>`;
         }
@@ -2410,7 +2409,7 @@ router.get("/download-pdf", async (req, res) => {
             let display = '-';
             if (typeof val === 'number') display = val.toFixed(2);
             else if (val !== undefined && val !== null && val !== '') display = val;
-            return `<td style="text-align:${align};padding:5px 4px;border:1px solid #ddd;width:${w}%;">${display}</strong></td>`;
+            return `<td style="text-align:${align};padding:3px 2px;border:1px solid #ddd;width:${w}%;">${display}</strong></td>`;
           }).join('');
           singleTableRows += `<tr>${cells19}</tr>`;
         }
@@ -2424,14 +2423,14 @@ router.get("/download-pdf", async (req, res) => {
         return sum.toFixed(2);
       });
       
-      let gtRowCells = `<td style="text-align:left;font-weight:bold;padding:6px 5px;border:1px solid #ccc;background:#eef2f8;"><strong>GRAND TOTAL</strong></strong></td>`;
+      let gtRowCells = `<td style="text-align:left;font-weight:bold;padding:5px 3px;border:1px solid #ccc;background:#eef2f8;"><strong>GRAND TOTAL</strong></strong></td>`;
       for (let i = 1; i < allCols19.length; i++) {
         const colName = allCols19[i];
         const idx = numericColsAnalysis.indexOf(colName);
         if (idx !== -1) {
-          gtRowCells += `<td style="text-align:right;font-weight:bold;padding:6px 5px;border:1px solid #ccc;background:#eef2f8;">${grandTotalsAnalysis[idx] || '0.00'}</strong></td>`;
+          gtRowCells += `<td style="text-align:right;font-weight:bold;padding:5px 3px;border:1px solid #ccc;background:#eef2f8;">${grandTotalsAnalysis[idx] || '0.00'}</strong></td>`;
         } else {
-          gtRowCells += `<td style="text-align:right;padding:6px 5px;border:1px solid #ccc;background:#eef2f8;">&nbsp;</strong></td>`;
+          gtRowCells += `<td style="text-align:right;padding:5px 3px;border:1px solid #ccc;background:#eef2f8;">&nbsp;</strong></td>`;
         }
       }
       
@@ -2441,54 +2440,41 @@ router.get("/download-pdf", async (req, res) => {
         <meta charset="UTF-8">
         <title>${reportTitle}</title>
         <style>
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          @page { size: A4 landscape; margin: 8mm 5mm 8mm 5mm; }
-          body {
-            font-family: 'Cambria', 'Times New Roman', serif;
-            font-size: 11px;
-            color: #222;
-            background: white;
-          }
-          .header-wrap { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #1a3c5a; padding-bottom: 5px; margin-bottom: 8px; }
-          .logo-box img { max-height: 40px; max-width: 60px; object-fit: contain; }
-          .company-center { text-align: center; flex: 1; }
-          .company-name { font-size: 13px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-sub { font-size: 9px; color: #555; margin-top: 2px; }
-          .report-title { text-align: center; font-size: 11px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
-          .report-period { text-align: center; font-size: 8px; color: #555; margin-bottom: 8px; }
-          .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9px; }
-          .data-table th {
-            background-color: #1a3c5a;
-            color: white;
-            padding: 6px 3px;
-            text-align: center;
-            border: 1px solid #2a4c6a;
-            font-weight: 600;
-            font-size: 10px;
-            white-space: normal;
-            word-break: break-word;
-          }
-          .data-table td {
-            border: 1px solid #ddd;
-            padding: 5px 3px;
-            white-space: normal;
-            word-break: break-word;
-          }
-          .data-table tr:nth-child(even) { background-color: #f9f9f9; }
-          .total-row td { background-color: #eef2f8 !important; font-weight: 700; border-top: 2px solid #1a3c5a; }
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        </style>
-      </head>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 11px; color: #333; background: white; padding: 15px; }
+  .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
+  .header-table td { border: none; padding: 0; }
+  .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
+  .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
+  .company-cell { text-align: center; vertical-align: middle; }
+  .company-name { font-size: 14px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+  .company-address { font-size: 10px; color: #555; margin-top: 4px; }
+  .company-phone { font-size: 10px; color: #666; margin-top: 2px; }
+  .spacer-cell { width: 100px; }
+  .report-title { text-align: center; font-size: 14px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
+  .report-subtitle { text-align: center; font-size: 10px; color: #555; margin-bottom: 15px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
+  .data-table th { background-color: #1a3c5a; color: white; padding: 8px 10px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; }
+  .data-table td { border: 1px solid #e0e0e0; padding: 6px 10px; }
+  .data-table tr:nth-child(even) { background-color: #f9f9f9; }
+  .total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; }
+  @media print {
+    body { padding: 0; margin: 0; }
+    .data-table th { background-color: #1a3c5a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .data-table tr:nth-child(even) { background-color: #f9f9f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .total-row td { background-color: #eef2f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+ </head>
       <body>
         <div class="header-wrap">
-          <div class="logo-box">${logoBase64 ? `<img src="${logoBase64}" alt="Logo">` : '<div style="width:70px"></div>'}</div>
+          <div class="logo-box">${logoBase64 ? `<img src="${logoBase64}" alt="Logo">` : '<div style="width:60px"></div>'}</div>
           <div class="company-center">
             <div class="company-name">${companyName}</div>
             <div class="company-sub">${fullAddress || defaultAddress}</div>
             <div class="company-sub">Phone: ${companyPhone}</div>
           </div>
-          <div style="width:70px;"></div>
+          <div style="width:60px;"></div>
         </div>
         <div class="report-title">${reportTitle}</div>
         <div class="report-period">Period: ${fromDate} to ${toDate} &nbsp;|&nbsp; Printed: ${currentDateTime}</div>
@@ -2504,7 +2490,7 @@ router.get("/download-pdf", async (req, res) => {
           </thead>
           <tbody>
             ${singleTableRows}
-            <tr class="total-row">${gtRowCells}<tr>
+            <tr class="total-row">${gtRowCells}</tr>
           </tbody>
         </table>
       </body>
@@ -2517,23 +2503,23 @@ router.get("/download-pdf", async (req, res) => {
         <title>${reportTitle}</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 13px; color: #333; background: white; padding: 15px; width: 100%; }
-          .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 6px; color: #333; background: white; padding: 12px; width: 100%; }
+          .header-table { width: 100%; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
-          .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
-          .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
+          .logo-cell { width: 80px; text-align: left; vertical-align: middle; }
+          .logo-cell img { max-height: 40px; max-width: 60px; object-fit: contain; }
           .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: 11px; color: #555; margin-top: 4px; }
-          .company-phone { font-size: 11px; color: #666; margin-top: 2px; }
-          .spacer-cell { width: 100px; }
-          .report-title { text-align: center; font-size: 16px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
-          .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 15px; }
-          .data-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; table-layout: fixed; }
+          .company-name { font-size: 9px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+          .company-address { font-size: 6px; color: #555; margin-top: 2px; }
+          .company-phone { font-size: 6px; color: #666; margin-top: 1px; }
+          .spacer-cell { width: 80px; }
+          .report-title { text-align: center; font-size: 8px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
+          .report-subtitle { text-align: center; font-size: 6px; color: #555; margin-bottom: 10px; }
+          .data-table { width: 100%; border-collapse: collapse; font-size: 6px; margin-top: 5px; table-layout: fixed; }
           .data-table th { 
             background-color: #1a3c5a; 
             color: white; 
-            padding: 8px 10px; 
+            padding: 3px 3px; 
             text-align: center; 
             border: 1px solid #2a4c6a; 
             font-weight: 600;
@@ -2543,7 +2529,7 @@ router.get("/download-pdf", async (req, res) => {
           }
           .data-table td { 
             border: 1px solid #e0e0e0; 
-            padding: 6px 8px; 
+            padding: 2px 3px; 
             word-wrap: break-word;
             white-space: normal;
             overflow: hidden;
@@ -2574,7 +2560,7 @@ router.get("/download-pdf", async (req, res) => {
         
         <table class="data-table">
           <thead>
-            <td>${displayColumns.map(col => {
+            <tr>${displayColumns.map(col => {
               const abbr = {
                 'No of Bills': 'No of Bills',
                 'Total Sales': 'Total Sales',
@@ -2585,25 +2571,24 @@ router.get("/download-pdf", async (req, res) => {
                 'ServiceCharge': 'Svc Chg'
               };
               return `<th>${(col === 'ServiceCharge' ? 'Service Charge' : col)}</th>`;
-            }).join('')}</th>
+            }).join('')}</tr>
           </thead>
           <tbody>
             ${tableRows}
             ${(() => {
               const label = (req.query.bySales === "BusinessType" || req.query.reportType === "GuestMeal") ? "Grand Total" : "TOTAL";
-              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 8px 10px; border: 1px solid #e0e0e0; background-color: #eef2f8;"><strong>${label}</strong></td>`;
-              for (let i = 1; i < displayColumns.length; i++) {
+              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 8px 12px; border: 1px solid #e0e0e0; background-color: #eef2f8;"><strong>${label}</strong></td>`;   for (let i = 1; i < displayColumns.length; i++) {
                 const colName = displayColumns[i];
                 const isNumeric = numericColumns.includes(colName);
                 if (isNumeric) {
                   const idx = numericColumns.indexOf(colName);
                   const totalValue = grandTotals[idx] || '0.00';
-                  totalCells += `<td style="text-align: right; font-weight: bold; padding: 6px 8px; border: 1px solid #e0e0e0; background-color: #eef2f8;">${totalValue}</strong></td>`;
+                  totalCells += `<td style="text-align: right; font-weight: bold; padding: 3px 5px; border: 1px solid #e0e0e0; background-color: #eef2f8;">${totalValue}</strong></td>`;
                 } else {
-                  totalCells += `<td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0; background-color: #eef2f8;">&nbsp;</strong></td>`;
+                  totalCells += `<td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0; background-color: #eef2f8;">&nbsp;</strong></td>`;
                 }
               }
-              return `<tr class="total-row">${totalCells}</td>`;
+              return `<tr class="total-row">${totalCells}</tr>`;
             })()}
           </tbody>
         </table>
@@ -2614,17 +2599,17 @@ router.get("/download-pdf", async (req, res) => {
     const pdfOptions = {
       format: 'A4',
       orientation: 'portrait',
-      zoomFactor: "0.75",
+      zoomFactor: "0.70",
       border: isAnalysisReport
         ? { top: '4mm', right: '2mm', bottom: '4mm', left: '2mm' }
         : { top: '0.4cm', right: '0.4cm', bottom: '0.8cm', left: '0.4cm' },
       footer: {
-        height: "8mm",
+        height: "6mm",
         contents: {
           default: `
-            <div style="border-top: 1px solid #eee; padding-top: 3px; font-family: 'Cambria', 'Times New Roman', serif;">
-              <div style="text-align: center; font-size: 8px; color: #888; margin-bottom: 1px;">*** System Generated Report ***</div>
-              <div style="text-align: center; font-size: 8px; color: #aaa;">Powered by Unipro</div>
+            <div style="border-top: 1px solid #eee; padding-top: 2px; font-family: 'Cambria', 'Times New Roman', serif;">
+              <div style="text-align: center; font-size: 6px; color: #888; margin-bottom: 1px;">*** System Generated Report ***</div>
+              <div style="text-align: center; font-size: 6px; color: #aaa;">Powered by Unipro</div>
             </div>
           `
         }
