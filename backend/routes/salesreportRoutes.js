@@ -1,4 +1,4 @@
-﻿  const express = require("express");
+  const express = require("express");
   const router = express.Router();
   const pdf = require("html-pdf");
   const axios = require("axios"); 
@@ -1185,16 +1185,16 @@ if (byItem === "Dish") {
           <title>Sales Summary</title>
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 17px; padding: 20px; }
+            body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; padding: 20px; }
             .header { font-weight: bold; margin-bottom: 15px; text-align: center; }
-            .header .company { font-size: 23px; }
-            .header .title { font-size: 21px; margin-top: 10px; }
+            .header .company { font-size: 16px; }
+            .header .title { font-size: 14px; margin-top: 10px; }
             .divider { border-top: 1px dashed #000; margin: 10px 0; }
             
             .grid-container { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 10px 0; }
             .grid-col { display: table-cell; vertical-align: top; padding: 5px; }
             
-            .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 18px; }
+            .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 13px; }
             
             .data-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
             .data-row.bold { font-weight: bold; }
@@ -1373,29 +1373,29 @@ if (byItem === "Dish") {
         <title>GST Report</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 17px; color: #333; background: white; padding: 20px; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; color: #333; background: white; padding: 20px; }
           .header-table { width: 100%; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
           .logo-cell { width: 120px; text-align: left; vertical-align: middle; }
           .logo-cell img { max-height: 60px; max-width: 100px; object-fit: contain; }
           .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: 25px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: 15px; color: #555; margin-top: 5px; }
+          .company-name { font-size: 18px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+          .company-address { font-size: 11px; color: #555; margin-top: 5px; }
           .spacer-cell { width: 120px; }
-          .report-title { text-align: center; font-size: 25px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
-          .report-subtitle { text-align: center; font-size: 16px; color: #555; margin-bottom: 20px; }
-          .data-table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 10px; }
+          .report-title { text-align: center; font-size: 18px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
+          .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 20px; }
+          .data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
           .data-table th { 
             background-color: #1a3c5a; 
             color: white; 
-            padding: 13px 15px; 
+            padding: 8px 10px; 
             text-align: center; 
             border: 1px solid #2a4c6a; 
             font-weight: 600;
           }
           .data-table td { 
             border: 1px solid #e0e0e0; 
-            padding: 11px 15px; 
+            padding: 7px 10px; 
           }
           .data-table td:first-child { text-align: left; }
           .data-table td:not(:first-child) { text-align: right; }
@@ -2516,7 +2516,7 @@ if (isAnalysisReport) {
     // ✅ ITEM SALES HEADER
     if (row.DataType === 'CATEGORY' && lastDataType !== 'CATEGORY') {
       singleTableRows += `<tr style="background:#1a3c5a;">
-        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:10px;font-size:13px;">
+        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:10px;font-size:11px;">
           🍽️ ITEM SALES
         </td>
       </tr>`;
@@ -2526,7 +2526,7 @@ if (isAnalysisReport) {
     // ✅ DAILY SALES ANALYSIS HEADER
     if (row.DataType === 'MAIN' && lastDataType !== 'MAIN') {
       singleTableRows += `<tr style="background:#1a3c5a;">
-        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:10px;font-size:13px;">
+        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:10px;font-size:11px;">
           📊 DAILY SALES ANALYSIS
         </td>
       </tr>`;
@@ -2536,7 +2536,7 @@ if (isAnalysisReport) {
     // ✅ SALES AVERAGES HEADER
     if (row.DataType === 'AVERAGES_HEADER') {
       singleTableRows += `<tr style="background:#2a5a8a;">
-        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:8px;font-size:12px;">
+        <td colspan="19" style="text-align:center;color:white;font-weight:bold;padding:8px;font-size:10px;">
           📈 ${row.Date}
         </td>
       </tr>`;
@@ -2622,19 +2622,19 @@ if (isAnalysisReport) {
       * { margin: 0; padding: 0; box-sizing: border-box; }
       @page { size: A4 landscape; margin: 8mm 5mm 8mm 5mm; }
       body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        font-size: 11px;
+        font-family: 'Cambria', 'Times New Roman', serif;
+        font-size: 9px;
         color: #222;
         background: white;
       }
       .header-wrap { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #1a3c5a; padding-bottom: 8px; margin-bottom: 10px; }
       .logo-box img { max-height: 50px; max-width: 70px; object-fit: contain; }
       .company-center { text-align: center; flex: 1; }
-      .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-      .company-sub { font-size: 9px; color: #555; margin-top: 2px; }
-      .report-title { text-align: center; font-size: 14px; font-weight: 800; color: #1a3c5a; margin: 5px 0 3px; text-transform: uppercase; }
-      .report-period { text-align: center; font-size: 9px; color: #555; margin-bottom: 10px; }
-      .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9px; }
+      .company-name { font-size: 13px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+      .company-sub { font-size: 8px; color: #555; margin-top: 2px; }
+      .report-title { text-align: center; font-size: 11px; font-weight: 800; color: #1a3c5a; margin: 5px 0 3px; text-transform: uppercase; }
+      .report-period { text-align: center; font-size: 8px; color: #555; margin-bottom: 10px; }
+      .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 8px; }
       .data-table th {
         background-color: #1a3c5a;
         color: white;
@@ -2695,24 +2695,24 @@ if (isAnalysisReport) {
         <title>${reportTitle}</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: Arial, sans-serif; font-size: ${isAnalysisReport ? '13px' : '17px'}; color: #333; background: white; padding: ${isAnalysisReport ? '20px' : '20px'}; width: ${isAnalysisReport ? '1540px' : '100%'}; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: ${isAnalysisReport ? '10px' : '12px'}; color: #333; background: white; padding: ${isAnalysisReport ? '20px' : '20px'}; width: ${isAnalysisReport ? '1540px' : '100%'}; }
           .header-table { width: 100%; margin-bottom: ${isAnalysisReport ? '15px' : '20px'}; padding-bottom: 6px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
           .logo-cell { width: ${isAnalysisReport ? '90px' : '120px'}; text-align: left; vertical-align: middle; }
           .logo-cell img { max-height: ${isAnalysisReport ? '60px' : '60px'}; max-width: ${isAnalysisReport ? '80px' : '100px'}; object-fit: contain; }
           .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: ${isAnalysisReport ? '18px' : '25px'}; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: ${isAnalysisReport ? '11px' : '15px'}; color: #555; margin-top: 2px; }
-          .company-phone { font-size: ${isAnalysisReport ? '11px' : '15px'}; color: #666; margin-top: 1px; }
+          .company-name { font-size: ${isAnalysisReport ? '14px' : '16px'}; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+          .company-address { font-size: ${isAnalysisReport ? '9px' : '10px'}; color: #555; margin-top: 2px; }
+          .company-phone { font-size: ${isAnalysisReport ? '9px' : '10px'}; color: #666; margin-top: 1px; }
           .spacer-cell { width: ${isAnalysisReport ? '90px' : '120px'}; }
-          .report-title { text-align: center; font-size: ${isAnalysisReport ? '18px' : '25px'}; font-weight: 800; color: #1a3c5a; margin: 6px 0 3px; text-transform: uppercase; }
-          .report-subtitle { text-align: center; font-size: ${isAnalysisReport ? '11px' : '16px'}; color: #555; margin-bottom: ${isAnalysisReport ? '15px' : '20px'}; }
+          .report-title { text-align: center; font-size: ${isAnalysisReport ? '14px' : '16px'}; font-weight: 800; color: #1a3c5a; margin: 6px 0 3px; text-transform: uppercase; }
+          .report-subtitle { text-align: center; font-size: ${isAnalysisReport ? '9px' : '10px'}; color: #555; margin-bottom: ${isAnalysisReport ? '15px' : '20px'}; }
           
-          .data-table { width: 100%; border-collapse: collapse; font-size: ${isAnalysisReport ? '13px' : '16px'}; margin-top: ${isAnalysisReport ? '5px' : '10px'}; table-layout: fixed; }
+          .data-table { width: 100%; border-collapse: collapse; font-size: ${isAnalysisReport ? '9px' : '11px'}; margin-top: ${isAnalysisReport ? '5px' : '10px'}; table-layout: fixed; }
           .data-table th { 
             background-color: #1a3c5a; 
             color: white; 
-            padding: ${isAnalysisReport ? '8px 4px' : '13px 15px'}; 
+            padding: ${isAnalysisReport ? '5px 3px' : '8px 10px'}; 
             text-align: center; 
             border: 1px solid #2a4c6a; 
             font-weight: 600;
@@ -2722,7 +2722,7 @@ if (isAnalysisReport) {
           }
           .data-table td { 
             border: 1px solid #e0e0e0; 
-            padding: ${isAnalysisReport ? '6px 4px' : '11px 15px'}; 
+            padding: ${isAnalysisReport ? '4px 3px' : '7px 10px'}; 
             word-wrap: break-word;
             white-space: normal;
             overflow: hidden;
@@ -2821,7 +2821,7 @@ if (isAnalysisReport) {
           height: "8mm",
           contents: {
             default: `
-              <div style="border-top: 1px solid #eee; padding-top: 3px; font-family: Arial, sans-serif;">
+              <div style="border-top: 1px solid #eee; padding-top: 3px; font-family: 'Cambria', 'Times New Roman', serif;">
                 <div style="text-align: center; font-size: 7px; color: #888; margin-bottom: 1px;">*** System Generated Report ***</div>
                 <div style="text-align: center; font-size: 7px; color: #aaa;">Powered by Unipro</div>
               </div>
