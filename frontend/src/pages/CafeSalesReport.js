@@ -959,8 +959,7 @@ else if (byItem === "Dish") {
                           {displayColumns.map((col, idx) => {
                             const isTextCol = col === 'Date' || col === 'Type' || col === 'Hour' || col === 'Item' || col === 'DishName' || col === 'DishGroupName' || col === 'CategoryName' || col === 'Month' || col === 'Year' || col === 'InvoiceNumber' || col === 'Group' || col === 'GstType' || col === 'Category' || col === 'InvoiceDate' || col === 'BillNumber' || col === 'Description';
                             return (
-                              <th key={idx} style={{ textAlign: isTextCol ? 'left' : 'right', padding: '10px 12px', whiteSpace: 'nowrap' }}>
-                                {
+                              <th key={idx} style={{ textAlign: isTextCol ? 'left' : 'right', padding: '6px 8px', whiteSpace: 'nowrap' }}>                              {
                                   col === 'ServiceCharge'
                                     ? 'Service Charge'
                                     : col === 'SubTotal'
@@ -990,11 +989,11 @@ else if (byItem === "Dish") {
                               const isNumeric = !isTextCol && (typeof value === "number" || (value !== '' && value !== null && !isNaN(Number(value))));
                               return (
                                 <td key={idx} style={{
-                                  textAlign: isTextCol ? 'left' : 'right',
-                                  padding: '8px 12px',
-                                  whiteSpace: 'nowrap',
-                                  fontWeight: item.isTotalRow ? 'bold' : 'normal'
-                                }}>
+  textAlign: isTextCol ? 'left' : 'right',
+  padding: '4px 8px',
+  whiteSpace: 'nowrap',
+  fontWeight: item.isTotalRow ? 'bold' : 'normal'
+}}>
                                   {isNumeric ? Number(value).toFixed(2) : (value !== null && value !== undefined && value !== '' ? value : '0.00')}
                                 </td>
                               );
@@ -1019,9 +1018,9 @@ else if (byItem === "Dish") {
                   </div>
                 </>
               ) : (
-                <div style={{ textAlign: 'center', padding: '60px 20px', fontSize: '18px', color: '#999', fontWeight: '500' }}>
-                  📋 No Data Found for the selected criteria
-                </div>
+               <div style={{ textAlign: 'center', padding: '40px 20px', fontSize: '14px', color: '#999', fontWeight: '500' }}>
+  📋 No Data Found for the selected criteria
+</div>
               )}
             </div>
           </div>
