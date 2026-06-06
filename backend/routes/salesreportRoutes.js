@@ -1170,7 +1170,7 @@ router.get("/download-gst-pdf", async (req, res) => {
       </body>
       </html>`;
 
-      const pdfOptions = { format: 'A4', orientation: 'portrait', border: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' }, zoomFactor: "0.70" };
+      const pdfOptions = { format: 'A4', orientation: 'portrait', border: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' }, zoomFactor: "0.85" };
       
       pdf.create(html, pdfOptions).toStream((err, stream) => {
         if (err) return res.status(500).send(err.message);
@@ -1302,7 +1302,7 @@ router.get("/download-gst-pdf", async (req, res) => {
     const pdfOptions = {
       format: 'A4',
       orientation: 'portrait',
-      zoomFactor: "0.70",
+      zoomFactor: "0.85",
       border: {
         top: '0.8cm',
         right: '0.5cm',
@@ -2503,37 +2503,37 @@ router.get("/download-pdf", async (req, res) => {
         <title>${reportTitle}</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 6px; color: #333; background: white; padding: 12px; width: 100%; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 9px; color: #333; background: white; padding: 12px; width: 100%; }
           .header-table { width: 100%; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
           .logo-cell { width: 80px; text-align: left; vertical-align: middle; }
-          .logo-cell img { max-height: 40px; max-width: 60px; object-fit: contain; }
+          .logo-cell img { max-height: 45px; max-width: 65px; object-fit: contain; }
           .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: 9px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: 6px; color: #555; margin-top: 2px; }
-          .company-phone { font-size: 6px; color: #666; margin-top: 1px; }
+          .company-name { font-size: 13px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+          .company-address { font-size: 8px; color: #555; margin-top: 2px; }
+          .company-phone { font-size: 8px; color: #666; margin-top: 1px; }
           .spacer-cell { width: 80px; }
-          .report-title { text-align: center; font-size: 8px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
-          .report-subtitle { text-align: center; font-size: 6px; color: #555; margin-bottom: 10px; }
-          .data-table { width: 100%; border-collapse: collapse; font-size: 6px; margin-top: 5px; table-layout: fixed; }
+          .report-title { text-align: center; font-size: 12px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
+          .report-subtitle { text-align: center; font-size: 8px; color: #555; margin-bottom: 10px; }
+          .data-table { width: 100%; border-collapse: collapse; font-size: 9px; margin-top: 5px; table-layout: fixed; }
           .data-table th { 
             background-color: #1a3c5a; 
             color: white; 
-            padding: 3px 3px; 
+            padding: 5px 4px; 
             text-align: center; 
             border: 1px solid #2a4c6a; 
             font-weight: 600;
             word-wrap: break-word;
             white-space: normal;
-            line-height: 1.1;
+            line-height: 1.2;
           }
           .data-table td { 
             border: 1px solid #e0e0e0; 
-            padding: 2px 3px; 
+            padding: 4px 4px; 
             word-wrap: break-word;
             white-space: normal;
             overflow: hidden;
-            line-height: 1.1;
+            line-height: 1.2;
           }
           .data-table tr:nth-child(even) { background-color: #f9f9f9; }
           .total-row td { 
@@ -2599,7 +2599,7 @@ router.get("/download-pdf", async (req, res) => {
     const pdfOptions = {
       format: 'A4',
       orientation: 'portrait',
-      zoomFactor: "0.70",
+      zoomFactor: "0.85",
       border: isAnalysisReport
         ? { top: '4mm', right: '2mm', bottom: '4mm', left: '2mm' }
         : { top: '0.4cm', right: '0.4cm', bottom: '0.8cm', left: '0.4cm' },
