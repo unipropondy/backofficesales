@@ -1185,7 +1185,7 @@ if (byItem === "Dish") {
           <title>Sales Summary</title>
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; padding: 20px; }
+            body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 10px; padding: 20px; }
             .header { font-weight: bold; margin-bottom: 15px; text-align: center; }
             .header .company { font-size: 16px; }
             .header .title { font-size: 14px; margin-top: 10px; }
@@ -1373,7 +1373,7 @@ if (byItem === "Dish") {
         <title>GST Report</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; color: #333; background: white; padding: 20px; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 10px; color: #333; background: white; padding: 20px; }
           .header-table { width: 100%; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
           .logo-cell { width: 120px; text-align: left; vertical-align: middle; }
@@ -2695,7 +2695,7 @@ if (isAnalysisReport) {
         <title>${reportTitle}</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: ${isAnalysisReport ? '10px' : '12px'}; color: #333; background: white; padding: ${isAnalysisReport ? '20px' : '20px'}; width: ${isAnalysisReport ? '1540px' : '100%'}; }
+          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 10px; color: #333; background: white; padding: ${isAnalysisReport ? '20px' : '20px'}; width: ${isAnalysisReport ? '1540px' : '100%'}; }
           .header-table { width: 100%; margin-bottom: ${isAnalysisReport ? '15px' : '20px'}; padding-bottom: 6px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
           .logo-cell { width: ${isAnalysisReport ? '90px' : '120px'}; text-align: left; vertical-align: middle; }
@@ -2851,15 +2851,15 @@ if (isAnalysisReport) {
 
   // Keep old endpoints for compatibility
   router.get("/sales-pdf", async (req, res) => {
-    res.redirect(`/api/reports/download-pdf?${new URLSearchParams(req.query).toString()}`);
+    res.redirect(`/api/salesreport/download-pdf?${new URLSearchParams(req.query).toString()}`);
   });
 
   router.get("/paymode-html", async (req, res) => {
-    res.redirect(`/api/reports/download-pdf?${new URLSearchParams(req.query).toString()}&dayEnd=Paymode`);
+    res.redirect(`/api/salesreport/download-pdf?${new URLSearchParams(req.query).toString()}&dayEnd=Paymode`);
   });
 
   router.get("/terminal-html", async (req, res) => {
-    res.redirect(`/api/reports/download-pdf?${new URLSearchParams(req.query).toString()}&dayEnd=Terminal`);
+    res.redirect(`/api/salesreport/download-pdf?${new URLSearchParams(req.query).toString()}&dayEnd=Terminal`);
   });
 
   module.exports = router;
