@@ -1309,16 +1309,13 @@ router.get("/download-gst-pdf", async (req, res) => {
     bottom: '1.2cm',
     left: '0.5cm'
   },
-      ffooter: {
-  height: "15mm",
+   footer: {
+  height: "10mm",
   contents: {
     default: `
-      <div style="border-top: 1px solid #ccc; padding-top: 8px; font-family: 'Cambria', 'Times New Roman', serif; text-align: center;">
-        <div style="font-size: 10px; color: #666; margin-bottom: 4px;">*** System Generated Report ***</div>
-        <div style="font-size: 10px; color: #888;">Powered by Unipro</div>
-      </div>
-      <div style="text-align: center; font-size: 10px; color: #999; margin-top: 5px;">
-        Page {{page}} of {{pages}}
+      <div style="border-top: 1px solid #eee; padding-top: 3px;">
+        <div style="text-align: center; font-size: 8px; color: #888;">*** System Generated Report ***</div>
+        <div style="text-align: center; font-size: 8px; color: #aaa;">Powered by Unipro</div>
       </div>
     `
   }
@@ -2206,14 +2203,13 @@ router.get("/download-pdf", async (req, res) => {
         if (row.isTotalRow) {
           tableRows += `
             <tr style="font-weight: bold; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; background-color: #f5f5f5;">
-            <td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
-              <<td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
-              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ItemAmount.toFixed(2)}</strong></td>
-              <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></td>
+              <td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
+<td style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
+<td style="text-align: right; padding: 6px 8px; border: 1px solid #e0e0e0;"><strong>${row.ItemAmount.toFixed(2)}</strong></td>         <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalTax.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalAmount.toFixed(2)}</strong></td>
-             <td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;">-</strong></td>
+              <td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;">-</strong></td>
             </tr>
           `;
         } else {
@@ -2251,7 +2247,7 @@ router.get("/download-pdf", async (req, res) => {
             currentDateVal = row.Date;
             tableRows += `
               <tr style="background-color: #ffffff; font-weight: bold;">
-               <td colspan="7" style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0; font-size: 13px;">                <strong>Date: ${row.Date}</strong>
+               <td colspan="7" style="text-align: left; padding: 6px 8px; border: 1px solid #e0e0e0; font-size: 11px;">                <strong>Date: ${row.Date}</strong>
                 </td>
               </tr>
             `;
@@ -2321,7 +2317,7 @@ router.get("/download-pdf", async (req, res) => {
               let val = row[col];
               const isNumber = typeof val === 'number';
               const alignment = idx === 0 ? 'left' : 'right';
-              return `<td style="text-align: ${alignment}; padding: 3px 5px; border: 1px solid #e0e0e0;">${isNumber ? val.toFixed(2) : (val || '-')}</strong></td>`;
+              return `<td style="text-align: ${alignment}; padding: 6px 8px; border: 1px solid #e0e0e0;">${isNumber ? val.toFixed(2) : (val || '-')}</strong></td>`;
             }).join("")}
           </tr>
         `;
@@ -2559,7 +2555,7 @@ router.get("/download-pdf", async (req, res) => {
             ${tableRows}
             ${(() => {
               const label = (req.query.bySales === "BusinessType" || req.query.reportType === "GuestMeal") ? "Grand Total" : "TOTAL";
-              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 10px 12px; border: 1px solid #e0e0e0; background-color: #eef2f8;"><strong>${label}</strong></td>`;
+              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 6px 8px; ...">...<strong>${label}</strong></td>`;
                      for (let i = 1; i < displayColumns.length; i++) {
                 const colName = displayColumns[i];
                 const isNumeric = numericColumns.includes(colName);
