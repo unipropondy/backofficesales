@@ -2596,7 +2596,7 @@ router.get("/download-pdf", async (req, res) => {
     
     const pdfOptions = {
       format: 'A4',
-      orientation: 'landscape',
+      orientation: 'portrait',
       zoomFactor: "0.85",
       border: isAnalysisReport
         ? { top: '4mm', right: '2mm', bottom: '4mm', left: '2mm' }
