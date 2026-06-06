@@ -959,7 +959,8 @@ else if (byItem === "Dish") {
                           {displayColumns.map((col, idx) => {
                             const isTextCol = col === 'Date' || col === 'Type' || col === 'Hour' || col === 'Item' || col === 'DishName' || col === 'DishGroupName' || col === 'CategoryName' || col === 'Month' || col === 'Year' || col === 'InvoiceNumber' || col === 'Group' || col === 'GstType' || col === 'Category' || col === 'InvoiceDate' || col === 'BillNumber' || col === 'Description';
                             return (
-                              <th key={idx} style={{ textAlign: isTextCol ? 'left' : 'right', padding: '6px 8px', whiteSpace: 'nowrap' }}>                              {
+                              <th key={idx} style={{ textAlign: isTextCol ? 'left' : 'right', padding: '10px 12px', whiteSpace: 'nowrap', fontSize: '13px' }}>                            
+                                {
                                   col === 'ServiceCharge'
                                     ? 'Service Charge'
                                     : col === 'SubTotal'
@@ -988,11 +989,12 @@ else if (byItem === "Dish") {
                               const isTextCol = col === 'Date' || col === 'Type' || col === 'Hour' || col === 'Item' || col === 'DishName' || col === 'DishGroupName' || col === 'CategoryName' || col === 'Month' || col === 'Year' || col === 'InvoiceNumber' || col === 'Group' || col === 'GstType' || col === 'Category' || col === 'InvoiceDate' || col === 'BillNumber' || col === 'Description';
                               const isNumeric = !isTextCol && (typeof value === "number" || (value !== '' && value !== null && !isNaN(Number(value))));
                               return (
-                                <td key={idx} style={{
+<td key={idx} style={{
   textAlign: isTextCol ? 'left' : 'right',
-  padding: '4px 8px',
+  padding: '8px 12px',
   whiteSpace: 'nowrap',
-  fontWeight: item.isTotalRow ? 'bold' : 'normal'
+  fontWeight: item.isTotalRow ? 'bold' : 'normal',
+  fontSize: '12px'
 }}>
                                   {isNumeric ? Number(value).toFixed(2) : (value !== null && value !== undefined && value !== '' ? value : '0.00')}
                                 </td>

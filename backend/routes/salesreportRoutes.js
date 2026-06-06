@@ -1073,19 +1073,19 @@ router.get("/download-gst-pdf", async (req, res) => {
         <title>Sales Summary</title>
         <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Arial', sans-serif; font-size: 11px; padding: 15px; }
+  body { font-family: 'Arial', sans-serif; font-size: 12px; padding: 15px; }
   .header { font-weight: bold; margin-bottom: 15px; text-align: center; }
-  .header .company { font-size: 14px; }
-  .header .title { font-size: 12px; margin-top: 8px; }
-  .divider { border-top: 1px dashed #000; margin: 10px 0; }
-  .grid-container { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 8px 0; }
-  .grid-col { display: table-cell; vertical-align: top; padding: 5px; }
-  .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 11px; }
-  .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 10px; }
+  .header .company { font-size: 16px; }
+  .header .title { font-size: 14px; margin-top: 8px; }
+  .divider { border-top: 1px dashed #000; margin: 12px 0; }
+  .grid-container { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 10px 0; }
+  .grid-col { display: table-cell; vertical-align: top; padding: 6px; }
+  .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 12px; }
+  .data-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; }
   .data-row.bold { font-weight: bold; }
-  .data-row.border-top { border-top: 1px dashed #000; padding-top: 4px; }
-  .data-row.border-bottom { border-bottom: 1px dashed #000; padding-bottom: 4px; margin-bottom: 6px; }
-  .box-container { border: 1px solid #000; padding: 6px; margin-bottom: 10px; }
+  .data-row.border-top { border-top: 1px dashed #000; padding-top: 5px; }
+  .data-row.border-bottom { border-bottom: 1px dashed #000; padding-bottom: 5px; margin-bottom: 8px; }
+  .box-container { border: 1px solid #000; padding: 8px; margin-bottom: 12px; }
 </style>
       </head>
       <body>
@@ -1246,24 +1246,24 @@ router.get("/download-gst-pdf", async (req, res) => {
       <title>GST Report</title>
       <<style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 11px; color: #333; background: white; padding: 15px; }
-  .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
+  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; color: #333; background: white; padding: 15px; }
+  .header-table { width: 100%; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #1a3c5a; }
   .header-table td { border: none; padding: 0; }
   .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
-  .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
+  .logo-cell img { max-height: 55px; max-width: 90px; object-fit: contain; }
   .company-cell { text-align: center; vertical-align: middle; }
-  .company-name { font-size: 14px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-  .company-address { font-size: 10px; color: #555; margin-top: 4px; }
+  .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+  .company-address { font-size: 11px; color: #555; margin-top: 5px; }
   .spacer-cell { width: 100px; }
-  .report-title { text-align: center; font-size: 14px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
-  .report-subtitle { text-align: center; font-size: 10px; color: #555; margin-bottom: 15px; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
-  .data-table th { background-color: #1a3c5a; color: white; padding: 8px 10px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; }
-  .data-table td { border: 1px solid #e0e0e0; padding: 6px 10px; }
+  .report-title { text-align: center; font-size: 16px; font-weight: 800; color: #1a3c5a; margin: 12px 0 8px; text-transform: uppercase; }
+  .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 18px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+  .data-table th { background-color: #1a3c5a; color: white; padding: 10px 12px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; font-size: 12px; }
+  .data-table td { border: 1px solid #e0e0e0; padding: 8px 12px; }
   .data-table td:first-child { text-align: left; }
   .data-table td:not(:first-child) { text-align: right; }
   .data-table tr:nth-child(even) { background-color: #f9f9f9; }
-  .grand-total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; }
+  .grand-total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; font-size: 12px; }
 </style>
     </head>
     <body>
@@ -1300,22 +1300,25 @@ router.get("/download-gst-pdf", async (req, res) => {
     </html>`;
 
     const pdfOptions = {
-      format: 'A4',
-      orientation: 'portrait',
-      zoomFactor: "0.70",
-      border: {
-        top: '0.8cm',
-        right: '0.5cm',
-        bottom: '1.2cm',
-        left: '0.5cm'
-      },
-      footer: {
-  height: "12mm",
+  format: 'A4',
+  orientation: 'portrait',
+  zoomFactor: "0.85",  // Change from 0.70 to 0.85
+  border: {
+    top: '0.8cm',
+    right: '0.5cm',
+    bottom: '1.2cm',
+    left: '0.5cm'
+  },
+      ffooter: {
+  height: "15mm",
   contents: {
     default: `
-      <div style="border-top: 1px solid #eee; padding-top: 5px; font-family: 'Cambria', 'Times New Roman', serif;">
-        <div style="text-align: center; font-size: 9px; color: #888; margin-bottom: 3px;">*** System Generated Report ***</div>
-        <div style="text-align: center; font-size: 9px; color: #aaa;">Powered by Unipro</div>
+      <div style="border-top: 1px solid #ccc; padding-top: 8px; font-family: 'Cambria', 'Times New Roman', serif; text-align: center;">
+        <div style="font-size: 10px; color: #666; margin-bottom: 4px;">*** System Generated Report ***</div>
+        <div style="font-size: 10px; color: #888;">Powered by Unipro</div>
+      </div>
+      <div style="text-align: center; font-size: 10px; color: #999; margin-top: 5px;">
+        Page {{page}} of {{pages}}
       </div>
     `
   }
@@ -2203,14 +2206,14 @@ router.get("/download-pdf", async (req, res) => {
         if (row.isTotalRow) {
           tableRows += `
             <tr style="font-weight: bold; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; background-color: #f5f5f5;">
-              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
-              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
+            <td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;">${row.InvoiceDate || '-'}</td>
+              <<td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;"><strong>Day Total</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ItemAmount.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.Discount.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.ServiceCharge.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalTax.toFixed(2)}</strong></td>
               <td style="text-align: right; padding: 3px 5px; border: 1px solid #e0e0e0;"><strong>${row.TotalAmount.toFixed(2)}</strong></td>
-              <td style="text-align: left; padding: 3px 5px; border: 1px solid #e0e0e0;">-</strong></td>
+             <td style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0;">-</strong></td>
             </tr>
           `;
         } else {
@@ -2248,7 +2251,7 @@ router.get("/download-pdf", async (req, res) => {
             currentDateVal = row.Date;
             tableRows += `
               <tr style="background-color: #ffffff; font-weight: bold;">
-               <td colspan="7" style="text-align: left; padding: 8px 12px; border: 1px solid #e0e0e0; font-size: 12px;">                <strong>Date: ${row.Date}</strong>
+               <td colspan="7" style="text-align: left; padding: 10px 12px; border: 1px solid #e0e0e0; font-size: 13px;">                <strong>Date: ${row.Date}</strong>
                 </td>
               </tr>
             `;
@@ -2439,25 +2442,25 @@ router.get("/download-pdf", async (req, res) => {
       <head>
         <meta charset="UTF-8">
         <title>${reportTitle}</title>
-        <style>
+       <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 11px; color: #333; background: white; padding: 15px; }
-  .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
+  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; color: #333; background: white; padding: 15px; }
+  .header-table { width: 100%; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #1a3c5a; }
   .header-table td { border: none; padding: 0; }
   .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
-  .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
+  .logo-cell img { max-height: 55px; max-width: 90px; object-fit: contain; }
   .company-cell { text-align: center; vertical-align: middle; }
-  .company-name { font-size: 14px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-  .company-address { font-size: 10px; color: #555; margin-top: 4px; }
-  .company-phone { font-size: 10px; color: #666; margin-top: 2px; }
+  .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+  .company-address { font-size: 11px; color: #555; margin-top: 5px; }
+  .company-phone { font-size: 11px; color: #666; margin-top: 3px; }
   .spacer-cell { width: 100px; }
-  .report-title { text-align: center; font-size: 14px; font-weight: 800; color: #1a3c5a; margin: 10px 0 5px; text-transform: uppercase; }
-  .report-subtitle { text-align: center; font-size: 10px; color: #555; margin-bottom: 15px; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
-  .data-table th { background-color: #1a3c5a; color: white; padding: 8px 10px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; }
-  .data-table td { border: 1px solid #e0e0e0; padding: 6px 10px; }
+  .report-title { text-align: center; font-size: 16px; font-weight: 800; color: #1a3c5a; margin: 12px 0 8px; text-transform: uppercase; }
+  .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 18px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+  .data-table th { background-color: #1a3c5a; color: white; padding: 10px 12px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; font-size: 12px; }
+  .data-table td { border: 1px solid #e0e0e0; padding: 8px 12px; }
   .data-table tr:nth-child(even) { background-color: #f9f9f9; }
-  .total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; }
+  .total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; font-size: 12px; }
   @media print {
     body { padding: 0; margin: 0; }
     .data-table th { background-color: #1a3c5a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -2502,52 +2505,31 @@ router.get("/download-pdf", async (req, res) => {
         <meta charset="UTF-8">
         <title>${reportTitle}</title>
         <style>
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 6px; color: #333; background: white; padding: 12px; width: 100%; }
-          .header-table { width: 100%; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid #1a3c5a; }
-          .header-table td { border: none; padding: 0; }
-          .logo-cell { width: 80px; text-align: left; vertical-align: middle; }
-          .logo-cell img { max-height: 40px; max-width: 60px; object-fit: contain; }
-          .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: 9px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: 6px; color: #555; margin-top: 2px; }
-          .company-phone { font-size: 6px; color: #666; margin-top: 1px; }
-          .spacer-cell { width: 80px; }
-          .report-title { text-align: center; font-size: 8px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
-          .report-subtitle { text-align: center; font-size: 6px; color: #555; margin-bottom: 10px; }
-          .data-table { width: 100%; border-collapse: collapse; font-size: 6px; margin-top: 5px; table-layout: fixed; }
-          .data-table th { 
-            background-color: #1a3c5a; 
-            color: white; 
-            padding: 3px 3px; 
-            text-align: center; 
-            border: 1px solid #2a4c6a; 
-            font-weight: 600;
-            word-wrap: break-word;
-            white-space: normal;
-            line-height: 1.1;
-          }
-          .data-table td { 
-            border: 1px solid #e0e0e0; 
-            padding: 2px 3px; 
-            word-wrap: break-word;
-            white-space: normal;
-            overflow: hidden;
-            line-height: 1.1;
-          }
-          .data-table tr:nth-child(even) { background-color: #f9f9f9; }
-          .total-row td { 
-            background-color: #eef2f8; 
-            font-weight: 700; 
-            border-top: 2px solid #1a3c5a; 
-          }
-          @media print {
-            body { padding: 0; margin: 0; }
-            .data-table th { background-color: #1a3c5a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .data-table tr:nth-child(even) { background-color: #f9f9f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .total-row td { background-color: #eef2f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-          }
-        </style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12px; color: #333; background: white; padding: 15px; }
+  .header-table { width: 100%; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #1a3c5a; }
+  .header-table td { border: none; padding: 0; }
+  .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
+  .logo-cell img { max-height: 55px; max-width: 90px; object-fit: contain; }
+  .company-cell { text-align: center; vertical-align: middle; }
+  .company-name { font-size: 16px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+  .company-address { font-size: 11px; color: #555; margin-top: 5px; }
+  .company-phone { font-size: 11px; color: #666; margin-top: 3px; }
+  .spacer-cell { width: 100px; }
+  .report-title { text-align: center; font-size: 16px; font-weight: 800; color: #1a3c5a; margin: 12px 0 8px; text-transform: uppercase; }
+  .report-subtitle { text-align: center; font-size: 11px; color: #555; margin-bottom: 18px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+  .data-table th { background-color: #1a3c5a; color: white; padding: 10px 12px; text-align: center; border: 1px solid #2a4c6a; font-weight: 600; font-size: 12px; }
+  .data-table td { border: 1px solid #e0e0e0; padding: 8px 12px; }
+  .data-table tr:nth-child(even) { background-color: #f9f9f9; }
+  .total-row td { background-color: #eef2f8; font-weight: 700; border-top: 2px solid #1a3c5a; font-size: 12px; }
+  @media print {
+    body { padding: 0; margin: 0; }
+    .data-table th { background-color: #1a3c5a !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .data-table tr:nth-child(even) { background-color: #f9f9f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .total-row td { background-color: #eef2f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
       </head>
       <body>
         <table class="header-table">
@@ -2577,8 +2559,8 @@ router.get("/download-pdf", async (req, res) => {
             ${tableRows}
             ${(() => {
               const label = (req.query.bySales === "BusinessType" || req.query.reportType === "GuestMeal") ? "Grand Total" : "TOTAL";
-              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 8px 12px; border: 1px solid #e0e0e0; background-color: #eef2f8;"><strong>${label}</strong></td>`;
-                 for (let i = 1; i < displayColumns.length; i++) {
+              let totalCells = `<td style="text-align: right; font-weight: bold; padding: 10px 12px; border: 1px solid #e0e0e0; background-color: #eef2f8;"><strong>${label}</strong></td>`;
+                     for (let i = 1; i < displayColumns.length; i++) {
                 const colName = displayColumns[i];
                 const isNumeric = numericColumns.includes(colName);
                 if (isNumeric) {
