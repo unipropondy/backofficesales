@@ -18,10 +18,16 @@
     min-height: 100vh;
     padding: 20px;
     font-family: 'Cambria', 'Times New Roman', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
  
 .console-sales-report.sidebar-open {
+    margin-left: 260px;
+    width: calc(100% - 260px);
     padding-left: 260px;
+    padding-right: 20px;
 }
  
 .der-header-title {
