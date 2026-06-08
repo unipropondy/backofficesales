@@ -167,13 +167,13 @@ import { API_BASE_URL } from "../config/config";
           return;
         }
 
-        // ✅ Paymode Report
-        if (dayEnd === "Paymode") {
-          url = `${REPORT_BASE}/paymode-html?fromDate=${fromDate}&toDate=${toDate}`;
-          if (viewMode) url += `&viewMode=${encodeURIComponent(viewMode)}`;
-          window.open(url, '_blank');
-          return;
-        }
+     // ✅ Paymode Report
+if (dayEnd === "Paymode") {
+  // Use download-pdf with dayEnd=Paymode (backend will handle pivoted format)
+  url = `${REPORT_BASE}/download-pdf?fromDate=${fromDate}&toDate=${toDate}&dayEnd=Paymode`;
+  window.open(url, '_blank');
+  return;
+}
 
         // ✅ Terminal Report
         if (dayEnd === "Terminal") {
@@ -508,6 +508,24 @@ else if (byItem === "Dish") {
           forcedColumns = ['Year', 'Month', 'Item', 'DishGroupName', 'Amount'];
           forcedData = rawData;
         }
+
+// ✅ ADD THE CANCEL ORDER HANDLER RIGHT HERE
+else if (dayEnd === "Cancellation") {
+  console.log("Processing Cancel Order List Report");
+  // Use DISPLAY NAMES as shown in your image
+  forcedColumns = ['Order Number', 'Bill Number', 'Sub Total', 'Discount', 'S.Chrg', 'Total Tax', 'Net Total', 'Remarks'];
+  forcedData = rawData.map(row => ({
+    'Order Number': row.OrderNumber || '-',
+    'Bill Number': row.BillNumber || '-',
+    'Sub Total': Number(row.TotalLineItemAmount || 0).toFixed(2),
+    'Discount': Number(row.TotalDiscountAmount || 0).toFixed(2),
+    'S.Chrg': Number(row.ServiceCharge || 0).toFixed(2),
+    'Total Tax': Number(row.TotalTax || 0).toFixed(2),
+    'Net Total': Number(row.TotalAmount || 0).toFixed(2),
+    'Remarks': row.Description || '-'
+  }));
+}
+  
         // GST REPORT
         else if (dayEnd === "GST") {
           console.log("Processing GST Report");
@@ -641,92 +659,520 @@ else if (byItem === "Dish") {
     forcedData = combinedData;
   }
 
-        // ✅ CATEGORY SALES (detailed) - use vw_Dishsalesreport joined with CategoryMaster
-        else if (byItem === "Category") {
-          console.log("Processing Category Sales Report (detailed)");
-          forcedColumns = ['CategoryId', 'CategoryName', 'DishGroupId', 'DishGroupname', 'Sold', 'ItemSales', 'ItemDisc', 'Foc', 'Revenue70', 'Revenue30', 'Revenue'];
-          forcedData = rawData.map(row => ({
-            CategoryId: row.CategoryId || '',
-            CategoryName: row.CategoryName || '-',
-            DishGroupId: row.DishGroupId || '',
-            DishGroupname: row.DishGroupname || '-',
-            Sold: Number(row.Sold || 0).toFixed(2),
-            ItemSales: Number(row.ItemSales || 0).toFixed(2),
-            ItemDisc: Number(row.ItemDisc || 0).toFixed(2),
-            Foc: Number(row.Foc || 0).toFixed(2),
-            Revenue70: Number(row.Revenue70 || 0).toFixed(2),
-            Revenue30: Number(row.Revenue30 || 0).toFixed(2),
-            Revenue: Number(row.Revenue || 0).toFixed(2)
-          }));
-        }
+// ✅ CATEGORY SALES REPORT (With Detail Total, Bill Discount, Grand Total)
+else if (byItem === "Category") {
+  console.log("Processing Category Sales Report");
+  
+  // Calculate totals from category data
+  let totalSold = 0;
+  let totalItemSales = 0;
+  let totalItemDisc = 0;
+  let totalFOC = 0;
+  let totalNetSales = 0;
+  
+  const categoryRows = rawData.map(row => {
+    const sold = Number(row.Sold || 0);
+    const itemSales = Number(row.ItemSales || 0);
+    const itemDisc = Number(row.ItemDisc || 0);
+    const foc = Number(row.FOC || row.Foc || 0);
+    const netSales = Number(row.NetSales || 0);
+    
+    totalSold += sold;
+    totalItemSales += itemSales;
+    totalItemDisc += itemDisc;
+    totalFOC += foc;
+    totalNetSales += netSales;
+    
+    return {
+      CategoryName: row.CategoryName || '-',
+      Sold: sold.toFixed(2),
+      ItemSales: itemSales.toFixed(2),
+      ItemDisc: itemDisc.toFixed(2),
+      FOC: foc.toFixed(2),
+      NetSales: netSales.toFixed(2),
+      isTotalRow: false
+    };
+  });
+  
+  // Get Bill Discount from API response (or use totalItemDisc as fallback)
+  const billDiscount = data.billDiscount || 0;
+  
+  // Add Detail Total row
+  categoryRows.push({
+    CategoryName: 'Detail Total:',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: totalNetSales.toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add Bill Discount row
+  categoryRows.push({
+    CategoryName: 'Bill Discount:',
+    Sold: '-',
+    ItemSales: '-',
+    ItemDisc: '-',
+    FOC: '-',
+    NetSales: Number(billDiscount).toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add ONLY ONE Grand Total row (removed duplicate)
+  const grandTotalNetSales = totalNetSales - Number(billDiscount);
+  categoryRows.push({
+    CategoryName: 'Grand Total:',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: grandTotalNetSales.toFixed(2),
+    isTotalRow: true,
+    isGrandTotal: true
+  });
+  
+  forcedColumns = ['CategoryName', 'Sold', 'ItemSales', 'ItemDisc', 'FOC', 'NetSales'];
+  forcedData = categoryRows;
+}
+       // ✅ DISH GROUP SALES REPORT (With Detail Total, Bill Discount, Grand Total)
+else if (byItem === "DishGroup") {
+  console.log("Processing Dish Group Sales Report");
+  
+  // Calculate totals from dish group data
+  let totalSold = 0;
+  let totalItemSales = 0;
+  let totalItemDisc = 0;
+  let totalFOC = 0;
+  let totalNetSales = 0;
+  
+  // Group data by Category first
+  const categoryGroups = new Map();
+  
+  rawData.forEach(row => {
+    const categoryName = row.CategoryName || 'Uncategorized';
+    if (!categoryGroups.has(categoryName)) {
+      categoryGroups.set(categoryName, []);
+    }
+    categoryGroups.get(categoryName).push(row);
+  });
+  
+  const dishGroupRows = [];
+  
+  // Process each category
+  for (const [categoryName, items] of categoryGroups.entries()) {
+    let categorySold = 0;
+    let categoryItemSales = 0;
+    let categoryItemDisc = 0;
+    let categoryFOC = 0;
+    let categoryNetSales = 0;
+    
+    // Add Category header row
+    dishGroupRows.push({
+      DishGroupname: `CategoryName: ${categoryName}`,
+      CategoryName: '',
+      Sold: '-',
+      ItemSales: '-',
+      ItemDisc: '-',
+      FOC: '-',
+      NetSales: '-',
+      isCategoryHeader: true,
+      isTotalRow: false
+    });
+    
+    // Add each dish group under this category
+    items.forEach(row => {
+      const sold = Number(row.Sold || 0);
+      const itemSales = Number(row.ItemSales || 0);
+      const itemDisc = Number(row.ItemDisc || 0);
+      const foc = Number(row.Foc || 0);
+      const netSales = Number(row.Revenue || itemSales || 0);
+      
+      categorySold += sold;
+      categoryItemSales += itemSales;
+      categoryItemDisc += itemDisc;
+      categoryFOC += foc;
+      categoryNetSales += netSales;
+      
+      totalSold += sold;
+      totalItemSales += itemSales;
+      totalItemDisc += itemDisc;
+      totalFOC += foc;
+      totalNetSales += netSales;
+      
+      dishGroupRows.push({
+        DishGroupname: row.DishGroupname || row.DishGroupName || '-',
+        CategoryName: '',
+        Sold: sold.toFixed(2),
+        ItemSales: itemSales.toFixed(2),
+        ItemDisc: itemDisc.toFixed(2),
+        FOC: foc.toFixed(2),
+        NetSales: netSales.toFixed(2),
+        isTotalRow: false
+      });
+    });
+    
+    // Add Category Total row
+    dishGroupRows.push({
+      DishGroupname: 'Total:',
+      CategoryName: '',
+      Sold: categorySold.toFixed(2),
+      ItemSales: categoryItemSales.toFixed(2),
+      ItemDisc: categoryItemDisc.toFixed(2),
+      FOC: categoryFOC.toFixed(2),
+      NetSales: categoryNetSales.toFixed(2),
+      isTotalRow: true,
+      isCategoryTotal: true
+    });
+    
+    // Add spacer between categories
+    dishGroupRows.push({
+      DishGroupname: '',
+      CategoryName: '',
+      Sold: '',
+      ItemSales: '',
+      ItemDisc: '',
+      FOC: '',
+      NetSales: '',
+      isSpacer: true
+    });
+  }
+  
+  // Get Bill Discount from API response
+  const billDiscount = data.billDiscount || 0;
+  
+  // Add Detail Total row
+  dishGroupRows.push({
+    DishGroupname: 'Detail Total:',
+    CategoryName: '',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: totalNetSales.toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add Bill Discount row
+  dishGroupRows.push({
+    DishGroupname: 'Bill Discount:',
+    CategoryName: '',
+    Sold: '-',
+    ItemSales: '-',
+    ItemDisc: '-',
+    FOC: '-',
+    NetSales: Number(billDiscount).toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add Grand Total row
+  const grandTotalNetSales = totalNetSales - Number(billDiscount);
+  dishGroupRows.push({
+    DishGroupname: 'Grand Total:',
+    CategoryName: '',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: grandTotalNetSales.toFixed(2),
+    isTotalRow: true,
+    isGrandTotal: true
+  });
+  
+  forcedColumns = ['DishGroupname', 'Sold', 'ItemSales', 'ItemDisc', 'FOC', 'NetSales'];
+  forcedData = dishGroupRows;
+}
 
-        else if (byItem === "DishGroup") {
-          console.log("Processing Dish Group Sales Report");
-          forcedColumns = ['DishGroupId', 'DishGroupname', 'CategoryId', 'CategoryName', 'Sold', 'ItemSales', 'ItemDisc', 'Foc', 'Revenue70', 'Revenue30', 'Revenue'];
-          forcedData = rawData.map(row => ({
-            DishGroupId: row.DishGroupId || '',
-            DishGroupname: row.DishGroupname || '-',
-            CategoryId: row.CategoryId || '',
-            CategoryName: row.CategoryName || '-',
-            Sold: Number(row.Sold || 0).toFixed(2),
-            ItemSales: Number(row.ItemSales || 0).toFixed(2),
-            ItemDisc: Number(row.ItemDisc || 0).toFixed(2),
-            Foc: Number(row.Foc || 0).toFixed(2),
-            Revenue70: Number(row.Revenue70 || 0).toFixed(2),
-            Revenue30: Number(row.Revenue30 || 0).toFixed(2),
-            Revenue: Number(row.Revenue || 0).toFixed(2)
-          }));
-        }
+// ✅ DISH SALES REPORT (With Category, DishGroup, Detail Total, Bill Discount, Grand Total)
+else if (byItem === "Dish") {
+  console.log("Processing Dish Sales Report");
+  
+  // Calculate totals from dish data
+  let totalSold = 0;
+  let totalItemSales = 0;
+  let totalItemDisc = 0;
+  let totalFOC = 0;
+  let totalNetSales = 0;
+  
+  // Group data by Category first, then by DishGroup
+  const categoryGroups = new Map();
+  
+  rawData.forEach(row => {
+    const categoryName = row.CategoryName || 'Uncategorized';
+    if (!categoryGroups.has(categoryName)) {
+      categoryGroups.set(categoryName, new Map());
+    }
+    const dishGroupMap = categoryGroups.get(categoryName);
+    const dishGroupName = row.DishGroupname || 'Uncategorized';
+    if (!dishGroupMap.has(dishGroupName)) {
+      dishGroupMap.set(dishGroupName, []);
+    }
+    dishGroupMap.get(dishGroupName).push(row);
+  });
+  
+  const dishRows = [];
+  
+  // Process each category
+  for (const [categoryName, dishGroupMap] of categoryGroups.entries()) {
+    let categorySold = 0;
+    let categoryItemSales = 0;
+    let categoryItemDisc = 0;
+    let categoryFOC = 0;
+    let categoryNetSales = 0;
+    
+    // Add Category header row
+    dishRows.push({
+      Dishname: `CategoryName: ${categoryName}`,
+      Sold: '-',
+      ItemSales: '-',
+      ItemDisc: '-',
+      FOC: '-',
+      NetSales: '-',
+      isCategoryHeader: true,
+      isTotalRow: false
+    });
+    
+    const dishGroupEntries = Array.from(dishGroupMap.entries());
+    const hasMultipleDishGroups = dishGroupEntries.length > 1;
+    
+    // Process each dish group under this category
+    for (let idx = 0; idx < dishGroupEntries.length; idx++) {
+      const [dishGroupName, items] = dishGroupEntries[idx];
+      let dishGroupSold = 0;
+      let dishGroupItemSales = 0;
+      let dishGroupItemDisc = 0;
+      let dishGroupFOC = 0;
+      let dishGroupNetSales = 0;
+      
+      // Add DishGroup header row
+      dishRows.push({
+        Dishname: `DishgroupName: ${dishGroupName}`,
+        Sold: '-',
+        ItemSales: '-',
+        ItemDisc: '-',
+        FOC: '-',
+        NetSales: '-',
+        isDishGroupHeader: true,
+        isTotalRow: false
+      });
+      
+      // Add each dish under this dish group
+      items.forEach(row => {
+        const sold = Number(row.Sold || 0);
+        const itemSales = Number(row.ItemSales || 0);
+        const itemDisc = Number(row.ItemDisc || 0);
+        const foc = Number(row.Foc || 0);
+        const netSales = Number(row.NetSales || itemSales || 0);
+        
+        dishGroupSold += sold;
+        dishGroupItemSales += itemSales;
+        dishGroupItemDisc += itemDisc;
+        dishGroupFOC += foc;
+        dishGroupNetSales += netSales;
+        
+        categorySold += sold;
+        categoryItemSales += itemSales;
+        categoryItemDisc += itemDisc;
+        categoryFOC += foc;
+        categoryNetSales += netSales;
+        
+        totalSold += sold;
+        totalItemSales += itemSales;
+        totalItemDisc += itemDisc;
+        totalFOC += foc;
+        totalNetSales += netSales;
+        
+        dishRows.push({
+          Dishname: row.Dishname || '-',
+          Sold: sold.toFixed(2),
+          ItemSales: itemSales.toFixed(2),
+          ItemDisc: itemDisc.toFixed(2),
+          FOC: foc.toFixed(2),
+          NetSales: netSales.toFixed(2),
+          isTotalRow: false
+        });
+      });
+      
+      // Add DishGroup Total row (only if multiple dish groups or it's the only one)
+      // For single dish group, we'll only show Category Total, not DishGroup Total
+      if (hasMultipleDishGroups) {
+        dishRows.push({
+          Dishname: 'Total:',
+          Sold: dishGroupSold.toFixed(2),
+          ItemSales: dishGroupItemSales.toFixed(2),
+          ItemDisc: dishGroupItemDisc.toFixed(2),
+          FOC: dishGroupFOC.toFixed(2),
+          NetSales: dishGroupNetSales.toFixed(2),
+          isTotalRow: true,
+          isDishGroupTotal: true
+        });
+      }
+    }
+    
+    // Add Category Total row (always show)
+    dishRows.push({
+      Dishname: 'Total:',
+      Sold: categorySold.toFixed(2),
+      ItemSales: categoryItemSales.toFixed(2),
+      ItemDisc: categoryItemDisc.toFixed(2),
+      FOC: categoryFOC.toFixed(2),
+      NetSales: categoryNetSales.toFixed(2),
+      isTotalRow: true,
+      isCategoryTotal: true
+    });
+    
+    // Add spacer between categories only if there are more categories
+    if (categoryGroups.size > 1) {
+      dishRows.push({
+        Dishname: '',
+        Sold: '',
+        ItemSales: '',
+        ItemDisc: '',
+        FOC: '',
+        NetSales: '',
+        isSpacer: true
+      });
+    }
+  }
+  
+  // Remove trailing spacer if exists
+  if (dishRows.length > 0 && dishRows[dishRows.length - 1] && dishRows[dishRows.length - 1].isSpacer) {
+    dishRows.pop();
+  }
+  
+  // Get Bill Discount from API response
+  const billDiscount = data.billDiscount || 0;
+  
+  // Add Detail Total row
+  dishRows.push({
+    Dishname: 'Detail Total:',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: totalNetSales.toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add Bill Discount row
+  dishRows.push({
+    Dishname: 'Bill Discount:',
+    Sold: '-',
+    ItemSales: '-',
+    ItemDisc: '-',
+    FOC: '-',
+    NetSales: Number(billDiscount).toFixed(2),
+    isTotalRow: true
+  });
+  
+  // Add Grand Total row
+  const grandTotalNetSales = totalNetSales - Number(billDiscount);
+  dishRows.push({
+    Dishname: 'Grand Total:',
+    Sold: totalSold.toFixed(2),
+    ItemSales: totalItemSales.toFixed(2),
+    ItemDisc: totalItemDisc.toFixed(2),
+    FOC: totalFOC.toFixed(2),
+    NetSales: grandTotalNetSales.toFixed(2),
+    isTotalRow: true,
+    isGrandTotal: true
+  });
+  
+  forcedColumns = ['Dishname', 'Sold', 'ItemSales', 'ItemDisc', 'FOC', 'NetSales'];
+  forcedData = dishRows;
+}
 
-        else if (byItem === "Dish") {
-          console.log("Processing Dish Sales Report");
-          forcedColumns = ['CategoryName', 'DishGroupname', 'Dishname', 'Sold', 'ItemSales', 'ItemDisc', 'Foc', 'Revenue70', 'Revenue30', 'Revenue'];
-          forcedData = rawData.map(row => ({
-            CategoryName: row.CategoryName || '-',
-            DishGroupname: row.DishGroupname || '-',
-            Dishname: row.Dishname || '-',
-            Sold: Number(row.Sold || 0).toFixed(2),
-            ItemSales: Number(row.ItemSales || 0).toFixed(2),
-            ItemDisc: Number(row.ItemDisc || 0).toFixed(2),
-            Foc: Number(row.Foc || 0).toFixed(2),
-            Revenue70: Number(row.Revenue70 || 0).toFixed(2),
-            Revenue30: Number(row.Revenue30 || 0).toFixed(2),
-            Revenue: Number(row.Revenue || 0).toFixed(2)
-          }));
-        }
-
-
-        // ✅ PAYMODE COLLECTION REPORT - Filter by Summary/Detail based on viewMode
-        else if (dayEnd === "Paymode") {
-          console.log("Processing Paymode Collection Report");
-          console.log("View Mode:", viewMode);
-
-          // Filter data based on viewMode selection
-          let filteredData = rawData;
-          if (viewMode === "Summary") {
-            filteredData = rawData.filter(row => row.ReportType === "SUMMARY");
-            console.log("Showing only SUMMARY");
-          } else if (viewMode === "Detail") {
-            filteredData = rawData.filter(row => row.ReportType === "DETAIL");
-            console.log("Showing only DETAIL");
-          }
-          // If viewMode is empty, show both
-
-          // Remove ReportType column from display
-          forcedColumns = ['Date', 'PayMode', 'BillNumber', 'ReferenceNumber', 'Amount', 'Tips', 'PayAmount', 'ReturnAmt'];
-          forcedData = filteredData.map(row => ({
-            Date: row.Date || '-',
-            PayMode: row.PayMode || '-',
-            BillNumber: row.BillNumber || '-',
-            ReferenceNumber: row.ReferenceNumber || '-',
-            Amount: Number(row.Amount || 0).toFixed(2),
-            Tips: Number(row.Tips || 0).toFixed(2),
-            PayAmount: Number(row.PayAmount || 0).toFixed(2),
-            ReturnAmt: Number(row.ReturnAmt || 0).toFixed(2)
-          }));
-        }
-
-
+      // ✅ PAYMODE COLLECTION REPORT - PIVOTED SUMMARY FORMAT (Like Crystal Report)
+else if (dayEnd === "Paymode") {
+  console.log("Processing Paymode Collection Report - Pivoted Format");
+  
+  // Check if data is already in pivoted format (has Cash column)
+  if (rawData.length > 0 && rawData[0].hasOwnProperty('Cash')) {
+    // Data is already pivoted from backend
+    forcedColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
+    forcedData = rawData.map(row => ({
+      Date: row.Date || '-',
+      Cash: Number(row.Cash || 0).toFixed(2),
+      Cheque: Number(row.Cheque || 0).toFixed(2),
+      Visa: Number(row.Visa || 0).toFixed(2),
+      Master: Number(row.Master || 0).toFixed(2),
+      Amex: Number(row.Amex || 0).toFixed(2),
+      Diners: Number(row.Diners || 0).toFixed(2),
+      JCB: Number(row.JCB || 0).toFixed(2),
+      Nets: Number(row.Nets || 0).toFixed(2),
+      'Total(Cards)': Number(row['Total(Cards)'] || 0).toFixed(2),
+      Others: Number(row.Others || 0).toFixed(2),
+      Nektar: Number(row.Nektar || 0).toFixed(2)
+    }));
+  } else {
+    // Fallback: If data is in old format, aggregate by date and paymode
+    console.log("Converting raw data to pivoted format");
+    
+    // Group by Date and PayMode
+    const datePayModeMap = new Map();
+    
+    rawData.forEach(row => {
+      const date = row.Date || '-';
+      const payMode = row.PayMode || row.Paymode || 'Unknown';
+      const amount = Number(row.Amount || row.SysAmount || 0);
+      
+      if (!datePayModeMap.has(date)) {
+        datePayModeMap.set(date, new Map());
+      }
+      const payModeMap = datePayModeMap.get(date);
+      const currentAmount = payModeMap.get(payMode) || 0;
+      payModeMap.set(payMode, currentAmount + amount);
+    });
+    
+    // Convert to array format
+    const pivotedData = [];
+    for (const [date, payModeMap] of datePayModeMap.entries()) {
+      const row = {
+        Date: date,
+        Cash: 0, Cheque: 0, Visa: 0, Master: 0, Amex: 0,
+        Diners: 0, JCB: 0, Nets: 0, Others: 0, Nektar: 0
+      };
+      
+      for (const [payMode, amount] of payModeMap.entries()) {
+        const upperPayMode = payMode.toUpperCase();
+        if (upperPayMode === 'CASH') row.Cash = amount;
+        else if (upperPayMode === 'CHEQUE') row.Cheque = amount;
+        else if (upperPayMode === 'VISA') row.Visa = amount;
+        else if (upperPayMode === 'MASTERCARD') row.Master = amount;
+        else if (upperPayMode === 'AMEX') row.Amex = amount;
+        else if (upperPayMode === 'DINERS') row.Diners = amount;
+        else if (upperPayMode === 'JCB') row.JCB = amount;
+        else if (upperPayMode === 'NETS') row.Nets = amount;
+        else if (upperPayMode === 'NEKTAR') row.Nektar = amount;
+        else row.Others += amount;
+      }
+      
+      // Calculate Total Cards
+      row['Total(Cards)'] = row.Visa + row.Master + row.Amex + row.Diners + row.JCB + row.Nets;
+      
+      pivotedData.push(row);
+    }
+    
+    forcedColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
+    forcedData = pivotedData.map(row => ({
+      Date: row.Date,
+      Cash: row.Cash.toFixed(2),
+      Cheque: row.Cheque.toFixed(2),
+      Visa: row.Visa.toFixed(2),
+      Master: row.Master.toFixed(2),
+      Amex: row.Amex.toFixed(2),
+      Diners: row.Diners.toFixed(2),
+      JCB: row.JCB.toFixed(2),
+      Nets: row.Nets.toFixed(2),
+      'Total(Cards)': row['Total(Cards)'].toFixed(2),
+      Others: row.Others.toFixed(2),
+      Nektar: row.Nektar.toFixed(2)
+    }));
+  }
+  
+  console.log("Paymode Data Processed, rows:", forcedData.length);
+  console.log("Columns:", forcedColumns);
+}
         // Sales Summary / Paymode report
         else if (data.columns && (data.columns.includes('Sales') || data.columns.includes('Cash'))) {
           forcedColumns = ['Date', 'Sales', 'FOC', 'Disc', 'SVC', 'Tax 7%', 'Tips', 'Rnd', 'ENT', 'Cash', 'Master', 'Visa'];
@@ -1002,15 +1448,18 @@ else if (byItem === "Dish") {
                             })}
                           </tr>
                         ))}
-                        <tr className="grand-total-row">
-                          {displayColumns.map((col, idx) => {
-                            const isTextCol = col === 'Date' || col === 'Type' || col === 'Hour' || col === 'Item' || col === 'DishName' || col === 'DishGroupName' || col === 'CategoryName' || col === 'Month' || col === 'Year' || col === 'InvoiceNumber' || col === 'Group' || col === 'GstType' || col === 'Category' || col === 'InvoiceDate' || col === 'BillNumber' || col === 'Description';
-                            if (idx === 0) return <td key={idx} style={{ textAlign: 'left', fontWeight: 'bold' }}>Grand Total:</td>;
-                            if (isTextCol) return <td key={idx} style={{ textAlign: 'left' }}></td>;
-                            const total = displayData.reduce((sum, row) => sum + (row.isTotalRow ? 0 : (parseFloat(row[col]) || 0)), 0);
-                            return <td key={idx} style={{ textAlign: 'right', fontWeight: 'bold' }}>{total.toFixed(2)}</td>;
-                          })}
-                        </tr>
+                      {/* Skip automatic Grand Total row for Category and DishGroup reports since we already have Grand Total in the data */}
+{byItem !== "Category" && byItem !== "DishGroup" && byItem !== "Dish" && (
+  <tr className="grand-total-row">
+    {displayColumns.map((col, idx) => {
+      const isTextCol = col === 'Date' || col === 'Type' || col === 'Hour' || col === 'Item' || col === 'DishName' || col === 'DishGroupName' || col === 'CategoryName' || col === 'Month' || col === 'Year' || col === 'InvoiceNumber' || col === 'Group' || col === 'GstType' || col === 'Category' || col === 'InvoiceDate' || col === 'BillNumber' || col === 'Description';
+      if (idx === 0) return <td key={idx} style={{ textAlign: 'left', fontWeight: 'bold' }}>Grand Total:</td>;
+      if (isTextCol) return <td key={idx} style={{ textAlign: 'left' }}></td>;
+      const total = displayData.reduce((sum, row) => sum + (row.isTotalRow ? 0 : (parseFloat(row[col]) || 0)), 0);
+      return <td key={idx} style={{ textAlign: 'right', fontWeight: 'bold' }}>{total.toFixed(2)}</td>;
+    })}
+  </tr>
+)}
                       </tbody>
                     </table>
                   </div>
