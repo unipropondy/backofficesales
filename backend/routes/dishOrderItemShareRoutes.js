@@ -8,19 +8,16 @@ router.get("/", async (req, res) => {
     const pool = await poolPromise;
     const result = await pool.request().query(`
 SELECT
-    d.Id,
-    d.DishId,
-    dm.DishName,
-    d.CustomerName,
-    d.Amount,
-    d.FromDate,
-    d.ToDate,
-    d.IsSelected,
-    d.CreatedDate
-FROM dishOrderItemShare d
-LEFT JOIN DishMaster dm
-    ON d.DishId = dm.DishId
-ORDER BY d.CreatedDate DESC
+    Id,
+    DishId,
+    CustomerName,
+    Amount,
+    FromDate,
+    ToDate,
+    IsSelected,
+    CreatedDate
+FROM dishOrderItemShare
+ORDER BY CreatedDate DESC
 `);
     res.json(result.recordset);
   } catch (err) {
@@ -46,16 +43,15 @@ router.post("/", async (req, res) => {
  
     const pool = await poolPromise;
     await pool.request()
-  .input("DishId", sql.UniqueIdentifier, DishId)
+  //.input("DishId", sql.UniqueIdentifier, DishId)
   .input("CustomerName", sql.NVarChar(100), CustomerName)
   .input("Amount", sql.Decimal(18, 2), Amount)
   .input("FromDate", sql.Date, FromDate)
   .input("ToDate", sql.Date, ToDate)
   .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
       .query(`
-       INSERT INTO dishOrderItemShare
+INSERT INTO dishOrderItemShare
 (
-  DishId,
   CustomerName,
   Amount,
   FromDate,
@@ -65,7 +61,6 @@ router.post("/", async (req, res) => {
 )
 VALUES
 (
-  @DishId,
   @CustomerName,
   @Amount,
   @FromDate,
@@ -110,11 +105,10 @@ router.put("/:id", async (req, res) => {
       .input("FromDate", sql.Date, req.body.FromDate)
       .input("ToDate", sql.Date, req.body.ToDate)
       .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
-      .input("DishId", sql.UniqueIdentifier, DishId)
+    //  .input("DishId", sql.UniqueIdentifier, DishId)
       .query(`
-       UPDATE dishOrderItemShare
-SET DishId = @DishId,
-    CustomerName = @CustomerName,
+      UPDATE dishOrderItemShare
+SET CustomerName = @CustomerName,
     Amount = @Amount,
     FromDate = @FromDate,
     ToDate = @ToDate,

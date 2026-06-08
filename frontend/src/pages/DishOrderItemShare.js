@@ -26,7 +26,7 @@ function DishOrderItemShare({ sidebarOpen }) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${BASE_URL}/dishorderitemshare`);
+      const res = await axios.get(`${BASE_URL}/api/dishorderitemshare`);
       setData(res.data);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -115,10 +115,9 @@ function DishOrderItemShare({ sidebarOpen }) {
 };
  
       if (isEditMode) {
-        await axios.put(`${BASE_URL}/dishorderitemshare/${editId}`, payload);
+        await axios.put(`${BASE_URL}/api/dishorderitemshare/${editId}`, payload);
       } else {
-        await axios.post(`${BASE_URL}/dishorderitemshare`, payload);
-      }
+        await axios.post(`${BASE_URL}/api/dishorderitemshare`, payload);      }
  
       setShowModal(false);
       fetchData();
@@ -132,7 +131,7 @@ function DishOrderItemShare({ sidebarOpen }) {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this dish order item share?")) {
       try {
-        await axios.delete(`${BASE_URL}/dishorderitemshare/${id}`);
+        await axios.delete(`${BASE_URL}/api/dishorderitemshare/${id}`);
         setShowModal(false);
         fetchData();
       } catch (err) {
