@@ -1,81 +1,138 @@
 const express = require("express");
 const router = express.Router();
 const { sql, poolPromise } = require("../db");
-
+ 
 // ================= GET ALL DISH ORDER ITEM SHARES =================
 router.get("/", async (req, res) => {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query(
-      "SELECT Id, OrderDishId, CustomerName, IsSelected, CreatedDate FROM dishOrderItemShare ORDER BY CreatedDate DESC"
-    );
+    const result = await pool.request().query(`
+SELECT
+    d.Id,
+    d.DishId,
+    dm.DishName,
+    d.CustomerName,
+    d.Amount,
+    d.FromDate,
+    d.ToDate,
+    d.IsSelected,
+    d.CreatedDate
+FROM dishOrderItemShare d
+LEFT JOIN DishMaster dm
+    ON d.DishId = dm.DishId
+ORDER BY d.CreatedDate DESC
+`);
     res.json(result.recordset);
   } catch (err) {
     console.error("GET Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+ 
 // ================= INSERT NEW DISH ORDER ITEM SHARE =================
 router.post("/", async (req, res) => {
   try {
-    const { CustomerName, IsSelected } = req.body;
-    const OrderDishId = req.body.OrderDishId ? req.body.OrderDishId : null;
-
+   const {
+  DishId,
+  CustomerName,
+  Amount,
+  FromDate,
+  ToDate,
+  IsSelected
+} = req.body;
     if (!CustomerName || !CustomerName.trim()) {
       return res.status(400).json({ error: "Customer Name is required." });
     }
-
+ 
     const pool = await poolPromise;
     await pool.request()
-      .input("OrderDishId", sql.UniqueIdentifier, OrderDishId)
-      .input("CustomerName", sql.NVarChar(100), CustomerName)
-      .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
+  .input("DishId", sql.UniqueIdentifier, DishId)
+  .input("CustomerName", sql.NVarChar(100), CustomerName)
+  .input("Amount", sql.Decimal(18, 2), Amount)
+  .input("FromDate", sql.Date, FromDate)
+  .input("ToDate", sql.Date, ToDate)
+  .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
       .query(`
-        INSERT INTO dishOrderItemShare (OrderDishId, CustomerName, IsSelected, CreatedDate)
-        VALUES (@OrderDishId, @CustomerName, @IsSelected, GETDATE())
+       INSERT INTO dishOrderItemShare
+(
+  DishId,
+  CustomerName,
+  Amount,
+  FromDate,
+  ToDate,
+  IsSelected,
+  CreatedDate
+)
+VALUES
+(
+  @DishId,
+  @CustomerName,
+  @Amount,
+  @FromDate,
+  @ToDate,
+  @IsSelected,
+  GETDATE()
+)
       `);
-
+ 
     res.json({ success: true, message: "Dish order item share inserted successfully" });
   } catch (err) {
-    console.error("INSERT Error:", err);
-    res.status(500).json({ error: "Insert Error" });
-  }
+  console.error("INSERT Error:", err);
+  res.status(500).json({
+    message: err.message,
+    details: err
+  });
+}
 });
-
+ 
 // ================= UPDATE DISH ORDER ITEM SHARE =================
 router.put("/:id", async (req, res) => {
   try {
-    const { CustomerName, IsSelected } = req.body;
+   const {
+  DishId,
+  CustomerName,
+  Amount,
+  FromDate,
+  ToDate,
+  IsSelected
+} = req.body;
     const { id } = req.params;
-
+ 
     if (!CustomerName || !CustomerName.trim()) {
       return res.status(400).json({ error: "Customer Name is required." });
     }
-
+ 
     const pool = await poolPromise;
     const result = await pool.request()
       .input("Id", sql.UniqueIdentifier, id)
       .input("CustomerName", sql.NVarChar(100), CustomerName)
+      .input("Amount", sql.Decimal(18, 2), req.body.Amount)
+      .input("FromDate", sql.Date, req.body.FromDate)
+      .input("ToDate", sql.Date, req.body.ToDate)
       .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
+      .input("DishId", sql.UniqueIdentifier, DishId)
       .query(`
-        UPDATE dishOrderItemShare
-        SET CustomerName = @CustomerName,
-            IsSelected = @IsSelected
-        WHERE Id = @Id
+       UPDATE dishOrderItemShare
+SET DishId = @DishId,
+    CustomerName = @CustomerName,
+    Amount = @Amount,
+    FromDate = @FromDate,
+    ToDate = @ToDate,
+    IsSelected = @IsSelected
+WHERE Id = @Id
       `);
-
+ 
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: "Dish order item share not found" });
     }
-
+ 
     res.json({ success: true, message: "Dish order item share updated successfully" });
   } catch (err) {
     console.error("UPDATE Error:", err);
     res.status(500).json({ error: "Update Error" });
   }
 });
-
+ 
 // ================= DELETE DISH ORDER ITEM SHARE =================
 router.delete("/:id", async (req, res) => {
   try {
@@ -84,16 +141,19 @@ router.delete("/:id", async (req, res) => {
     const result = await pool.request()
       .input("Id", sql.UniqueIdentifier, id)
       .query("DELETE FROM dishOrderItemShare WHERE Id = @Id");
-
+ 
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: "Dish order item share not found" });
     }
-
+ 
     res.json({ success: true, message: "Dish order item share deleted successfully" });
   } catch (err) {
     console.error("DELETE Error:", err);
     res.status(500).json({ error: "Delete Error" });
   }
 });
-
+ 
 module.exports = router;
+ 
+ 
+ 
