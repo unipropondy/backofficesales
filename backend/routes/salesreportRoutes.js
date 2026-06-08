@@ -1066,109 +1066,159 @@ router.get("/download-gst-pdf", async (req, res) => {
         return Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       };
 
-      const html = `<!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>Sales Summary</title>
-        <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Arial', sans-serif; font-size: 11px; padding: 15px; }
-  .header { font-weight: bold; margin-bottom: 15px; text-align: center; }
-  .header .company { font-size: 14px; }
-  .header .title { font-size: 12px; margin-top: 8px; }
-  .divider { border-top: 1px dashed #000; margin: 10px 0; }
-  .grid-container { display: table; width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 8px 0; }
-  .grid-col { display: table-cell; vertical-align: top; padding: 5px; }
-  .grid-title { font-weight: bold; margin-bottom: 8px; font-size: 11px; }
-  .data-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 10px; }
-  .data-row.bold { font-weight: bold; }
-  .data-row.border-top { border-top: 1px dashed #000; padding-top: 4px; }
-  .data-row.border-bottom { border-bottom: 1px dashed #000; padding-bottom: 4px; margin-bottom: 6px; }
-  .box-container { border: 1px solid #000; padding: 6px; margin-bottom: 10px; }
-</style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="company">${companyName}</div>
-          <div>${fullAddress}</div>
-          <div class="title">Sales Summary</div>
-          <div>As on ${finalFrom} to ${finalTo}</div>
-        </div>
-        <div class="divider"></div>
-        
-        <div class="grid-container" style="margin-bottom: 15px;">
-          <div class="grid-col" style="border-right: 1px solid #000;">
-            <div class="grid-title">Item Sales</div>
-            <div style="min-height: 150px;">
-              ${categories.map(c => `<div class="data-row"><span>${c.CategoryName}</span><span>${formatCurrency(c.Amount)}</span></div>`).join('')}
-            </div>
-            <div class="data-row bold border-top" style="justify-content: flex-end;">
-              <span>${formatCurrency(catTotal)}</span>
-            </div>
-          </div>
-          
-          <div class="grid-col" style="border-right: 1px solid #000;">
-            <div class="grid-title">Item Sales</div>
-            <div class="data-row"><span>ItemSales</span><span>${formatCurrency(p.ItemSales)}</span></div>
-            <div class="data-row"><span>ItemDisc</span><span>${formatCurrency(p.Discount)}</span></div>
-            <div class="data-row"><span>BillDisc</span><span>$0.00</span></div>
-            <div class="data-row"><span>RndAdjmt</span><span>${p.RndAdjmt < 0 ? '-' : ''}${formatCurrency(Math.abs(p.RndAdjmt))}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Sales</span><span>${formatCurrency(netSales)}</span></div>
-            <div class="data-row"><span>SVC 10%</span><span>${formatCurrency(p.SVC)}</span></div>
-            <div class="data-row"><span>GST</span><span>${formatCurrency(p.Tax)}</span></div>
-            <div class="data-row"><span>Tips</span><span>${formatCurrency(p.Tips)}</span></div>
-          </div>
-          
-          <div class="grid-col">
-            <div class="grid-title border-bottom">Sales Collections(Cards)</div>
-            <div class="data-row bold"><span>Total</span><span>${formatCurrency(p.TotalCards)}</span></div>
-            <div style="margin-top:20px;"></div>
-            <div class="grid-title border-bottom">Sales Collection (All)</div>
-            <div class="data-row"><span>CARD</span><span>${formatCurrency(p.TotalCards)}</span></div>
-            <div class="data-row"><span>CASH</span><span>${formatCurrency(p.Cash)}</span></div>
-            <div class="data-row"><span>CHEQUE</span><span>${formatCurrency(p.Cheque)}</span></div>
-            <div class="data-row"><span>LEDGER</span><span>${formatCurrency(p.Ledger)}</span></div>
-            <div class="data-row"><span>NEKTAR</span><span>${formatCurrency(p.Nektar)}</span></div>
-            <div class="data-row"><span>VOUCHER</span><span>${formatCurrency(p.Voucher)}</span></div>
-            <div class="data-row"><span>ENT</span><span>${formatCurrency(p.ENT)}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Total</span><span>${formatCurrency(p.Totcollect)}</span></div>
-          </div>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="grid-container">
-          <div class="grid-col" style="border-right: 1px solid #000;">
-            <div class="grid-title">FOC</div>
-            <div style="min-height: 50px;"></div>
-            <div class="data-row bold border-top"><span>Grand Total:</span><span>${formatCurrency(p.FOC)}</span></div>
-          </div>
-          
-          <div class="grid-col" style="border-right: 1px solid #000;">
-            <div class="grid-title">Sales Avg</div>
-            <div class="data-row"><span>Total Cover</span><span>${totalCover}</span></div>
-            <div class="data-row bold" style="margin-bottom: 10px;"><span>Avg/Cover</span><span>${formatCurrency(avgCover)}</span></div>
-            <div class="data-row"><span>Total PAX</span><span>${totalPax}</span></div>
-            <div class="data-row bold"><span>Avg/PAX</span><span>${formatCurrency(avgPax)}</span></div>
-          </div>
-          
-          <div class="grid-col">
-            <div class="grid-title border-bottom">Cheque/Ledger/Voucher/Credit/NEKTAR</div>
-            <div class="data-row"><span>Cheque</span><span>${formatCurrency(p.Cheque)}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Total</span><span>${formatCurrency(p.Cheque)}</span></div>
-            <div class="data-row" style="margin-top:10px;"><span>Ledger</span><span>${formatCurrency(p.Ledger)}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Total</span><span>${formatCurrency(p.Ledger)}</span></div>
-            <div class="data-row" style="margin-top:10px;"><span>NEKTAR</span><span>${formatCurrency(p.Nektar)}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Total</span><span>${formatCurrency(p.Nektar)}</span></div>
-            <div class="data-row" style="margin-top:10px;"><span>Voucher</span><span>${formatCurrency(p.Voucher)}</span></div>
-            <div class="data-row bold border-top border-bottom"><span>Total</span><span>${formatCurrency(p.Voucher)}</span></div>
-          </div>
-        </div>
-        
-        <div class="divider"></div>
-      </body>
-      </html>`;
+     html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${reportTitle}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 11px; color: #333; background: white; padding: 15px; }
+    
+    /* Header container using flexbox for 3-column layout */
+    .header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #1a3c5a;
+    }
+    
+    /* Left column - Logo */
+    .logo-box {
+      width: 100px;
+      text-align: left;
+    }
+    .logo-box img {
+      max-height: 50px;
+      max-width: 80px;
+      object-fit: contain;
+    }
+    
+    /* Center column - Company details */
+    .company-center {
+      flex: 1;
+      text-align: center;
+    }
+    .company-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1a3c5a;
+      text-transform: uppercase;
+    }
+    .company-sub {
+      font-size: 10px;
+      color: #555;
+      margin-top: 4px;
+    }
+    
+    /* Right column - Empty spacer */
+    .spacer-box {
+      width: 100px;
+    }
+    
+    .report-title { 
+      text-align: center; 
+      font-size: 14px; 
+      font-weight: 800; 
+      color: #1a3c5a; 
+      margin: 10px 0 5px; 
+      text-transform: uppercase; 
+    }
+    
+    .report-period { 
+      text-align: center; 
+      font-size: 10px; 
+      color: #555; 
+      margin-bottom: 15px; 
+    }
+    
+    .data-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 10px; 
+      margin-top: 8px; 
+    }
+    
+    .data-table th { 
+      background-color: #1a3c5a; 
+      color: white; 
+      padding: 8px 10px; 
+      text-align: center; 
+      border: 1px solid #2a4c6a; 
+      font-weight: 600; 
+    }
+    
+    .data-table td { 
+      border: 1px solid #e0e0e0; 
+      padding: 6px 10px; 
+    }
+    
+    .data-table tr:nth-child(even) { 
+      background-color: #f9f9f9; 
+    }
+    
+    .total-row td { 
+      background-color: #eef2f8; 
+      font-weight: 700; 
+      border-top: 2px solid #1a3c5a; 
+    }
+    
+    @media print {
+      body { padding: 0; margin: 0; }
+      .data-table th { 
+        background-color: #1a3c5a !important; 
+        color: white !important; 
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact; 
+      }
+      .data-table tr:nth-child(even) { 
+        background-color: #f9f9f9 !important; 
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact; 
+      }
+      .total-row td { 
+        background-color: #eef2f8 !important; 
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-wrap">
+    <div class="logo-box">
+      ${logoBase64 ? `<img src="${logoBase64}" alt="Logo">` : ''}
+    </div>
+    <div class="company-center">
+      <div class="company-name">${companyName}</div>
+      <div class="company-sub">${fullAddress || defaultAddress}</div>
+      <div class="company-sub">Phone: ${companyPhone}</div>
+    </div>
+    <div class="spacer-box"></div>
+  </div>
+  
+  <div class="report-title">${reportTitle}</div>
+  <div class="report-period">Period: ${fromDate} to ${toDate} &nbsp;|&nbsp; Printed: ${currentDateTime}</div>
+
+  <table class="data-table">
+    <colgroup>
+      ${colW19.map(w => `<col style="width:${w}%">`).join('')}
+    </colgroup>
+    <thead>
+      <tr>
+        ${allCols19.map(col => `<th>${headerAbbr[col] || col}</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>
+      ${singleTableRows}
+      <tr class="total-row">${gtRowCells}</tr>
+    </tbody>
+  </table>
+</body>
+</html>`;
 
       const pdfOptions = { format: 'A4', orientation: 'portrait', border: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' }, zoomFactor: "0.85" };
       
