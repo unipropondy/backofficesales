@@ -553,13 +553,12 @@ if (byItem === "Dish") {
     };
   }
   
-  // ✅ 8. Day End - Paymode Collection (PIVOTED SUMMARY FORMAT)
+// ✅ 8. Day End - Paymode Collection (PIVOTED SUMMARY FORMAT)
 if (dayEnd === "Paymode") {
   return {
     query: `
-      -- PIVOTED SUMMARY - One row per date with all pay modes as columns
       SELECT 
-        CONVERT(VARCHAR, sh.LastDayEndDate, 103) AS Date,
+        CONVERT(VARCHAR, CAST(sh.LastDayEndDate AS DATE), 103) AS Date,
         ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'CASH' THEN sts.SysAmount ELSE 0 END), 0) AS Cash,
         ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'CHEQUE' THEN sts.SysAmount ELSE 0 END), 0) AS Cheque,
         ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'VISA' THEN sts.SysAmount ELSE 0 END), 0) AS Visa,
@@ -573,10 +572,10 @@ if (dayEnd === "Paymode") {
         ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'NEKTAR' THEN sts.SysAmount ELSE 0 END), 0) AS Nektar
       FROM dbo.SettlementHeader sh
       INNER JOIN dbo.SettlementTotalSales sts ON sh.SettlementID = sts.SettlementID
-      WHERE sh.LastDayEndDate >= '${finalFrom}' 
-        AND sh.LastDayEndDate <= '${finalTo} 23:59:59'
-        AND sh.isDayEnd = 1
-      GROUP BY CONVERT(VARCHAR, sh.LastDayEndDate, 103)
+      WHERE sh.isDayEnd = 1
+        AND CAST(sh.LastDayEndDate AS DATE) >= CAST('${finalFrom}' AS DATE)
+        AND CAST(sh.LastDayEndDate AS DATE) <= CAST('${finalTo}' AS DATE)
+      GROUP BY CAST(sh.LastDayEndDate AS DATE)
       ORDER BY MIN(sh.LastDayEndDate)
     `
   };
@@ -1320,6 +1319,16 @@ router.get("/salesreport", async (req, res) => {
       dishGroup: req.query.dishGroup,
       reportType: req.query.reportType
     });
+
+
+    // ✅ ADD THIS DEBUG CODE RIGHT HERE (LINE 35-40 approximately)
+    if (req.query.dayEnd === "Paymode") {
+      console.log("=== PAYMODE DEBUG ===");
+      console.log("From Date:", req.query.fromDate);
+      console.log("To Date:", req.query.toDate);
+      console.log("SQL Query:", config.query);
+    }
+
     const result = await pool.request().query(config.query);
 
     if (req.query.bySales === "BusinessType") {
