@@ -32,6 +32,7 @@
     font-weight: 700;
     margin-bottom: 5px;
     font-family: 'Cambria', 'Times New Roman', serif;
+    text-align: center;
 }
  
 .der-filter-container {
@@ -41,6 +42,11 @@
     border: 1px solid var(--der-border);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     margin-bottom: 15px;
+
+    width: 90%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
  
 .der-filter-row {
@@ -141,6 +147,11 @@
     border: 1px solid var(--der-border);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     margin-top: 5px;
+
+    width: 90%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
  
 .der-table-wrapper {
@@ -208,6 +219,10 @@
     color: #888;
     font-size: 12px;
     font-family: 'Cambria', 'Times New Roman', serif;
+
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
  
 @media print {
