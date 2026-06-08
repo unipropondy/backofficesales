@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
  
     const pool = await poolPromise;
     await pool.request()
-  //.input("DishId", sql.UniqueIdentifier, DishId)
+  .input("DishId", sql.UniqueIdentifier, DishId)
   .input("CustomerName", sql.NVarChar(100), CustomerName)
   .input("Amount", sql.Decimal(18, 2), Amount)
   .input("FromDate", sql.Date, FromDate)
@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
       .query(`
 INSERT INTO dishOrderItemShare
 (
+  DishId,
   CustomerName,
   Amount,
   FromDate,
@@ -61,6 +62,7 @@ INSERT INTO dishOrderItemShare
 )
 VALUES
 (
+  @DishId,
   @CustomerName,
   @Amount,
   @FromDate,
@@ -105,10 +107,11 @@ router.put("/:id", async (req, res) => {
       .input("FromDate", sql.Date, req.body.FromDate)
       .input("ToDate", sql.Date, req.body.ToDate)
       .input("IsSelected", sql.Bit, IsSelected ? 1 : 0)
-    //  .input("DishId", sql.UniqueIdentifier, DishId)
+      .input("DishId", sql.UniqueIdentifier, DishId)
       .query(`
-      UPDATE dishOrderItemShare
-SET CustomerName = @CustomerName,
+UPDATE dishOrderItemShare
+SET DishId = @DishId,
+    CustomerName = @CustomerName,
     Amount = @Amount,
     FromDate = @FromDate,
     ToDate = @ToDate,

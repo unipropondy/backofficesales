@@ -25,6 +25,7 @@ app.use(cors({
 app.use(express.json());
 app.use(requestLogger);
 
+const dishRoutes = require("./routes/dishRoutes");
 const barcodeRoutes = require("./routes/barcodeRoutes");
 const organizationRoutes = require("./routes/organizationRoutes");
 const happyHoursRoutes = require("./routes/happyhours");
@@ -44,6 +45,7 @@ const dishGroupRoutes = require("./routes/dishGroupRoutes");
 const dishOrderItemShareRoutes = require("./routes/dishOrderItemShareRoutes");
 const salesReportRoutes = require("./routes/salesreportRoutes");
 
+app.use("/api/dish", dishRoutes);
 app.use("/api/barcode", barcodeRoutes);
 app.use("/api/dishorderitemshare", dishOrderItemShareRoutes);
 app.use("/api/organization", organizationRoutes);

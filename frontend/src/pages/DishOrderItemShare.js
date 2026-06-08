@@ -37,7 +37,7 @@ function DishOrderItemShare({ sidebarOpen }) {
  
  const fetchDishes = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/dish`);
+   const res = await axios.get(`${BASE_URL}/api/dish`);
     console.log("Dish List =", res.data);
     setDishList(res.data);
   } catch (err) {
@@ -79,7 +79,7 @@ function DishOrderItemShare({ sidebarOpen }) {
       Amount: item.Amount ?? "",
       FromDate: item.FromDate?.split("T")[0] ?? "",
       ToDate: item.ToDate?.split("T")[0] ?? "",
-      Active: item.Active === true || item.Active === 1,
+     Active: item.IsSelected === true || item.IsSelected === 1,
     });
     setShowModal(true);
   };
@@ -178,7 +178,7 @@ function DishOrderItemShare({ sidebarOpen }) {
                       <input
                         type="checkbox"
                         className="dishorderitemshare-custom-checkbox"
-                        checked={item.Active}
+                        checked={item.IsSelected === 1 || item.IsSelected === true}
                         readOnly
                       />
                     </td>
@@ -211,8 +211,8 @@ function DishOrderItemShare({ sidebarOpen }) {
   setForm({
     ...form,
     DishId: selectedDish?.DishId || "",
-    CustomerName: selectedDish?.DishName || "",
-    Amount: selectedDish?.Amount || ""
+    CustomerName: selectedDish?.Name || "",
+Amount: selectedDish?.Amount || ""
   });
 }}
             >
@@ -220,11 +220,11 @@ function DishOrderItemShare({ sidebarOpen }) {
  
               {dishList.map((dish) => (
                 <option
-                  key={dish.DishId}
-                  value={dish.DishId}
-                >
-                  {dish.DishName}
-                </option>
+  key={dish.DishId}
+  value={dish.DishId}
+>
+  {dish.Name}
+</option>
               ))}
             </select>
           </div>
