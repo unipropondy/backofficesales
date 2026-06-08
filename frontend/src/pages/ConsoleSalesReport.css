@@ -9,10 +9,6 @@
     --der-border: #d1d8dd;
     --der-table-header: #34495e;
     --der-text: #333;
-    --der-success: #27ae60;
-    --der-danger: #e74c3c;
-    --der-warning: #f39c12;
-    --der-info: #3498db;
 }
  
 .console-sales-report {
@@ -79,15 +75,9 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-date-picker:focus {
-    border-color: var(--der-primary);
-    box-shadow: 0 0 0 2px rgba(52, 73, 94, 0.1);
-}
- 
 .der-generate-row {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
 }
  
 .der-btn-generate {
@@ -107,12 +97,6 @@
 .der-btn-generate:hover {
     background-color: var(--der-primary-hover);
     transform: translateY(-1px);
-}
- 
-.der-btn-generate:disabled {
-    background-color: #95a5a6;
-    cursor: not-allowed;
-    transform: none;
 }
  
 .der-results-heading {
@@ -147,8 +131,6 @@
  
 .der-download-btn:hover {
     background: #fdfaf7;
-    border-color: var(--der-primary);
-    color: var(--der-primary);
 }
  
 .der-table-container {
@@ -163,46 +145,6 @@
  
 .der-table-wrapper {
     padding: 15px;
-}
- 
-/* Summary Cards Styles */
-.der-summary-cards {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    flex-wrap: wrap;
-}
- 
-.der-summary-card {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid var(--der-border);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
- 
-.der-summary-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
- 
-.der-summary-card-label {
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
- 
-.der-summary-card-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--der-primary);
 }
  
 /* Table Styles */
@@ -231,16 +173,11 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-table tr:hover td {
-    background-color: #f8f9fa;
-}
- 
 /* Section headers */
 .der-section-header td {
     background: #eaeff2 !important;
     font-weight: bold;
     color: #34495e;
-    font-size: 12px;
 }
  
 /* Total row */
@@ -273,269 +210,12 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-/* Section Headers for new features */
-.der-section-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--der-primary);
-    color: var(--der-primary);
-    font-family: 'Cambria', 'Times New Roman', serif;
-}
- 
-.der-subsection-title {
-    font-size: 12px;
-    font-weight: bold;
-    margin: 15px 0 8px 0;
-    color: var(--der-secondary);
-    font-family: 'Cambria', 'Times New Roman', serif;
-}
- 
-/* Color classes for different metrics */
-.der-text-success {
-    color: var(--der-success);
-}
- 
-.der-text-danger {
-    color: var(--der-danger);
-}
- 
-.der-text-warning {
-    color: var(--der-warning);
-}
- 
-.der-text-info {
-    color: var(--der-info);
-}
- 
-/* Paymode table specific styles */
-.der-paymode-table {
-    width: 100%;
-    margin-bottom: 20px;
-}
- 
-.der-paymode-table th {
-    background-color: var(--der-primary);
-}
- 
-/* Sales analysis table styles */
-.der-analysis-table {
-    width: 100%;
-    margin-bottom: 15px;
-}
- 
-.der-analysis-table th {
-    background-color: var(--der-secondary);
-}
- 
-/* Top items highlight */
-.der-top-item-row {
-    background-color: rgba(39, 174, 96, 0.05);
-}
- 
-/* Slow items highlight */
-.der-slow-item-row {
-    background-color: rgba(231, 76, 60, 0.05);
-}
- 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .console-sales-report {
-        padding: 10px;
-    }
-    
-    .console-sales-report.sidebar-open {
-        padding-left: 10px;
-    }
-    
-    .der-filter-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .der-filter-item {
-        width: 100%;
-    }
-    
-    .der-date-picker {
-        width: 100%;
-    }
-    
-    .der-summary-cards {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .der-summary-card {
-        width: 100%;
-    }
-    
-    .der-table-wrapper {
-        padding: 10px;
-        overflow-x: auto;
-    }
-    
-    .der-table {
-        font-size: 10px;
-    }
-    
-    .der-table th,
-    .der-table td {
-        padding: 6px 8px;
-    }
-    
-    .der-summary-card-value {
-        font-size: 18px;
-    }
-}
- 
-/* Print Styles */
 @media print {
     .der-header-title,
     .der-filter-container,
     .der-results-heading,
-    .der-action-bar,
-    .der-btn-generate,
-    .der-download-btn {
-        display: none !important;
-    }
-    
-    .console-sales-report {
-        padding: 0 !important;
-        background: white;
-    }
-    
-    .console-sales-report.sidebar-open {
-        padding-left: 0 !important;
-    }
-    
-    .der-table-container {
-        box-shadow: none;
-        border: none;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .der-table-wrapper {
-        padding: 0;
-    }
-    
-    .der-table {
-        font-size: 9px;
-    }
-    
-    .der-table th,
-    .der-table td {
-        padding: 4px 6px;
-    }
-    
-    .der-summary-cards {
-        background: none;
-        padding: 0;
-        margin-bottom: 15px;
-    }
-    
-    .der-summary-card {
-        border: 1px solid #ddd;
-        box-shadow: none;
-    }
-    
-    @page {
-        margin: 1.5cm;
-        size: A4;
-    }
-    
-    body {
-        margin: 0;
-        padding: 0;
+    .der-action-bar {
+        display: none;
     }
 }
  
-/* Scrollbar Styling */
-.der-table-container::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
- 
-.der-table-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-}
- 
-.der-table-container::-webkit-scrollbar-thumb {
-    background: var(--der-border);
-    border-radius: 4px;
-}
- 
-.der-table-container::-webkit-scrollbar-thumb:hover {
-    background: var(--der-primary);
-}
- 
-/* Loading Animation */
-@keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
-}
- 
-.der-loading {
-    animation: pulse 1.5s ease-in-out infinite;
-}
- 
-/* Tooltip Styles */
-.der-tooltip {
-    position: relative;
-    cursor: help;
-}
- 
-.der-tooltip:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--der-primary);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    white-space: nowrap;
-    z-index: 1000;
-}
- 
-/* Badge Styles */
-.der-badge {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 9px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
- 
-.der-badge-success {
-    background: rgba(39, 174, 96, 0.2);
-    color: var(--der-success);
-}
- 
-.der-badge-danger {
-    background: rgba(231, 76, 60, 0.2);
-    color: var(--der-danger);
-}
- 
-.der-badge-warning {
-    background: rgba(243, 156, 18, 0.2);
-    color: var(--der-warning);
-}
- 
-.der-badge-info {
-    background: rgba(52, 152, 219, 0.2);
-    color: var(--der-info);
-}
