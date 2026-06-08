@@ -553,30 +553,30 @@ if (byItem === "Dish") {
     };
   }
   
-// ✅ 8. Day End - Paymode Collection (PIVOTED SUMMARY FORMAT)
+// ✅ Alternative Paymode Report - Using RestaurantInvoice and PaymentDetail (No Settlement data needed)
 if (dayEnd === "Paymode") {
   return {
     query: `
       SELECT 
-        CONVERT(VARCHAR, CAST(sh.LastDayEndDate AS DATE), 103) AS Date,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'CASH' THEN sts.SysAmount ELSE 0 END), 0) AS Cash,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'CHEQUE' THEN sts.SysAmount ELSE 0 END), 0) AS Cheque,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'VISA' THEN sts.SysAmount ELSE 0 END), 0) AS Visa,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'MASTERCARD' THEN sts.SysAmount ELSE 0 END), 0) AS Master,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'AMEX' THEN sts.SysAmount ELSE 0 END), 0) AS Amex,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'DINERS' THEN sts.SysAmount ELSE 0 END), 0) AS Diners,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'JCB' THEN sts.SysAmount ELSE 0 END), 0) AS JCB,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'NETS' THEN sts.SysAmount ELSE 0 END), 0) AS Nets,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) IN ('VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS') THEN sts.SysAmount ELSE 0 END), 0) AS [Total(Cards)],
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) NOT IN ('CASH', 'CHEQUE', 'VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS', 'NEKTAR') THEN sts.SysAmount ELSE 0 END), 0) AS Others,
-        ISNULL(SUM(CASE WHEN UPPER(sts.PayMode) = 'NEKTAR' THEN sts.SysAmount ELSE 0 END), 0) AS Nektar
-      FROM dbo.SettlementHeader sh
-      INNER JOIN dbo.SettlementTotalSales sts ON sh.SettlementID = sts.SettlementID
-      WHERE sh.isDayEnd = 1
-        AND CAST(sh.LastDayEndDate AS DATE) >= CAST('${finalFrom}' AS DATE)
-        AND CAST(sh.LastDayEndDate AS DATE) <= CAST('${finalTo}' AS DATE)
-      GROUP BY CAST(sh.LastDayEndDate AS DATE)
-      ORDER BY MIN(sh.LastDayEndDate)
+        CONVERT(VARCHAR, CAST(ri.InvoiceDate AS DATE), 103) AS Date,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'CASH' THEN pd.Amount ELSE 0 END), 0) AS Cash,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'CHEQUE' THEN pd.Amount ELSE 0 END), 0) AS Cheque,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'VISA' THEN pd.Amount ELSE 0 END), 0) AS Visa,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'MASTERCARD' THEN pd.Amount ELSE 0 END), 0) AS Master,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'AMEX' THEN pd.Amount ELSE 0 END), 0) AS Amex,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'DINERS' THEN pd.Amount ELSE 0 END), 0) AS Diners,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'JCB' THEN pd.Amount ELSE 0 END), 0) AS JCB,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NETS' THEN pd.Amount ELSE 0 END), 0) AS Nets,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) IN ('VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS') THEN pd.Amount ELSE 0 END), 0) AS [Total(Cards)],
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) NOT IN ('CASH', 'CHEQUE', 'VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS', 'NEKTAR') THEN pd.Amount ELSE 0 END), 0) AS Others,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NEKTAR' THEN pd.Amount ELSE 0 END), 0) AS Nektar
+      FROM dbo.RestaurantInvoice ri
+      INNER JOIN dbo.PaymentDetail pd ON ri.RestaurantBillId = pd.RestaurantBillId
+      INNER JOIN dbo.Paymode pm ON pd.Paymode = pm.Position
+      WHERE CAST(ri.InvoiceDate AS DATE) >= CAST('${finalFrom}' AS DATE)
+        AND CAST(ri.InvoiceDate AS DATE) <= CAST('${finalTo}' AS DATE)
+      GROUP BY CAST(ri.InvoiceDate AS DATE)
+      ORDER BY MIN(ri.InvoiceDate)
     `
   };
 }
