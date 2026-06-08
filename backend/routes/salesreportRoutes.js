@@ -2844,15 +2844,23 @@ else if (req.query.dayEnd === "Paymode") {
 </style>
  </head>
       <body>
-        <div class="header-wrap">
-          <div class="logo-box">${logoBase64 ? `<img src="${logoBase64}" alt="Logo">` : '<div style="width:60px"></div>'}</div>
-          <div class="company-center">
-            <div class="company-name">${companyName}</div>
-            <div class="company-sub">${fullAddress || defaultAddress}</div>
-            <div class="company-sub">Phone: ${companyPhone}</div>
-          </div>
-          <div style="width:60px;"></div>
-        </div>
+       <table class="header-table">
+<tr>
+<td class="logo-cell">
+
+      ${logoBase64 ? `<img src="${logoBase64}" alt="Company Logo">` : ''}
+</td>
+ 
+    <td class="company-cell">
+<div class="company-name">${companyName}</div>
+<div class="company-address">${fullAddress || defaultAddress}</div>
+<div class="company-phone">Phone: ${companyPhone}</div>
+</td>
+ 
+    <td class="spacer-cell"></td>
+</tr>
+</table>
+ 
         <div class="report-title">${reportTitle}</div>
         <div class="report-period">Period: ${fromDate} to ${toDate} &nbsp;|&nbsp; Printed: ${currentDateTime}</div>
 
@@ -2881,15 +2889,15 @@ else if (req.query.dayEnd === "Paymode") {
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 9px; color: #333; background: white; padding: 12px; width: 100%; }
-          .header-table { width: 100%; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid #1a3c5a; }
+          .header-table { width: 100%; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #1a3c5a; }
           .header-table td { border: none; padding: 0; }
-          .logo-cell { width: 80px; text-align: left; vertical-align: middle; }
-          .logo-cell img { max-height: 45px; max-width: 65px; object-fit: contain; }
+          .logo-cell { width: 100px; text-align: left; vertical-align: middle; }
+          .logo-cell img { max-height: 50px; max-width: 80px; object-fit: contain; }
           .company-cell { text-align: center; vertical-align: middle; }
-          .company-name { font-size: 13px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
-          .company-address { font-size: 8px; color: #555; margin-top: 2px; }
-          .company-phone { font-size: 8px; color: #666; margin-top: 1px; }
-          .spacer-cell { width: 80px; }
+          .company-name { font-size: 14px; font-weight: 800; color: #1a3c5a; text-transform: uppercase; }
+          .company-address { font-size: 10px; color: #555; margin-top: 2px; }
+          .company-phone { font-size: 10px; color: #666; margin-top: 1px; }
+          .spacer-cell { width: 100px; }
           .report-title { text-align: center; font-size: 12px; font-weight: 800; color: #1a3c5a; margin: 4px 0 2px; text-transform: uppercase; }
           .report-subtitle { text-align: center; font-size: 8px; color: #555; margin-bottom: 10px; }
           .data-table { width: 100%; border-collapse: collapse; font-size: 9px; margin-top: 5px; table-layout: auto; }
