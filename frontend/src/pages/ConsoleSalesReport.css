@@ -239,10 +239,8 @@
     .der-filter-container,
     .der-results-heading,
     .der-action-bar {
-         width: 95%;
-    max-width: 1200px;
         display: none;
-
+        
     }
 }
  
