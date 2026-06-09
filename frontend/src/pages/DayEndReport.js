@@ -78,9 +78,16 @@ const DayEndReport = ({ sidebarOpen }) => {
             return;
         }
 
-        const now = new Date();
-        const printDate = now.toLocaleDateString('en-GB');
-        const printTime = now.toLocaleTimeString('en-GB');
+const now = new Date();
+
+const printDate = now.toLocaleDateString('en-GB', {
+  timeZone: 'Asia/Singapore'
+});
+
+const printTime = now.toLocaleTimeString('en-GB', {
+  timeZone: 'Asia/Singapore',
+  hour12: false
+});
         const selectedDateFormatted = formatDate(selectedDate);
 
         let htmlContent = `

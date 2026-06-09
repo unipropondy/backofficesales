@@ -43,7 +43,11 @@ router.get('/', async (req, res) => {
         `;
  
         if (fromDate && toDate) {
-      headerQuery += ` WHERE CAST(LastSettlementDate AS DATE) BETWEEN @start AND @end`;
+      headerQuery += `
+WHERE CAST(
+    DATEADD(HOUR, 8, LastSettlementDate)
+AS DATE) BETWEEN @start AND @end
+`;
         }
  
         const headerRequest = pool.request();
@@ -186,14 +190,15 @@ router.get('/dates', async (req, res) => {
        
         const result = await pool.request().query(`
             SELECT DISTINCT
-                CAST(LastSettlementDate AS DATE) as OrderDate,
+                CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE) as OrderDate,
                 COUNT(*) as OrderCount,
                 SUM(ISNULL(SubTotal, 0)) as TotalAmount,
                 SUM(ISNULL(InvoiceCount, 0)) as TotalBills
             FROM SettlementHeader
             WHERE LastSettlementDate IS NOT NULL
-            GROUP BY CAST(LastSettlementDate AS DATE)
-            ORDER BY CAST(LastSettlementDate AS DATE) DESC
+           GROUP BY CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE)
+
+ORDER BY CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE) DESC
         `);
        
         res.json({
