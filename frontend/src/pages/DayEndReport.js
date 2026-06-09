@@ -84,9 +84,9 @@ const printDate = now.toLocaleDateString('en-GB', {
   timeZone: 'Asia/Singapore'
 });
 
-const printTime = now.toLocaleTimeString('en-GB', {
+const printTime = now.toLocaleTimeString('en-US', {
   timeZone: 'Asia/Singapore',
-  hour12: false
+  hour12: true
 });
         const selectedDateFormatted = formatDate(selectedDate);
 
