@@ -60,8 +60,12 @@
             const pool = await poolPromise;
         
             // Default to today if dates are missing
-            const start = fromDate || new Date().toISOString().split('T')[0];
-            const end = toDate || new Date().toISOString().split('T')[0];
+        const singaporeToday = new Date().toLocaleDateString('en-CA', {
+  timeZone: 'Asia/Singapore'
+});
+
+const start = fromDate || singaporeToday;
+const end = toDate || singaporeToday;
     
             console.log(`📊 Report Request - Type: ${type}, From: ${start}, To: ${end}`);
 
@@ -614,8 +618,12 @@
             const { fromDate, toDate } = req.query;
             const pool = await poolPromise;
         
-            const start = fromDate || new Date().toISOString().split('T')[0];
-            const end = toDate || new Date().toISOString().split('T')[0];
+const singaporeToday = new Date().toLocaleDateString('en-CA', {
+  timeZone: 'Asia/Singapore'
+});
+
+const start = fromDate || singaporeToday;
+const end = toDate || singaporeToday;
     
             const groupQuery = `
                 SELECT

@@ -4,7 +4,9 @@ import axios from "axios";
 import "./ConsoleSalesReport.css";
 
 const ConsoleSalesReport = ({ sidebarOpen }) => {
-    const today = new Date().toISOString().split('T')[0];
+   const today = new Date().toLocaleDateString('en-CA', {
+  timeZone: 'Asia/Singapore'
+});
     const [fromDate, setFromDate] = useState(today);
     const [toDate, setToDate] = useState(today);
 
@@ -528,7 +530,15 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         </div>
                     </div>
                     <div style={{ textAlign: 'center', fontSize: '10px', color: '#666' }}>
-                        Printed On: {new Date().toLocaleDateString('en-GB')} {new Date().toLocaleTimeString('en-GB')}
+                       Printed On: {
+  new Date().toLocaleDateString('en-GB', {
+    timeZone: 'Asia/Singapore'
+  })
+} {
+  new Date().toLocaleTimeString('en-GB', {
+    timeZone: 'Asia/Singapore'
+  })
+}
                     </div>
                     <div style={{ textAlign: 'center' }}>
                         <div style={{ borderTop: '1px solid #333', width: '200px', paddingTop: '5px', fontSize: '11px' }}>
@@ -578,9 +588,15 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
             return;
         }
 
-        const now = new Date();
-        const printDate = now.toLocaleDateString('en-GB');
-        const printTime = now.toLocaleTimeString('en-GB');
+       const now = new Date();
+
+const printDate = now.toLocaleDateString('en-GB', {
+  timeZone: 'Asia/Singapore'
+});
+
+const printTime = now.toLocaleTimeString('en-GB', {
+  timeZone: 'Asia/Singapore'
+});
 
         let htmlContent = `
         <!DOCTYPE html>
