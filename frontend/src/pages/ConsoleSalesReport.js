@@ -535,9 +535,12 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
     timeZone: 'Asia/Singapore'
   })
 } {
-  new Date().toLocaleTimeString('en-GB', {
-    timeZone: 'Asia/Singapore'
-  })
+new Date().toLocaleTimeString('en-US', {
+  timeZone: 'Asia/Singapore',
+  hour: 'numeric',
+  minute: '2-digit',
+  hour12: true
+})
 }
                     </div>
                     <div style={{ textAlign: 'center' }}>
@@ -594,8 +597,11 @@ const printDate = now.toLocaleDateString('en-GB', {
   timeZone: 'Asia/Singapore'
 });
 
-const printTime = now.toLocaleTimeString('en-GB', {
-  timeZone: 'Asia/Singapore'
+const printTime = now.toLocaleTimeString('en-US', {
+  timeZone: 'Asia/Singapore',
+  hour: 'numeric',
+  minute: '2-digit',
+  hour12: true
 });
 
         let htmlContent = `
