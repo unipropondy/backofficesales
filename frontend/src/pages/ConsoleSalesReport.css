@@ -28,7 +28,7 @@
     padding: 20px;
 }
  
-.der-header-title {
+.console-header-title {
     background: transparent;
     color: #2c2c2c;
     padding: 10px 0;
@@ -44,7 +44,7 @@
     margin-right: auto;
 }
  
-.der-filter-container {
+.console-filter-container {
     background: white;
     padding: 15px;
     border-radius: 12px;
@@ -58,7 +58,7 @@
     margin-right: auto;
 }
  
-.der-filter-row {
+.console-filter-row {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
@@ -66,12 +66,12 @@
     align-items: flex-end;
 }
  
-.der-filter-item {
+.console-filter-item {
     display: flex;
     flex-direction: column;
 }
  
-.der-filter-item label {
+.console-filter-item label {
     font-size: 11px;
     font-weight: 600;
     color: #555;
@@ -79,7 +79,7 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-date-picker {
+.console-date-picker {
     padding: 4px 8px;
     border: 1px solid var(--der-border);
     border-radius: 6px;
@@ -90,12 +90,12 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-generate-row {
+.console-generate-row {
     display: flex;
     justify-content: flex-end;
 }
  
-.der-btn-generate {
+.console-btn-generate {
     background-color: var(--der-primary);
     color: white;
     border: none;
@@ -109,12 +109,12 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-btn-generate:hover {
+.console-btn-generate:hover {
     background-color: var(--der-primary-hover);
     transform: translateY(-1px);
 }
  
-.der-results-heading {
+.console-results-heading {
     padding: 8px 0;
     font-size: 13px;
     font-weight: bold;
@@ -123,13 +123,13 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-action-bar {
+.console-action-bar {
     display: flex;
     justify-content: flex-end;
     padding: 8px 0;
 }
  
-.der-download-btn {
+.console-download-btn {
     background: white;
     color: var(--der-text);
     border: 1px solid var(--der-border);
@@ -144,11 +144,11 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-download-btn:hover {
+.console-download-btn:hover {
     background: #fdfaf7;
 }
  
-.der-table-container {
+.console-table-container {
     padding: 0;
     overflow-x: auto;
     background: white;
@@ -163,19 +163,19 @@
     margin-right: auto;
 }
  
-.der-table-wrapper {
+.console-table-wrapper {
     padding: 15px;
 }
  
 /* Table Styles */
-.der-table {
+.console-table {
     border-collapse: collapse;
     font-size: 11px;
     width: 100%;
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-table th {
+.console-table th {
     background-color: var(--der-table-header);
     color: #ffffff;
     font-weight: 700;
@@ -187,42 +187,42 @@
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
-.der-table td {
+.console-table td {
     padding: 8px 12px;
     border-bottom: 1px solid #f0f2f5;
     font-family: 'Cambria', 'Times New Roman', serif;
 }
  
 /* Section headers */
-.der-section-header td {
+.console-section-header td {
     background: #eaeff2 !important;
     font-weight: bold;
     color: #34495e;
 }
  
 /* Total row */
-.der-total-row td {
+.console-total-row td {
     background: #f8f9fa !important;
     font-weight: bold;
 }
  
-.der-text-center {
+.console-text-center {
     text-align: center;
 }
  
-.der-text-right {
+.console-text-right {
     text-align: right;
 }
  
-.der-th-center {
+.console-th-center {
     text-align: center !important;
 }
  
-.der-th-right {
+.console-th-right {
     text-align: right !important;
 }
  
-.der-empty {
+.console-empty {
     padding: 40px 20px;
     text-align: center;
     color: #888;
@@ -233,18 +233,19 @@
     max-width: 1400px;
     margin: 0 auto;
 }
- .der-filter-container,
-.der-table-container {
+ 
+.console-filter-container,
+.console-table-container {
     width: 100%;
     max-width: 950px;
     margin-left: auto;
     margin-right: auto;
 } 
 @media print {
-    .der-header-title,
-    .der-filter-container,
-    .der-results-heading,
-    .der-action-bar {
+    .console-header-title,
+    .console-filter-container,
+    .console-results-heading,
+    .console-action-bar {
         display: none;
     }
 }
