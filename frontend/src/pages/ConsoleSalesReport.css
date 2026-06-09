@@ -24,10 +24,8 @@
 }
  
 .console-sales-report.sidebar-open {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-    padding-left: 20px;
-    
+    width: 100%;
+    padding: 20px;
 }
  
 .der-header-title {
@@ -155,7 +153,7 @@
     margin-top: 5px;
 
     width: 100%;
-    max-width: 100px;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -230,7 +228,13 @@
     max-width: 1400px;
     margin: 0 auto;
 }
- 
+ .der-filter-container,
+.der-table-container {
+    width: 100%;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+} 
 @media print {
     .der-header-title,
     .der-filter-container,
