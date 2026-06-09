@@ -414,34 +414,42 @@ const printTime = now.toLocaleTimeString('en-US', {
             <div className="dayend-header-title">Day End Report</div>
 
             <div className="dayend-filter-container">
-                <div className="dayend-filter-row">
-                    <div className="dayend-filter-item">
-                        <label>DAY END DATE</label>
-                        <input
-                            type="date"
-                            className="dayend-date-picker"
-                            value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
-                        />
-                    </div>
-                </div>
+    <div className="dayend-filter-row">
 
-                <div className="dayend-generate-row">
-                    <button className="dayend-btn-generate" onClick={handleGenerate} disabled={loading}>
-                        {loading ? "Loading..." : "Generate"}
-                    </button>
-                </div>
-            </div>
+        <div className="dayend-filter-item">
+            <label>DAY END DATE</label>
+            <input
+                type="date"
+                className="dayend-date-picker"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+            />
+        </div>
 
-            <div className="dayend-results-heading">Result(s)</div>
+        <div className="dayend-generate-row">
+            <button
+                className="dayend-btn-generate"
+                onClick={handleGenerate}
+                disabled={loading}
+            >
+                {loading ? "Loading..." : "Generate"}
+            </button>
 
-            <div className="dayend-action-bar">
-                {reportData && (
-                    <button className="dayend-download-btn" onClick={handleDownload}>
-                        <span style={{ marginRight: '8px' }}>⬇️</span> Report
-                    </button>
-                )}
-            </div>
+            {reportData && (
+                <button
+                    className="dayend-download-btn"
+                    onClick={handleDownload}
+                >
+                    <span style={{ marginRight: "8px" }}>⬇️</span>
+                    Report
+                </button>
+            )}
+        </div>
+
+    </div>
+</div>
+
+
 
             <div className="dayend-table-container">
                 {loading ? (
