@@ -1173,9 +1173,20 @@ router.get("/download-gst-pdf", async (req, res) => {
       return res.status(404).send("No data found for the selected criteria");
     }
 
-    const currentDate = new Date().toLocaleDateString('en-GB');
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    const currentDateTime = `${currentDate}, ${currentTime}`;
+    const now = new Date();
+
+const currentDate = now.toLocaleDateString('en-GB', {
+  timeZone: 'Asia/Singapore'
+});
+
+const currentTime = now.toLocaleTimeString('en-US', {
+  timeZone: 'Asia/Singapore',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true
+});
+
+const currentDateTime = `${currentDate}, ${currentTime}`;
 
     const grandTotalSales = rawData.reduce((sum, row) => sum + (row.TotalSales || 0), 0);
     const grandTotalTax = rawData.reduce((sum, row) => sum + (row.TotalTax || 0), 0);
@@ -1668,9 +1679,20 @@ router.get("/download-pdf", async (req, res) => {
 
     const fromDate = req.query.fromDate || "";
     const toDate = req.query.toDate || "";
-    const currentDate = new Date().toLocaleDateString('en-GB');
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    const currentDateTime = `${currentDate}, ${currentTime}`;
+const now = new Date();
+
+const currentDate = now.toLocaleDateString('en-GB', {
+  timeZone: 'Asia/Singapore'
+});
+
+const currentTime = now.toLocaleTimeString('en-US', {
+  timeZone: 'Asia/Singapore',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true
+});
+
+const currentDateTime = `${currentDate}, ${currentTime}`;
 
     let reportTitle = "SALES REPORT";
     let displayColumns = [];
