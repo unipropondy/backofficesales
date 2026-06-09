@@ -411,133 +411,133 @@ const printTime = now.toLocaleTimeString('en-US', {
 
     return (
         <div className={`dayend-report ${sidebarOpen ? "sidebar-open" : ""}`}>
-            <div className="der-header-title">Day End Report</div>
+            <div className="dayend-header-title">Day End Report</div>
 
-            <div className="der-filter-container">
-                <div className="der-filter-row">
-                    <div className="der-filter-item">
+            <div className="dayend-filter-container">
+                <div className="dayend-filter-row">
+                    <div className="dayend-filter-item">
                         <label>DAY END DATE</label>
                         <input
                             type="date"
-                            className="der-date-picker"
+                            className="dayend-date-picker"
                             value={selectedDate}
                             onChange={(e) => setSelectedDate(e.target.value)}
                         />
                     </div>
                 </div>
 
-                <div className="der-generate-row">
-                    <button className="der-btn-generate" onClick={handleGenerate} disabled={loading}>
+                <div className="dayend-generate-row">
+                    <button className="dayend-btn-generate" onClick={handleGenerate} disabled={loading}>
                         {loading ? "Loading..." : "Generate"}
                     </button>
                 </div>
             </div>
 
-            <div className="der-results-heading">Result(s)</div>
+            <div className="dayend-results-heading">Result(s)</div>
 
-            <div className="der-action-bar">
+            <div className="dayend-action-bar">
                 {reportData && (
-                    <button className="der-download-btn" onClick={handleDownload}>
+                    <button className="dayend-download-btn" onClick={handleDownload}>
                         <span style={{ marginRight: '8px' }}>⬇️</span> Report
                     </button>
                 )}
             </div>
 
-            <div className="der-table-container">
+            <div className="dayend-table-container">
                 {loading ? (
-                    <div className="der-empty">Loading...</div>
+                    <div className="dayend-empty">Loading...</div>
                 ) : showResults && reportData ? (
-                    <div className="der-table-wrapper">
-                        <table className="der-table">
+                    <div className="dayend-table-wrapper">
+                        <table className="dayend-table">
                             <thead>
                                 <tr>
                                     <th>Particulars</th>
-                                    <th className="der-th-center">Amount</th>
+                                    <th className="dayend-th-center">Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {/* Sales Detail Section */}
-                                <tr className="der-section-header">
+                                <tr className="dayend-section-header">
                                     <td colSpan="2">Sales Detail</td>
                                 </tr>
                                 <tr>
                                     <td>Total Sales</td>
-                                    <td className="der-text-center">{(reportData.salesDetail?.totalSales || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.salesDetail?.totalSales || 0).toFixed(2)}</td>
                                 </tr>
                                 <tr>
                                     <td>Round Off</td>
-                                    <td className="der-text-center">{(reportData.salesDetail?.roundOff || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.salesDetail?.roundOff || 0).toFixed(2)}</td>
                                 </tr>
-                                <tr className="der-total-row">
+                                <tr className="dayend-total-row">
                                     <td><strong>Total</strong></td>
-                                    <td className="der-text-center"><strong>{(reportData.salesDetail?.netTotal || 0).toFixed(2)}</strong></td>
+                                    <td className="dayend-text-center"><strong>{(reportData.salesDetail?.netTotal || 0).toFixed(2)}</strong></td>
                                 </tr>
 
                                 {/* Paymode Detail Section */}
-                                <tr className="der-section-header">
+                                <tr className="dayend-section-header">
                                     <td colSpan="2">Paymode Detail</td>
                                 </tr>
                                 {Object.entries(reportData.paymodeDetail || {}).map(([key, value]) => (
                                     <tr key={key}>
-                                        <td className="der-particulars-cell">
+                                        <td className="dayend-particulars-cell">
                                             <span>{key}</span>
-                                            <span className="der-particulars-right">{reportData.receiptCount || 0}</span>
+                                            <span className="dayend-particulars-right">{reportData.receiptCount || 0}</span>
                                         </td>
-                                        <td className="der-text-center">{(value || 0).toFixed(2)}</td>
+                                        <td className="dayend-text-center">{(value || 0).toFixed(2)}</td>
                                     </tr>
                                 ))}
-                                <tr className="der-total-row">
+                                <tr className="dayend-total-row">
                                     <td><strong>Total</strong></td>
-                                    <td className="der-text-center"><strong>{Object.values(reportData.paymodeDetail || {}).reduce((a, b) => a + b, 0).toFixed(2)}</strong></td>
+                                    <td className="dayend-text-center"><strong>{Object.values(reportData.paymodeDetail || {}).reduce((a, b) => a + b, 0).toFixed(2)}</strong></td>
                                 </tr>
 
                                 {/* Settlement Detail Section */}
-                                <tr className="der-section-header">
+                                <tr className="dayend-section-header">
                                     <td colSpan="2">Settlement Detail</td>
                                 </tr>
                                 <tr>
                                     <td>Cash Total</td>
-                                    <td className="der-text-center">{(reportData.settlementDetail?.cashTotal || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.settlementDetail?.cashTotal || 0).toFixed(2)}</td>
                                 </tr>
                                 <tr>
                                     <td>Other Total</td>
-                                    <td className="der-text-center">{(reportData.settlementDetail?.otherTotal || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.settlementDetail?.otherTotal || 0).toFixed(2)}</td>
                                 </tr>
 
                                 {/* Analysis Section */}
-                                <tr className="der-section-header">
+                                <tr className="dayend-section-header">
                                     <td colSpan="2">Analysis</td>
                                 </tr>
                                 <tr>
                                     <td>Sales Amount</td>
-                                    <td className="der-text-center">{(reportData.analysis?.salesAmount || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.analysis?.salesAmount || 0).toFixed(2)}</td>
                                 </tr>
                                 <tr>
                                     <td>No of Bills</td>
-                                    <td className="der-text-center">{reportData.analysis?.noOfBills || 0}</td>
+                                    <td className="dayend-text-center">{reportData.analysis?.noOfBills || 0}</td>
                                 </tr>
                                 <tr>
                                     <td>Avg/Bill</td>
-                                    <td className="der-text-center">{(reportData.analysis?.avgPerBill || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.analysis?.avgPerBill || 0).toFixed(2)}</td>
                                 </tr>
 
                                 {/* Void Detail Section */}
-                                <tr className="der-section-header">
+                                <tr className="dayend-section-header">
                                     <td colSpan="2">Void Detail</td>
                                 </tr>
                                 <tr>
                                     <td>Void Item Qty</td>
-                                    <td className="der-text-center">{reportData.voidDetail?.voidItemQty || 0}</td>
+                                    <td className="dayend-text-center">{reportData.voidDetail?.voidItemQty || 0}</td>
                                 </tr>
                                 <tr>
                                     <td>Void Item Amount</td>
-                                    <td className="der-text-center">{(reportData.voidDetail?.voidItemAmount || 0).toFixed(2)}</td>
+                                    <td className="dayend-text-center">{(reportData.voidDetail?.voidItemAmount || 0).toFixed(2)}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 ) : (
-                    <div className="der-empty">Select date and click Generate to see results</div>
+                    <div className="dayend-empty">Select date and click Generate to see results</div>
                 )}
             </div>
         </div>
