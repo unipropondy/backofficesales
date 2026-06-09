@@ -61,50 +61,50 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
     
     const renderSummaryReport = () => {
         if (!reportData || !reportData.data) {
-            return <div className="der-empty">No data available</div>;
+            return <div className="console-empty">No data available</div>;
         }
         const data = reportData.data;
         
         const dishGroupName = data.DishGroupName || "";
 
         return (
-            <table className="der-table">
+            <table className="console-table">
                 <thead>
-                    <tr><th>Particulars</th><th className="der-th-center">Amount</th></tr>
+                    <tr><th>Particulars</th><th className="console-th-center">Amount</th></tr>
                 </thead>
                 <tbody>
-                    <tr className="der-section-header"><td colSpan="2">Report Total</td></tr>
-                    <tr><td>Net Sales</td><td className="der-text-right">{(data.NetSales || 0).toFixed(2)}</td></tr>
-                    <tr><td>Service Charge</td><td className="der-text-right">{(data.ServiceCharge || 0).toFixed(2)}</td></tr>
-                    <tr><td>Tax Collected</td><td className="der-text-right">{(data.TaxCollected || 0).toFixed(2)}</td></tr>
-                    <tr><td>Rounding & Excess</td><td className="der-text-right">{(data.Rounding || 0).toFixed(2)}</td></tr>
-                    <tr className="der-total-row"><td>Total Revenue</td><td className="der-text-right">{(data.TotalRevenue || 0).toFixed(2)}</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Report Total</td></tr>
+                    <tr><td>Net Sales</td><td className="console-text-right">{(data.NetSales || 0).toFixed(2)}</td></tr>
+                    <tr><td>Service Charge</td><td className="console-text-right">{(data.ServiceCharge || 0).toFixed(2)}</td></tr>
+                    <tr><td>Tax Collected</td><td className="console-text-right">{(data.TaxCollected || 0).toFixed(2)}</td></tr>
+                    <tr><td>Rounding & Excess</td><td className="console-text-right">{(data.Rounding || 0).toFixed(2)}</td></tr>
+                    <tr className="console-total-row"><td>Total Revenue</td><td className="console-text-right">{(data.TotalRevenue || 0).toFixed(2)}</td></tr>
 
-                    <tr className="der-section-header"><td colSpan="2">Sales</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Sales</td></tr>
                     <tr>
                         <td style={{ paddingLeft: '20px' }}>{dishGroupName}</td>
-                        <td className="der-text-right">{(data.NetSales || 0).toFixed(2)}</td>
+                        <td className="console-text-right">{(data.NetSales || 0).toFixed(2)}</td>
                     </tr>
 
                     {/* 1. PAYMODE BREAKDOWN - FIRST */}
-                    <tr className="der-section-header"><td colSpan="2">Paymode Breakdown</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Paymode Breakdown</td></tr>
                     {['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER'].map((mode) => (
                         <tr key={mode}>
                             <td style={{ paddingLeft: '20px' }}>{mode}</td>
-                            <td className="der-text-right">
+                            <td className="console-text-right">
                                 {(reportData?.paymodeBreakdown?.[mode]?.amount || 0).toFixed(2)}
                             </td>
                         </tr>
                     ))}
 
                     {/* 2. SALES BREAKDOWN - SECOND */}
-                    <tr className="der-section-header"><td colSpan="2">Sales Breakdown</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Sales Breakdown</td></tr>
                     
                     {/* a) Sales by Category */}
                     {reportData?.salesByCategory?.map((cat, idx) => (
                         <tr key={`cat-${idx}`}>
                             <td style={{ paddingLeft: '20px' }}>Sales by Category - {cat.CategoryName}</td>
-                            <td className="der-text-right">{cat.TotalSales.toFixed(2)}</td>
+                            <td className="console-text-right">{cat.TotalSales.toFixed(2)}</td>
                         </tr>
                     ))}
 
@@ -114,7 +114,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         return (
                             <tr key={`dept-${idx}`}>
                                 <td style={{ paddingLeft: '20px' }}>Sales by Department - {departmentName}</td>
-                                <td className="der-text-right">{dept.TotalSales.toFixed(2)}</td>
+                                <td className="console-text-right">{dept.TotalSales.toFixed(2)}</td>
                             </tr>
                         );
                     })}
@@ -123,7 +123,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                     {reportData?.salesByCategory?.[0] && (
                         <tr>
                             <td style={{ paddingLeft: '20px' }}>Top Selling Category</td>
-                            <td className="der-text-right">{reportData.salesByCategory[0].CategoryName}</td>
+                            <td className="console-text-right">{reportData.salesByCategory[0].CategoryName}</td>
                         </tr>
                     )}
 
@@ -131,7 +131,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                     {reportData?.topSellingItems?.[0] && (
                         <tr>
                             <td style={{ paddingLeft: '20px' }}>Top Selling Item</td>
-                            <td className="der-text-right">{reportData.topSellingItems[0].ItemName}</td>
+                            <td className="console-text-right">{reportData.topSellingItems[0].ItemName}</td>
                         </tr>
                     )}
 
@@ -139,7 +139,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                     {reportData?.slowMovingCategory?.[0] && (
                         <tr>
                             <td style={{ paddingLeft: '20px' }}>Slow-moving Category</td>
-                            <td className="der-text-right">{reportData.slowMovingCategory[0].CategoryName}</td>
+                            <td className="console-text-right">{reportData.slowMovingCategory[0].CategoryName}</td>
                         </tr>
                     )}
 
@@ -147,35 +147,35 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                     {reportData?.slowMovingItems?.[0] && (
                         <tr>
                             <td style={{ paddingLeft: '20px' }}>Slow-moving Item</td>
-                            <td className="der-text-right">{reportData.slowMovingItems[0].ItemName}</td>
+                            <td className="console-text-right">{reportData.slowMovingItems[0].ItemName}</td>
                         </tr>
                     )}
 
-                    <tr className="der-total-row">
+                    <tr className="console-total-row">
                         <td style={{ paddingLeft: '20px' }}>Total Sales</td>
-                        <td className="der-text-right">{(data.NetSales || 0).toFixed(2)}</td>
+                        <td className="console-text-right">{(data.NetSales || 0).toFixed(2)}</td>
                     </tr>
 
                     {/* 3. TOTAL TRANSACTIONS COUNT - THIRD */}
-                    <tr className="der-section-header"><td colSpan="2">Total Transactions Count</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Total Transactions Count</td></tr>
                     <tr>
                         <td>Total Transactions</td>
-                        <td className="der-text-right">{reportData?.totalReceipts || 0}</td>
+                        <td className="console-text-right">{reportData?.totalReceipts || 0}</td>
                     </tr>
 
                     {/* 4. AVERAGE BILL VALUE - FOURTH */}
-                    <tr className="der-section-header"><td colSpan="2">Average Bill Value</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Average Bill Value</td></tr>
                     <tr>
                         <td>Average Bill</td>
-                        <td className="der-text-right">{(parseFloat(reportData?.averageReceipt || 0)).toFixed(2)}</td>
+                        <td className="console-text-right">{(parseFloat(reportData?.averageReceipt || 0)).toFixed(2)}</td>
                     </tr>
 
-                    <tr className="der-section-header"><td colSpan="2">Tax & SVC</td></tr>
-                    <tr><td>Service Charge</td><td className="der-text-right">{(data.ServiceCharge || 0).toFixed(2)}</td></tr>
-                    <tr><td>Tax Collected</td><td className="der-text-right">{(data.TaxCollected || 0).toFixed(2)}</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Tax & SVC</td></tr>
+                    <tr><td>Service Charge</td><td className="console-text-right">{(data.ServiceCharge || 0).toFixed(2)}</td></tr>
+                    <tr><td>Tax Collected</td><td className="console-text-right">{(data.TaxCollected || 0).toFixed(2)}</td></tr>
 
-                    <tr className="der-section-header"><td colSpan="2">Discount</td></tr>
-                    <tr><td>Total Discount</td><td className="der-text-right">{(data.TotalDiscount || 0).toFixed(2)}</td></tr>
+                    <tr className="console-section-header"><td colSpan="2">Discount</td></tr>
+                    <tr><td>Total Discount</td><td className="console-text-right">{(data.TotalDiscount || 0).toFixed(2)}</td></tr>
                 </tbody>
             </table>
         );
@@ -184,7 +184,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
     // Render Detail Report with NEW ORDER
     const renderDetailReport = () => {
         if (!reportData || !reportData.data || !Array.isArray(reportData.data) || reportData.data.length === 0) {
-            return <div className="der-empty">No data available</div>;
+            return <div className="console-empty">No data available</div>;
         }
 
         const groupedData = {};
@@ -207,19 +207,19 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
         return (
             <div>
                 {/* SALES REPORT TABLE */}
-                <table className="der-table">
+                <table className="console-table">
                     <thead>
                         <tr>
                             <th>DishCode</th>
                             <th>Name</th>
-                            <th className="der-th-center">Qty</th>
-                            <th className="der-th-center">%</th>
-                            <th className="der-th-center">Gross</th>
-                            <th className="der-th-center">Disc</th>
-                            <th className="der-th-center">%</th>
-                            <th className="der-th-center">Disc.Gross</th>
-                            <th className="der-th-center">%</th>
-                            <th className="der-th-center">Net</th>
+                            <th className="console-th-center">Qty</th>
+                            <th className="console-th-center">%</th>
+                            <th className="console-th-center">Gross</th>
+                            <th className="console-th-center">Disc</th>
+                            <th className="console-th-center">%</th>
+                            <th className="console-th-center">Disc.Gross</th>
+                            <th className="console-th-center">%</th>
+                            <th className="console-th-center">Net</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -231,7 +231,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
 
                             return (
                                 <React.Fragment key={gIdx}>
-                                    <tr className="der-section-header">
+                                    <tr className="console-section-header">
                                         <td colSpan="10">Dish Group : {group}</td>
                                     </tr>
                                     {groupedData[group].map((item, idx) => {
@@ -247,42 +247,42 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                             <tr key={idx}>
                                                 <td>{item.DishCode || ""}</td>
                                                 <td>{item.DishName || ""}</td>
-                                                <td className="der-text-right">{item.Quantity || 0}</td>
-                                                <td className="der-text-right">{grossPercent}%</td>
-                                                <td className="der-text-right">{(item.BaseAmount || 0).toFixed(2)}</td>
-                                                <td className="der-text-right">{(item.ManualDiscountAmount || 0).toFixed(2)}</td>
-                                                <td className="der-text-right">0.00%</td>
-                                                <td className="der-text-right">{(item.TotalDetailLineAmount || 0).toFixed(2)}</td>
-                                                <td className="der-text-right">{netPercent}%</td>
-                                                <td className="der-text-right">{(item.TotalDetailLineAmount || 0).toFixed(2)}</td>
+                                                <td className="console-text-right">{item.Quantity || 0}</td>
+                                                <td className="console-text-right">{grossPercent}%</td>
+                                                <td className="console-text-right">{(item.BaseAmount || 0).toFixed(2)}</td>
+                                                <td className="console-text-right">{(item.ManualDiscountAmount || 0).toFixed(2)}</td>
+                                                <td className="console-text-right">0.00%</td>
+                                                <td className="console-text-right">{(item.TotalDetailLineAmount || 0).toFixed(2)}</td>
+                                                <td className="console-text-right">{netPercent}%</td>
+                                                <td className="console-text-right">{(item.TotalDetailLineAmount || 0).toFixed(2)}</td>
                                             </tr>
                                         );
                                     })}
-                                    <tr className="der-total-row">
+                                    <tr className="console-total-row">
                                         <td colSpan="2">Group Total</td>
-                                        <td className="der-text-right">{groupTotalQty}</td>
+                                        <td className="console-text-right">{groupTotalQty}</td>
                                         <td></td>
-                                        <td className="der-text-right">{groupTotalGross.toFixed(2)}</td>
-                                        <td className="der-text-right">{groupTotalDiscount.toFixed(2)}</td>
+                                        <td className="console-text-right">{groupTotalGross.toFixed(2)}</td>
+                                        <td className="console-text-right">{groupTotalDiscount.toFixed(2)}</td>
                                         <td></td>
-                                        <td className="der-text-right">{groupTotalNet.toFixed(2)}</td>
+                                        <td className="console-text-right">{groupTotalNet.toFixed(2)}</td>
                                         <td></td>
-                                        <td className="der-text-right">{groupTotalNet.toFixed(2)}</td>
+                                        <td className="console-text-right">{groupTotalNet.toFixed(2)}</td>
                                     </tr>
                                 </React.Fragment>
                             );
                         })}
 
-                        <tr className="der-total-row" style={{ backgroundColor: '#d1d8dd' }}>
+                        <tr className="console-total-row" style={{ backgroundColor: '#d1d8dd' }}>
                             <td colSpan="2">Grand Total</td>
-                            <td className="der-text-right">{grandTotalQuantity}</td>
+                            <td className="console-text-right">{grandTotalQuantity}</td>
                             <td></td>
-                            <td className="der-text-right">{grandTotalGross.toFixed(2)}</td>
-                            <td className="der-text-right">{grandTotalDiscount.toFixed(2)}</td>
+                            <td className="console-text-right">{grandTotalGross.toFixed(2)}</td>
+                            <td className="console-text-right">{grandTotalDiscount.toFixed(2)}</td>
                             <td></td>
-                            <td className="der-text-right">{grandTotalNet.toFixed(2)}</td>
+                            <td className="console-text-right">{grandTotalNet.toFixed(2)}</td>
                             <td></td>
-                            <td className="der-text-right">{grandTotalNet.toFixed(2)}</td>
+                            <td className="console-text-right">{grandTotalNet.toFixed(2)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -297,13 +297,13 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                             <h3 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '10px', color: '#34495e', borderLeft: '4px solid #34495e', paddingLeft: '10px' }}>
                                 1. Paymode Breakdown
                             </h3>
-                            <table className="der-table" style={{ width: '100%' }}>
+                            <table className="console-table" style={{ width: '100%' }}>
                                 <thead>
                                     <tr>
                                         <th>Payment Mode</th>
-                                        <th className="der-th-center">Transaction Count</th>
-                                        <th className="der-th-right">Amount (SGD)</th>
-                                        <th className="der-th-center">Percentage</th>
+                                        <th className="console-th-center">Transaction Count</th>
+                                        <th className="console-th-right">Amount (SGD)</th>
+                                        <th className="console-th-center">Percentage</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -316,20 +316,20 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                             return (
                                                 <tr key={mode}>
                                                     <td><strong>{mode}</strong></td>
-                                                    <td className="der-text-right">{data.count || 0}</td>
-                                                    <td className="der-text-right">{(data.amount || 0).toFixed(2)}</td>
-                                                    <td className="der-text-right">{percentage}%</td>
+                                                    <td className="console-text-right">{data.count || 0}</td>
+                                                    <td className="console-text-right">{(data.amount || 0).toFixed(2)}</td>
+                                                    <td className="console-text-right">{percentage}%</td>
                                                 </tr>
                                             );
                                         });
                                     })()}
-                                    <tr className="der-total-row">
+                                    <tr className="console-total-row">
                                         <td><strong>Total</strong></td>
-                                        <td className="der-text-right"><strong>{reportData.totalReceipts || 0}</strong></td>
-                                        <td className="der-text-right"><strong>
+                                        <td className="console-text-right"><strong>{reportData.totalReceipts || 0}</strong></td>
+                                        <td className="console-text-right"><strong>
                                             {Object.values(reportData.paymodeBreakdown).reduce((sum, mode) => sum + (mode?.amount || 0), 0).toFixed(2)}
                                         </strong></td>
-                                        <td className="der-text-right"><strong>100%</strong></td>
+                                        <td className="console-text-right"><strong>100%</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -346,13 +346,13 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         {reportData.salesByCategory && reportData.salesByCategory.length > 0 && (
                             <div style={{ marginBottom: '25px' }}>
                                 <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px', color: '#27ae60' }}>a) Sales by Category</h4>
-                                <table className="der-table" style={{ width: '100%' }}>
+                                <table className="console-table" style={{ width: '100%' }}>
                                     <thead>
                                         <tr>
                                             <th>Category Name</th>
-                                            <th className="der-th-right">Quantity Sold</th>
-                                            <th className="der-th-right">Sales Amount (SGD)</th>
-                                            <th className="der-th-center">% of Total</th>
+                                            <th className="console-th-right">Quantity Sold</th>
+                                            <th className="console-th-right">Sales Amount (SGD)</th>
+                                            <th className="console-th-center">% of Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -361,9 +361,9 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                             return (
                                                 <tr key={idx}>
                                                     <td>{cat.CategoryName}</td>
-                                                    <td className="der-text-right">{cat.TotalQuantity}</td>
-                                                    <td className="der-text-right">{cat.TotalSales.toFixed(2)}</td>
-                                                    <td className="der-text-right">{percentage}%</td>
+                                                    <td className="console-text-right">{cat.TotalQuantity}</td>
+                                                    <td className="console-text-right">{cat.TotalSales.toFixed(2)}</td>
+                                                    <td className="console-text-right">{percentage}%</td>
                                                 </tr>
                                             );
                                         })}
@@ -376,13 +376,13 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         {reportData.salesByDepartment && reportData.salesByDepartment.length > 0 && (
                             <div style={{ marginBottom: '25px' }}>
                                 <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px', color: '#27ae60' }}>b) Sales by Department</h4>
-                                <table className="der-table" style={{ width: '100%' }}>
+                                <table className="console-table" style={{ width: '100%' }}>
                                     <thead>
                                         <tr>
                                             <th>Department Name</th>
-                                            <th className="der-th-right">Quantity Sold</th>
-                                            <th className="der-th-right">Sales Amount (SGD)</th>
-                                            <th className="der-th-center">% of Total</th>
+                                            <th className="console-th-right">Quantity Sold</th>
+                                            <th className="console-th-right">Sales Amount (SGD)</th>
+                                            <th className="console-th-center">% of Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -392,9 +392,9 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                             return (
                                                 <tr key={idx}>
                                                     <td>{departmentName}</td>
-                                                    <td className="der-text-right">{dept.TotalQuantity}</td>
-                                                    <td className="der-text-right">{dept.TotalSales.toFixed(2)}</td>
-                                                    <td className="der-text-right">{percentage}%</td>
+                                                    <td className="console-text-right">{dept.TotalQuantity}</td>
+                                                    <td className="console-text-right">{dept.TotalSales.toFixed(2)}</td>
+                                                    <td className="console-text-right">{percentage}%</td>
                                                 </tr>
                                             );
                                         })}
@@ -419,26 +419,26 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         {reportData.topSellingItems && reportData.topSellingItems.length > 0 && (
                             <div style={{ marginBottom: '25px' }}>
                                 <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px', color: '#27ae60' }}>d) Top Selling Items ⭐</h4>
-                                <table className="der-table" style={{ width: '100%' }}>
+                                <table className="console-table" style={{ width: '100%' }}>
                                     <thead>
                                         <tr>
                                             <th>Rank</th>
                                             <th>Item Code</th>
                                             <th>Item Name</th>
                                             <th>Category</th>
-                                            <th className="der-th-right">Quantity</th>
-                                            <th className="der-th-right">Sales (SGD)</th>
+                                            <th className="console-th-right">Quantity</th>
+                                            <th className="console-th-right">Sales (SGD)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {reportData.topSellingItems.map((item, idx) => (
                                             <tr key={idx} style={idx === 0 ? { backgroundColor: '#fff9e6' } : {}}>
-                                                <td className="der-text-center">#{idx + 1}</td>
+                                                <td className="console-text-center">#{idx + 1}</td>
                                                 <td>{item.DishCode}</td>
                                                 <td><strong>{item.ItemName}</strong></td>
                                                 <td>{item.Category}</td>
-                                                <td className="der-text-right">{item.TotalQuantity}</td>
-                                                <td className="der-text-right">{item.TotalSales.toFixed(2)}</td>
+                                                <td className="console-text-right">{item.TotalQuantity}</td>
+                                                <td className="console-text-right">{item.TotalSales.toFixed(2)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -462,26 +462,26 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                         {reportData.slowMovingItems && reportData.slowMovingItems.length > 0 && (
                             <div style={{ marginBottom: '15px' }}>
                                 <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px', color: '#e74c3c' }}>f) Slow-moving Items (Lowest Sales) ⚠️</h4>
-                                <table className="der-table" style={{ width: '100%' }}>
+                                <table className="console-table" style={{ width: '100%' }}>
                                     <thead>
                                         <tr>
                                             <th>Rank</th>
                                             <th>Item Code</th>
                                             <th>Item Name</th>
                                             <th>Category</th>
-                                            <th className="der-th-right">Quantity</th>
-                                            <th className="der-th-right">Sales (SGD)</th>
+                                            <th className="console-th-right">Quantity</th>
+                                            <th className="console-th-right">Sales (SGD)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {reportData.slowMovingItems.map((item, idx) => (
                                             <tr key={idx}>
-                                                <td className="der-text-center">#{idx + 1}</td>
+                                                <td className="console-text-center">#{idx + 1}</td>
                                                 <td>{item.DishCode}</td>
                                                 <td>{item.ItemName}</td>
                                                 <td>{item.Category}</td>
-                                                <td className="der-text-right">{item.TotalQuantity}</td>
-                                                <td className="der-text-right">{item.TotalSales.toFixed(2)}</td>
+                                                <td className="console-text-right">{item.TotalQuantity}</td>
+                                                <td className="console-text-right">{item.TotalSales.toFixed(2)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -1227,35 +1227,35 @@ const printTime = now.toLocaleTimeString('en-US', {
 
     return (
         <div className={`console-sales-report ${sidebarOpen ? "sidebar-open" : ""}`}>
-            <div className="der-header-title">Consolidated Business Performance Report</div>
+            <div className="console-header-title">Consolidated Business Performance Report</div>
 
-            <div className="der-filter-container">
-                <div className="der-filter-row">
-                    <div className="der-filter-item"><label>Report Type</label><select value={reportType} onChange={(e) => setReportType(e.target.value)} className="der-date-picker" style={{ width: '120px' }}><option value="summary">Summary</option><option value="detail">Detail</option></select></div>
-                    <div className="der-filter-item"><label>From Date</label><input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="der-date-picker" /></div>
-                    <div className="der-filter-item"><label>To Date</label><input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="der-date-picker" /></div>
+            <div className="console-filter-container">
+                <div className="console-filter-row">
+                    <div className="console-filter-item"><label>Report Type</label><select value={reportType} onChange={(e) => setReportType(e.target.value)} className="console-date-picker" style={{ width: '120px' }}><option value="summary">Summary</option><option value="detail">Detail</option></select></div>
+                    <div className="console-filter-item"><label>From Date</label><input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="console-date-picker" /></div>
+                    <div className="console-filter-item"><label>To Date</label><input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="console-date-picker" /></div>
                 </div>
-                <div className="der-generate-row">
-                    <button className="der-btn-generate" onClick={handleGenerate} disabled={loading}>
+                <div className="console-generate-row">
+                    <button className="console-btn-generate" onClick={handleGenerate} disabled={loading}>
                         {loading ? "..." : "Generate"}
                     </button>
                     {reportData && (
-                        <button className="der-download-btn" onClick={handleDownload} title="Download Report" style={{ marginLeft: '10px' }}>
+                        <button className="console-download-btn" onClick={handleDownload} title="Download Report" style={{ marginLeft: '10px' }}>
                             <span style={{ marginRight: '8px' }}>⬇️</span> Report
                         </button>
                     )}
                 </div>
             </div>
 
-            <div className="der-table-container">
+            <div className="console-table-container">
                 {loading ? (
-                    <div className="der-empty">Loading...</div>
+                    <div className="console-empty">Loading...</div>
                 ) : reportData ? (
-                    <div className="der-table-wrapper">
+                    <div className="console-table-wrapper">
                         {reportData.type === "summary" ? renderSummaryReport() : renderDetailReport()}
                     </div>
                 ) : (
-                    <div className="der-empty">Select filters and click Generate to see results</div>
+                    <div className="console-empty">Select filters and click Generate to see results</div>
                 )}
             </div>
         </div>
