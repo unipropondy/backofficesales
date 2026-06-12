@@ -1,8 +1,10 @@
-
-/* PAGE */
+/* PAGE - UPDATED TO DISCOUNT THEME (Orange/Beige) */
 .payment-page1 {
-  font-family: Arial;
-  padding: 10px 20px;
+  font-family: 'Cambria', serif; /* CHANGED: To match Discount font */
+  padding: 20px;
+  background-color: #fbf9f4; /* CHANGED: To Discount cream background */
+  min-height: 100vh;
+  transition: all 0.3s ease;
 }
 
 /* HEADER */
@@ -10,123 +12,200 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 5px;   /* 🔥 reduce space */
+  margin-bottom: 10px;
 }
+
 .payment-title1 {
-  font-size: 24px;
-  margin: 0;           /* 🔥 IMPORTANT */
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+  color: #2c2c2c;
 }
 
 /* BOX */
 .payment-box1 {
-  width: 90%;
-  margin: 10px auto;   /* 🔥 was 30px → now tight */
-
-  border-radius: 10px;
-  padding: 15px;
- 
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 12px;
+  padding: 0;
+  position: relative;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #dcd1c5; /* CHANGED: To Discount border color */
+  overflow: hidden;
 }
 
 /* TABLE */
 .payment-table1 {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 0px;   /* 🔥 reduce */
+  margin-top: 0;
 }
+
 .payment-table1 th,
 .payment-table1 td {
-  border: 1px solid #aaa;
-  padding: 10px;
+  padding: 8px 12px;
+  font-size: 11px;
 }
 
 .payment-table1 th {
-  background: #6d477d;
-  color: white;
+  background: #f2eadb; /* CHANGED: To Discount beige header */
+  color: #6d645e; /* CHANGED: To Discount header text color */
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payment-table1 td {
+  border-bottom: 1px solid #f2f2f2; /* CHANGED: To Discount border */
+  color: #333;
+}
+
+.payment-table1 tr:hover td {
+  background: #fdfaf7; /* CHANGED: To Discount hover color */
 }
 
 /* NO DATA */
 .payment-noData1 {
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 12px;
 }
 
-/* BUTTON */
+/* BUTTONS - UPDATED TO DISCOUNT THEME (Orange) */
 .payment-btn1 {
-  padding: 8px 15px;
+  padding: 6px 20px;
   border: none;
   border-radius: 6px;
   color: white;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-.payment-new1 { background: purple; }
-.payment-save1 { background: green; }
-.payment-exit1 { background: brown; }
-.payment-scan1 { background: blue; }
+.payment-btn1:hover {
+  transform: translateY(-1px);
+}
 
-/* BUTTON POSITION */
+.payment-new1 { 
+  background: #ef7f22; /* CHANGED: To Discount orange */
+  box-shadow: 0 4px 10px rgba(239, 127, 34, 0.3); /* CHANGED: Orange shadow */
+}
+.payment-new1:hover {
+  background: #e66b1d; /* CHANGED: Orange hover */
+}
+
+.payment-save1 { 
+  background: green; /* CHANGED: To Discount save green */
+}
+.payment-exit1 { 
+  background: crimson; /* CHANGED: To Discount exit crimson */
+}
+.payment-scan1 { 
+  background: #3498db;
+}
+
+/* BUTTON POSITION - CONTAINER */
 .payment-bottomBtns1 {
-  position: absolute;
-  top: -30px;   /* 🔥 increase negative value → move UP */
-  right: 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px;
+  background: white;
+  border-top: 1px solid #dcd1c5; /* CHANGED: To Discount border */
 }
 
 /* MODAL */
 .payment-modalOverlay1 {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
 }
 
 .payment-modal1 {
   width: 800px;
-  background: #f3f3f3;
-  padding: 25px;
+  max-width: 90%;
+  background: #f5f5f5; /* CHANGED: To Discount form background */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* TITLE */
 .payment-modalTitle1 {
-  font-size: 22px;
-  margin-bottom: 10px;
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #2c2c2c;
+  border-bottom: 1px solid #ddd; /* CHANGED: To Discount border */
+  padding-bottom: 10px;
 }
 
 /* ROW */
 .payment-modalRow1 {
   display: flex;
   align-items: center;
-  gap: 40px;   /* 🔥 increase gap */
-  margin-bottom: 20px;
+  gap: 40px;
+  margin-bottom: 15px;
 }
 
 /* FIELD */
 .payment-field1 {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+}
+
+.payment-field1 label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
 }
 
 .payment-field1 input {
   width: 160px;
   height: 28px;
   padding: 4px 8px;
-  font-size: 13px;
-  border-radius: 8px;
-
-  border: 1px solid #999;   /* 🔥 thinner border */
-  outline: none;            /* 🔥 remove default thick outline */
+  font-size: 11px;
+  border-radius: 6px;
+  border: 1px solid #ddd; /* CHANGED: To Discount border */
+  outline: none;
+  transition: border-color 0.2s;
 }
+
+.payment-field1 input:focus {
+  border-color: #ef7f22; /* CHANGED: Orange focus color */
+}
+
 /* CHECKBOX */
 .payment-checkbox1 {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.payment-checkbox1 input {
+  accent-color: #ef7f22; /* CHANGED: Orange checkbox accent */
+  width: 16px;
+  height: 16px;
 }
 
 /* IMAGE BOX */
 .payment-imageBox1 {
   width: 60px;
   height: 60px;
-  border: 2px dashed #ccc;
+  border: 2px dashed #ddd; /* CHANGED: To Discount border */
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -141,29 +220,26 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
 }
 
-
-/* BOX */
-.payment-box1 {
-  width: 900px;
-  margin: 10px auto;
-  padding: 15px;
-  position: relative;
+.payment-modalActions1 .payment-btn1 {
+  padding: 6px 16px;
+  font-size: 11px;
 }
 
-/* BUTTON ROW FIX */
-.payment-bottomBtns1 {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+/* Sidebar open state */
+.payment-page1.sidebar-open {
+  padding-left: 20px;
 }
 
-.payment-box1 {
-  margin-top: 5px;
-  padding-top: 5px;
-}
-
-.payment-table1 {
-  margin-top: 0;
+/* Print styles */
+@media print {
+  .payment-page1,
+  .payment-header1,
+  .payment-bottomBtns1 {
+    display: none;
+  }
 }

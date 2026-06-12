@@ -1,19 +1,19 @@
 .servermaster-page {
-  background-color: #fdf8f4;
+  background-color: #fdf8f4; /* KEPT ORIGINAL */
   min-height: 100vh;
-  padding: 15px 30px;
-  font-family: 'Cambria', serif;
+  padding: 20px; /* CHANGED: From 15px 30px to 20px (to match Day End spacing) */
+  font-family: 'Cambria', serif; /* KEPT ORIGINAL */
   color: #333;
   transition: all 0.3s ease;
-  text-align: justify;
+  text-align: left; /* CHANGED: From justify to left (to match Day End alignment) */
 }
 
 .servermaster-page.servermaster-sidebar-open {
-  padding-left: 260px;
+  padding-left: 20px; /* CHANGED: From 260px to 20px (to match Day End) */
 }
 
 .servermaster-container {
-  max-width: 1000px;
+  max-width: 1000px; /* KEPT SAME - already matching Day End */
   margin: 0 auto;
 }
 
@@ -32,11 +32,11 @@
 }
 
 .servermaster-btn-orange-new {
-  background-color: #ff7f27;
+  background-color: #ff7f27; /* KEPT ORIGINAL */
   color: white;
   border: none;
   padding: 6px 20px;
-  border-radius: 10px;
+  border-radius: 6px; /* CHANGED: From 10px to 6px (to match Day End) */
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -51,7 +51,7 @@
 
 .servermaster-table-card {
   background: white;
-  border-radius: 15px;
+  border-radius: 12px; /* CHANGED: From 15px to 12px (to match Day End) */
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid #dcd1c5;
@@ -63,12 +63,12 @@
 }
 
 .servermaster-custom-table th {
-  background-color: #f2ece4;
-  padding: 10px 12px;
+  background-color: #f2ece4; /* KEPT ORIGINAL */
+  padding: 10px 12px; /* KEPT SAME */
   text-align: left;
   font-size: 11px;
   font-weight: 700;
-  color: #6d645e;
+  color: #6d645e; /* KEPT ORIGINAL */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border: 1px solid #e0d6cc;
@@ -90,7 +90,7 @@
 .servermaster-custom-checkbox {
   width: 16px;
   height: 16px;
-  accent-color: #ff7f27;
+  accent-color: #ff7f27; /* KEPT ORIGINAL */
   cursor: pointer;
 }
 
@@ -104,7 +104,7 @@
   gap: 6px;
   background: white;
   padding: 4px 10px;
-  border-radius: 8px;
+  border-radius: 6px; /* CHANGED: From 8px to 6px (to match Day End) */
   border: 1px solid #ddd;
   font-size: 11px;
   color: #444;
@@ -120,11 +120,11 @@
 }
 
 .servermaster-btn-pagination {
-  background-color: #ff7f27;
+  background-color: #ff7f27; /* KEPT ORIGINAL */
   color: white;
   border: none;
   padding: 8px 20px;
-  border-radius: 10px;
+  border-radius: 6px; /* CHANGED: From 10px to 6px (to match Day End) */
   font-weight: 700;
   cursor: pointer;
   font-size: 13px;
@@ -155,7 +155,7 @@
 .servermaster-modal-content {
   background: white;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 12px; /* CHANGED: From 15px to 12px (to match Day End) */
   width: 380px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
@@ -188,7 +188,7 @@
   width: 100%;
   padding: 8px 12px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 6px; /* CHANGED: From 8px to 6px (to match Day End) */
   font-size: 11px;
   box-sizing: border-box;
 }
@@ -201,11 +201,11 @@
 }
 
 .servermaster-btn-save-orange {
-  background: #ff7f27;
+  background: #ff7f27; /* KEPT ORIGINAL */
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px; /* CHANGED: From 8px to 6px (to match Day End) */
   cursor: pointer;
   font-weight: 600;
   font-size: 11px;
@@ -216,7 +216,7 @@
   color: #666;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px; /* CHANGED: From 8px to 6px (to match Day End) */
   cursor: pointer;
   font-weight: 600;
   font-size: 11px;
@@ -227,7 +227,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px; /* CHANGED: From 8px to 6px (to match Day End) */
   cursor: pointer;
   font-weight: 600;
   font-size: 11px;

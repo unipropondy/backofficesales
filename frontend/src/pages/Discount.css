@@ -1,17 +1,16 @@
-/* MAIN CONTAINER */
+/* MAIN CONTAINER - LAYOUT CHANGES ONLY */
 .discount-container1 {
-  padding: 20px 30px;
+  padding: 20px; /* CHANGED: From 20px 30px to 20px (to match Day End spacing) */
   height: 100%;
   box-sizing: border-box;
   overflow-y: auto;
-  font-family: 'Cambria', serif;
+  font-family: 'Cambria', serif; /* KEPT ORIGINAL */
   transition: all 0.3s ease;
-  background-color: #fbf9f4; /* Light cream background */
+  background-color: #fbf9f4; /* KEPT ORIGINAL - Light cream background */
 }
 
 .discount-container1.sidebar-open {
-  padding-left: 260px;
-  /* shift content when sidebar is open */
+  padding-left: 20px; /* CHANGED: From 260px to 20px (to match Day End) */
 }
 
 /* HEADER */
@@ -20,28 +19,25 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0;
-  /* 🔥 IMPORTANT */
   padding-bottom: 0;
-  /* 🔥 IMPORTANT */
 }
 
 .discount-title1 {
-  font-size: 22px;
+  font-size: 18px; /* CHANGED: From 22px to 18px (to match Day End header size) */
   font-weight: bold;
   margin-top: 0;
-  /* 🔥 removes top gap */
   margin-bottom: 5px;
-  /* control gap below */
+  color: #2c2c2c; /* ADDED: To match Day End header color */
 }
 
 /* BUTTON */
 .discount-new-btn1 {
   background: transparent;
-  color: #ef7f22; /* Orange text */
+  color: #ef7f22; /* KEPT ORIGINAL - Orange text */
   padding: 6px 18px;
-  border: 1px solid #ef7f22; /* Orange border */
+  border: 1px solid #ef7f22; /* KEPT ORIGINAL - Orange border */
   cursor: pointer;
-  border-radius: 20px; /* Pill shape */
+  border-radius: 6px; /* CHANGED: From 20px to 6px (to match Day End) */
   font-weight: 600;
   transition: 0.3s;
 }
@@ -51,38 +47,38 @@
   color: white;
 }
 
-/* TABLE */
+/* TABLE - BORDER RADIUS CHANGE ONLY */
 .discount-table1 {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px; /* CHANGED: From 8px to 12px (to match Day End) */
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
  
 .discount-table1 th {
-  background: #f2eadb; /* Beige header */
-  color: #7b7167; /* Grey-brown text */
-  padding: 14px 10px;
+  background: #f2eadb; /* KEPT ORIGINAL - Beige header */
+  color: #6d645e; /* CHANGED: From #7b7167 to match Day End text color */
+  padding: 10px 12px; /* CHANGED: From 14px 10px to 10px 12px (to match Day End spacing) */
   text-align: center;
-  font-size: 11px; /* Smaller font size */
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: bold;
 }
  
 .discount-table1 td {
-  padding: 12px 8px;
+  padding: 8px 12px; /* CHANGED: From 12px 8px to 8px 12px (to match Day End spacing) */
   border-bottom: 1px solid #f2f2f2;
   text-align: center;
   color: #333;
-  font-size: 13px; /* Smaller font size */
+  font-size: 11px; /* CHANGED: From 13px to 11px (to match Day End font size) */
 }
  
 .discount-table1 tr:hover {
-  background: #fdfdfd;
+  background: #fdfaf7; /* CHANGED: From #fdfdfd to match Day End hover */
 }
 
 /* MODAL */
@@ -92,66 +88,63 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(2px); /* ADDED: To match Day End modal */
 }
 
-/* FORM */
-/* FORM BOX */
+/* FORM BOX - BORDER RADIUS CHANGE ONLY */
 .discount-form-box1 {
   background: #f5f5f5;
   padding: 20px;
   width: 620px;
-  border-radius: 8px;
+  border-radius: 12px; /* CHANGED: From 8px to 12px (to match Day End) */
+  position: relative;
 }
 
 /* ROW */
 .discount-form-row1 {
   display: grid;
   grid-template-columns: 140px 1fr 100px 1fr;
-  /* 🔥 reduced from 120px */
   gap: 8px;
-  /* slightly tighter */
   align-items: center;
   margin-bottom: 10px;
-
 }
 
 /* INPUT */
 .discount-form-row1 input[type="text"],
 .discount-form-row1 input[type="date"],
 .discount-form-row1 input {
-  padding: 6px;
+  padding: 8px 12px; /* CHANGED: From 6px to 8px 12px (to match Day End spacing) */
   width: 100%;
   max-width: 160px;
+  border: 1px solid #ddd; /* ADDED: Border styling */
+  border-radius: 6px; /* ADDED: To match Day End */
 }
 
 /* LABEL */
 .discount-form-row1 label1 {
-  font-size: 14px;
+  font-size: 11px; /* CHANGED: From 14px to 11px (to match Day End) */
+  font-weight: 600; /* ADDED: To match Day End */
+  color: #555; /* ADDED: To match Day End */
 }
-
-
 
 .discount-form-row1 input:nth-child(4) {
   margin-left: -15px;
-  /* 🔥 pulls input box left */
 }
 
 .discount-form-row1 label:nth-child(3) {
   margin-left: 10px;
-  /* 👉 right move */
 }
 
 /* CHECKBOX FIX */
-/* ADD THIS */
 .discount-form-row1 input[type="checkbox"] {
   transform: scale(1.2);
   position: relative;
   left: -52px;
-  /* 🔥 controlled shift */
+  accent-color: #ef7f22; /* ADDED: Orange accent for checkbox */
 }
 
 /* COLOR BOX */
@@ -159,6 +152,7 @@
   width: 80px;
   height: 40px;
   border: 1px solid #ccc;
+  border-radius: 6px; /* ADDED: To match Day End */
 }
 
 /* COLOR ACTIONS */
@@ -171,34 +165,32 @@
 /* BUTTONS */
 .discount-btn-row1 {
   position: absolute;
-  /* 🔥 move out of normal flow */
   top: 15px;
-  /* 🔥 top space */
   right: 15px;
-  /* 🔥 right corner */
-
   display: flex;
   gap: 10px;
-  /* 🔥 spacing between buttons */
-}
-
-.discount-form-box1 {
-  position: relative;
-  /* 🔥 parent reference */
 }
 
 .discount-save-btn1 {
   background: green;
   color: white;
-  padding: 8px 20px;
+  padding: 6px 16px; /* CHANGED: From 8px 20px to 6px 16px */
   border: none;
+  border-radius: 6px; /* ADDED: To match Day End */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
 }
 
 .discount-exit-btn1 {
   background: crimson;
   color: white;
-  padding: 8px 20px;
+  padding: 6px 16px; /* CHANGED: From 8px 20px to 6px 16px */
   border: none;
+  border-radius: 6px; /* ADDED: To match Day End */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
 }
 
 /* PREVIEW BOX */
@@ -212,16 +204,18 @@
   text-align: center;
   font-weight: bold;
   background: #fff;
+  border-radius: 6px; /* ADDED: To match Day End */
 }
 
-/* BUTTON STYLE (LIKE YOUR IMAGE) */
+/* BUTTON STYLE */
 .discount-color-btn1 {
   background: linear-gradient(#cfe3f5, #9fc2e6);
   border: 1px solid #7aa7d9;
   padding: 6px 12px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 11px; /* CHANGED: From 13px to 11px */
   color: #7aa7d9;
+  border-radius: 6px; /* ADDED: To match Day End */
 }
 
 /* BUTTON GROUP */
@@ -235,17 +229,15 @@
 .discount-custom-picker1 {
   position: absolute;
   top: 40%;
-  /* 🔥 move UP (reduce value) */
   left: 62%;
-  /* 🔥 move LEFT (reduce value) */
   z-index: 1000;
   background: white;
   padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 6px; /* ADDED: To match Day End */
 }
 
 .discount-table1 td:nth-child(1) {
   text-align: left;
   padding-left: 10px;
-  /* 🔥 spacing from left */
 }

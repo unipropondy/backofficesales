@@ -1,23 +1,32 @@
+/* ================= REWARD POINTS - UPDATED TO DISCOUNT THEME (Orange/Beige) ================= */
 .rp-page1 {
-  font-family: Arial;
-  padding: 10px;
+  font-family: 'Cambria', serif; /* CHANGED: To Discount font */
+  padding: 20px; /* CHANGED: To match Day End spacing */
+  background-color: #fbf9f4; /* ADDED: Discount cream background */
+  min-height: 100vh;
+  transition: all 0.3s ease;
 }
 
 /* MAIN BOX */
 .rp-mainBox1 {
-  width: 750px;
-  margin: 40px auto;
-  background: #f8f8f8;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  width: 100%;
+  max-width: 1000px; /* CHANGED: Responsive max-width */
+  margin: 0 auto; /* CHANGED: Centered */
+  background: white; /* CHANGED: To white */
+  border: 1px solid #dcd1c5; /* CHANGED: To Discount border */
+  border-radius: 12px; /* CHANGED: From 6px to 12px */
   padding: 20px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 /* TITLE */
 .rp-title1 {
-  text-align: center;
+  text-align: left; /* CHANGED: From center to left */
   margin-bottom: 20px;
-  font-size: 22px;
+  font-size: 18px; /* CHANGED: From 22px to 18px */
+  font-weight: bold;
+  color: #2c2c2c;
 }
 
 /* GRID */
@@ -35,18 +44,48 @@
 
 .rp-row1 label {
   width: 130px;
-  font-size: 13px;
+  font-size: 11px; /* CHANGED: From 13px to 11px */
+  font-weight: 600;
+  color: #555;
 }
 
 .rp-row1 input {
   width: 150px;
-  height: 25px;
+  height: 28px;
+  padding: 4px 8px;
+  border: 1px solid #ddd; /* CHANGED: To Discount border */
+  border-radius: 6px;
+  font-size: 11px;
+  transition: border-color 0.2s;
 }
 
-/* TABLE */
+.rp-row1 input:focus {
+  outline: none;
+  border-color: #ef7f22; /* Orange focus color */
+}
+
+/* DATE INPUT */
+.rp-input1 {
+  width: 150px;
+  height: 28px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.rp-input1:focus {
+  outline: none;
+  border-color: #ef7f22;
+}
+
+/* TABLE SECTION */
 .rp-tableBox1 {
   margin-top: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #dcd1c5; /* CHANGED: To Discount border */
+  border-radius: 12px; /* ADDED: Border radius */
+  overflow: hidden;
+  background: white;
 }
 
 .rp-table1 {
@@ -55,50 +94,125 @@
 }
 
 .rp-table1 th {
-  background: #6d477d;
-  color: white;
+  background: #f2eadb; /* CHANGED: To Discount beige header */
+  color: #6d645e; /* CHANGED: To Discount header text */
+  padding: 10px 12px; /* CHANGED: Better padding */
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
 }
 
 .rp-table1 th,
 .rp-table1 td {
-  border: 1px solid #ccc;
-  padding: 5px;
-  font-size: 12px;
+  border: none; /* CHANGED: Removed borders */
+  padding: 8px 12px;
+  font-size: 11px;
+}
+
+.rp-table1 td {
+  border-bottom: 1px solid #f2f2f2; /* Discount border */
+  color: #333;
+}
+
+.rp-table1 tr:hover td {
+  background: #fdfaf7; /* Discount hover */
 }
 
 /* INLINE EDIT INPUT */
 .rp-table1 td input {
   width: 100%;
-  height: 22px;
-  border: 1px solid #6d477d;
-  font-size: 12px;
+  height: 28px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.rp-table1 td input:focus {
+  outline: none;
+  border-color: #ef7f22;
 }
 
 /* NO DATA */
 .rp-noData1 {
   text-align: center;
-  padding: 10px;
-  color: #555;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 12px;
 }
 
-/* BUTTONS */
+/* BUTTONS - UPDATED TO DISCOUNT ORANGE STYLE */
 .rp-btns1 {
-  text-align: center;
-  margin-top: 15px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  text-align: unset;
+  margin-top: 0;
 }
 
 .rp-btn1 {
-  padding: 6px 14px;
-  margin: 5px;
-  border: none;
-  color: white;
+  padding: 6px 18px;
+  margin: 0;
+  border: 1px solid;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+  transition: all 0.2s ease;
 }
 
-.rp-btn1.new1 { background:  #6d477d;; }
-.rp-btn1.save1 { background: green; }
-.rp-btn1.clear1 { background: red; }
-.rp-btn1.exit1 { background: brown; }
+.rp-btn1:hover {
+  transform: translateY(-1px);
+}
+
+.rp-btn1.new1 { 
+  background: transparent; /* Discount orange outline style */
+  color: #ef7f22;
+  border: 1px solid #ef7f22;
+}
+.rp-btn1.new1:hover {
+  background: #ef7f22;
+  color: white;
+}
+
+.rp-btn1.save1 { 
+  background: green; /* Discount green */
+  border: 1px solid green;
+  color: white;
+}
+.rp-btn1.save1:hover {
+  background: darkgreen;
+}
+
+.rp-btn1.clear1 { 
+  background: crimson; /* Discount red/crimson */
+  border: 1px solid crimson;
+  color: white;
+}
+.rp-btn1.clear1:hover {
+  background: darkred;
+}
+
+.rp-btn1.exit1 { 
+  background: brown; /* Discount brown */
+  border: 1px solid brown;
+  color: white;
+}
+.rp-btn1.exit1:hover {
+  background: darkbrown;
+}
+
+/* TOP BAR */
+.rp-topBar1 {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
 
 /* NOTIFICATION */
 .rp-topMsg1 {
@@ -110,64 +224,33 @@
   color: #155724;
   padding: 8px 18px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 12px;
+  z-index: 2001;
 }
 
-/* 🔥 ADD THIS ONLY (no other changes) */
-.rp-mainBox1 {
-  position: relative;   /* needed for absolute positioning */
-}
-
-/* 🔥 UPDATE BUTTON POSITION */
-.rp-btns1 {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-
-  display: flex;
-  gap: 10px;
-
-  text-align: unset;   /* remove center */
-  margin-top: 0;       /* remove bottom spacing */
-}
-
-/* MODAL OVERLAY FIX */
+/* MODAL OVERLAY */
 .rp-modalOverlay1 {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-
-  padding-left: 150px; /* 🔥 adjust here */
+  z-index: 2000;
+  backdrop-filter: blur(2px);
 }
 
-/* TOP BAR */
-.rp-topBar1 {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+/* SIDEBAR OPEN STATE */
+.rp-page1.sidebar-open {
+  padding-left: 20px;
 }
 
-/* DATE INPUT */
-.rp-input1 {
-  width: 150px;
-  height: 25px;
-}
-
-.rp-tableBox1 {
-  margin-top: 15px;
-  border: 1px solid #aaa;   /* softer outer border */
-}
-
-.rp-table1 th,
-.rp-table1 td {
-  border: 1px solid #aaa;   /* medium visibility */
-  padding: 8px;
-  font-size: 14px;
+/* PRINT STYLES */
+@media print {
+  .rp-page1,
+  .rp-topBar1,
+  .rp-btns1,
+  .rp-topMsg1 {
+    display: none;
+  }
 }

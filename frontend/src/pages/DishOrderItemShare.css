@@ -1,225 +1,264 @@
+/* DishOrderItemShare.css - Updated to match Day End Report (Blue & Slate Theme) */
+
+:root {
+    --dois-primary: #34495e;
+    --dois-primary-hover: #2c3e50;
+    --dois-secondary: #2c3e50;
+    --dois-bg: #f0f2f5;
+    --dois-card-bg: #ffffff;
+    --dois-border: #d1d8dd;
+    --dois-table-header: #34495e;
+    --dois-text: #333;
+}
+
 .dishorderitemshare-page {
-  background-color: #fdf8f4;
-  min-height: 100vh;
-  padding: 15px 30px;
-  font-family: 'Cambria', serif;
-  color: #333;
-  transition: all 0.3s ease;
-  text-align: justify;
+    background-color: var(--dois-bg); /* CHANGE: From #fdf8f4 to #f0f2f5 */
+    min-height: 100vh;
+    padding: 20px; /* CHANGE: From 15px 30px to 20px */
+    font-family: 'Inter', sans-serif; /* CHANGE: From Cambria to Inter */
+    color: var(--dois-text);
+    transition: all 0.3s ease;
+    text-align: left; /* CHANGE: From justify to left */
 }
- 
+
 .dishorderitemshare-page.dishorderitemshare-sidebar-open {
-  padding-left: 260px;
+    padding-left: 20px; /* CHANGE: From 260px to 20px to match Day End */
 }
- 
+
 .dishorderitemshare-container {
-  max-width: 1000px;
-  margin: 0 auto;
+    max-width: 1000px; /* CHANGE: Keep max-width for centering */
+    margin: 0 auto;
 }
- 
+
 .dishorderitemshare-top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
- 
+
 .dishorderitemshare-page-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #2c2c2c;
-  margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0;
 }
- 
+
+/* CHANGE: Button styling - from Orange to Blue/Slate */
 .dishorderitemshare-btn-orange-new {
-  background-color: #ff7f27;
-  color: white;
-  border: none;
-  padding: 6px 20px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 127, 39, 0.3);
-  transition: all 0.2s ease;
+    background-color: var(--dois-primary); /* CHANGE: From #ff7f27 to #34495e */
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    border-radius: 6px; /* CHANGE: From 10px to 6px */
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(52, 73, 94, 0.3); /* CHANGE: Shadow color */
+    transition: all 0.2s ease;
 }
- 
+
 .dishorderitemshare-btn-orange-new:hover {
-  background-color: #e66b1d;
-  transform: translateY(-1px);
+    background-color: var(--dois-primary-hover); /* CHANGE: From #e66b1d to #2c3e50 */
+    transform: translateY(-1px);
 }
- 
+
+/* CHANGE: Same button styling for consistency */
 .dishorderitemshare-btn-new {
-  background-color: #ff7f27;
-  color: white;
-  border: none;
-  padding: 6px 20px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(255, 127, 39, 0.3);
-  transition: all 0.2s ease;
+    background-color: var(--dois-primary);
+    color: white;
+    border: none;
+    padding: 6px 20px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(52, 73, 94, 0.3);
+    transition: all 0.2s ease;
 }
- 
+
 .dishorderitemshare-btn-new:hover {
-  background-color: #e66b1d;
-  transform: translateY(-1px);
+    background-color: var(--dois-primary-hover);
+    transform: translateY(-1px);
 }
- 
+
+/* CHANGE: Card styling - match Day End table container */
 .dishorderitemshare-table-card {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid #dcd1c5;
+    background: var(--dois-card-bg);
+    border-radius: 12px; /* CHANGE: From 15px to 12px */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--dois-border); /* CHANGE: Border color */
 }
- 
+
+/* CHANGE: Table header styling - Blue theme */
 .dishorderitemshare-custom-table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
- 
+
 .dishorderitemshare-custom-table th {
-  background-color: #f2ece4;
-  padding: 10px 12px;
-  text-align: left;
-  font-size: 11px;
-  font-weight: 700;
-  color: #6d645e;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: 1px solid #e0d6cc;
+    background-color: var(--dois-table-header); /* CHANGE: From #f2ece4 to #34495e */
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff; /* CHANGE: From #6d645e to white */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--dois-border); /* CHANGE: Border color */
 }
- 
+
 .dishorderitemshare-custom-table td {
-  padding: 8px 12px;
-  border: 1px solid #f0e6dc;
-  font-size: 11px;
-  color: #333;
+    padding: 8px 12px;
+    border: 1px solid #f0f2f5; /* CHANGE: Border color to match theme */
+    font-size: 11px;
+    color: var(--dois-text);
 }
- 
+
 .dishorderitemshare-custom-table tr:hover {
-  background-color: #fdfaf7;
-  cursor: pointer;
+    background-color: #f8f9fa; /* CHANGE: Hover color */
+    cursor: pointer;
 }
- 
-/* CUSTOM CHECKBOX */
+
+/* CHANGE: Checkbox styling - Blue accent instead of Orange */
 .dishorderitemshare-custom-checkbox {
-  width: 16px;
-  height: 16px;
-  accent-color: #ff7f27;
-  cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--dois-primary); /* CHANGE: From #ff7f27 to #34495e */
+    cursor: pointer;
 }
- 
+
 .dishorderitemshare-text-center {
-  text-align: center !important;
+    text-align: center !important;
 }
- 
-/* MODAL STYLES */
+
+/* CHANGE: Modal styling - Blue theme */
 .dishorderitemshare-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  backdrop-filter: blur(2px);
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(2px);
 }
- 
+
 .dishorderitemshare-modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  width: 450px; /* 380px -> 450px */
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    background: white;
+    padding: 20px;
+    border-radius: 12px; /* CHANGE: From 15px to 12px */
+    width: 450px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
- 
+
 .dishorderitemshare-form-field select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 11px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--dois-border); /* CHANGE: Border color */
+    border-radius: 6px; /* CHANGE: From 8px to 6px */
+    font-size: 11px;
+    box-sizing: border-box;
 }
- 
+
 .dishorderitemshare-modal-header {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--dois-border); /* CHANGE: Border color */
+    padding-bottom: 10px;
 }
- 
+
 .dishorderitemshare-modal-header h2 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
+    margin: 0;
+    font-size: 18px;
+    color: var(--dois-text);
 }
- 
+
 .dishorderitemshare-form-field {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
- 
+
 .dishorderitemshare-form-field label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 600;
-  font-size: 11px;
-  color: #555;
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #555;
 }
- 
+
 .dishorderitemshare-form-field input[type="text"],
 .dishorderitemshare-form-field input[type="number"],
-  .dishorderitemshare-form-field input[type="date"] {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 11px;
-  box-sizing: border-box;
+.dishorderitemshare-form-field input[type="date"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--dois-border); /* CHANGE: Border color */
+    border-radius: 6px; /* CHANGE: From 8px to 6px */
+    font-size: 11px;
+    box-sizing: border-box;
 }
- 
+
 .dishorderitemshare-modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
 }
- 
+
+/* CHANGE: Button styling - Blue theme */
 .dishorderitemshare-btn-save-orange {
-  background: #ff7f27;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 11px;
+    background: var(--dois-primary); /* CHANGE: From #ff7f27 to #34495e */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px; /* CHANGE: From 8px to 6px */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 11px;
 }
- 
+
+.dishorderitemshare-btn-save-orange:hover {
+    background: var(--dois-primary-hover); /* Add hover effect */
+}
+
 .dishorderitemshare-btn-cancel-grey {
-  background: #eee;
-  color: #666;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 11px;
+    background: #eee;
+    color: #666;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px; /* CHANGE: From 8px to 6px */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 11px;
 }
- 
+
+/* CHANGE: Delete button - keep red but adjust border radius */
 .dishorderitemshare-btn-delete-red {
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 11px;
-  margin-right: auto;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px; /* CHANGE: From 8px to 6px */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 11px;
+    margin-right: auto;
 }
- 
- 
- 
+
+/* ADD: Print styles to match Day End Report */
+@media print {
+    .dishorderitemshare-top-header,
+    .dishorderitemshare-btn-orange-new,
+    .dishorderitemshare-btn-new {
+        display: none;
+    }
+    
+    .dishorderitemshare-page {
+        background: white;
+        padding: 0;
+    }
+    
+    .dishorderitemshare-table-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

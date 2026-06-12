@@ -14,7 +14,7 @@
       const [fromDate, setFromDate] = useState(today);
       const [toDate, setToDate] = useState(today);
       const [columns, setColumns] = useState(initialColumns);
-      const [orderSales, setOrderSales] = useState("Daywise");
+      const [orderSales, setOrderSales] = useState("");
       const [dayEnd, setDayEnd] = useState("");
       const [bySales, setBySales] = useState("");
       const [byItem, setByItem] = useState("");

@@ -392,3 +392,101 @@ SyntaxError: Identifier 'isAnalysisReport' has already been declared
     at Module.require (node:internal/modules/cjs/loader:1548:12)
     at require (node:internal/modules/helpers:152:16)
     at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\my-react-app-backoffice\my-react-app-backoffice\backend\server.js:41:27)
+
+[2026-06-10T11:14:26.049Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/vendor'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:33:22)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:15:06.953Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/vendor'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:33:22)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:15:33.224Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/vendor'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:33:22)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:16:34.771Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/vendor'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:33:22)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:53:07.627Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/Sidebar'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:43:17)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:53:20.532Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/Sidebar'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:43:17)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)
+
+[2026-06-10T11:53:49.251Z] UNCAUGHT EXCEPTION: Error: Cannot find module './routes/Sidebar'
+Require stack:
+- C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1448:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1234:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1548:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (C:\Users\faiza\OneDrive\Desktop\backofficesales\backend\server.js:43:17)
+    at Module._compile (node:internal/modules/cjs/loader:1804:14)

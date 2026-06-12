@@ -26,19 +26,9 @@ function Sidebar({ open, setOpen }) {
       </div>
 
       <div className={`sidebar ${open ? "open" : "close"}`}>
-        <Link className="menu" to="/Home" onClick={() => setOpen(false)}>Home</Link>
-        <Link className="menu" to="/Contact" onClick={() => setOpen(false)}>Kitchen</Link>
-        <Link className="menu" to="/About" onClick={() => setOpen(false)}>Category</Link>
-        <Link className="menu" to="/DishGroup" onClick={() => setOpen(false)}>Dish Group</Link>
-        <Link className="menu" to="/Dish" onClick={() => setOpen(false)}>Dish</Link>
-        <Link className="menu" to="/Modifier" onClick={() => setOpen(false)}>Modifier</Link>
-        <Link className="menu" to="/discount" onClick={() => setOpen(false)}>Discount</Link>
-        <Link className="menu" to="/Inventory" onClick={() => setOpen(false)}>Inventory</Link>
-        <Link className="menu" to="/Settlement" onClick={() => setOpen(false)}>Settlement</Link>
+        
+        
         <Link className="menu" to="/SalesReport" onClick={() => setOpen(false)}>Sales Report</Link>
-        <Link className="menu" to="/SltReport" onClick={() => setOpen(false)}>Slt.. Report</Link>
-        <Link className="menu" to="/Member" onClick={() => setOpen(false)}>Member</Link>
-        <Link className="menu" to="/Organization" onClick={() => setOpen(false)}>Organization</Link>
         <Link className="menu" to="/console-sales-report" onClick={() => setOpen(false)}>Consolidated Business Performance Report</Link>
         <Link className="menu" to="/dish-movement-report" onClick={() => setOpen(false)}>Dish Movement Report</Link>
         <Link className="menu" to="/dish-movement" onClick={() => setOpen(false)}>Dish Movement</Link>
@@ -46,6 +36,12 @@ function Sidebar({ open, setOpen }) {
         <Link className="menu" to="/dayend-report" onClick={() => setOpen(false)}>Dayend Report</Link>
         <Link className="menu" to="/HappyHours" onClick={() => setOpen(false)}>Happy Hours</Link>
         <Link className="menu" to="/Server" onClick={() => setOpen(false)}>Server Master</Link>
+        <Link className="menu" to="/Discount" onClick={() => setOpen(false)}>Discount</Link>
+        <Link className="menu" to="/Paymode" onClick={() => setOpen(false)}>Paymode</Link>
+        <Link className="menu" to="/Vendormaster" onClick={() => setOpen(false)}>Vendormaster</Link>
+        <Link className="menu" to="/RewardPoints" onClick={() => setOpen(false)}>Reward Points</Link>
+        <Link className="menu" to="/EmailSettings" onClick={() => setOpen(false)}>Email Settings</Link>
+        <Link className="menu" to="/Organization" onClick={() => setOpen(false)}>Organization</Link>
       </div>
     </>
   );

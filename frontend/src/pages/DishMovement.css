@@ -1,5 +1,5 @@
-/* DishMovement.css - Standardized Report Theme */
- 
+/* DishMovementReport.css - Updated to match Day End Report layout */
+
 :root {
     --der-primary: #34495e;
     --der-primary-hover: #2c3e50;
@@ -10,20 +10,20 @@
     --der-table-header: #34495e;
     --der-text: #333;
 }
- 
-.dish-movement {
+
+.dish-movement-report {
     transition: all 0.3s ease;
     width: 100%;
     background: var(--der-bg);
     min-height: 100vh;
     padding: 20px;
-    font-family: 'Cambria', serif;
+    font-family: 'Inter', sans-serif; /* CHANGE: Use Inter font like Day End */
 }
- 
-.dish-movement.sidebar-open {
-    padding-left: 260px;
+
+.dish-movement-report.sidebar-open {
+    padding-left: 20px; /* CHANGE: Match Day End padding */
 }
- 
+
 .der-header-title {
     background: transparent;
     color: #2c2c2c;
@@ -32,36 +32,42 @@
     font-weight: 700;
     margin-bottom: 5px;
 }
- 
+
+/* CHANGE: Filter container - simplified like Day End */
 .der-filter-container {
     background: white;
     padding: 15px;
     border-radius: 12px;
     border: 1px solid var(--der-border);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 15px;
+    margin: 0 auto 15px auto; /* CHANGE: Centered with auto margins */
+    width: 100%;
+    max-width: 1000px; /* CHANGE: Add max-width constraint */
 }
- 
+
+/* CHANGE: Filter row - simplified horizontal layout */
 .der-filter-row {
     display: flex;
+    justify-content: space-between; /* CHANGE: Space between items */
+    align-items: flex-end; /* CHANGE: Align to bottom */
     flex-wrap: wrap;
     gap: 15px;
-    margin-bottom: 10px;
-    align-items: flex-end;
+    margin-bottom: 0; /* CHANGE: Remove bottom margin */
 }
- 
+
 .der-filter-item {
     display: flex;
     flex-direction: column;
 }
- 
+
 .der-filter-item label {
     font-size: 11px;
     font-weight: 600;
     color: #555;
     margin-bottom: 4px;
 }
- 
+
+.der-filter-item select,
 .der-date-picker {
     padding: 4px 8px;
     border: 1px solid var(--der-border);
@@ -71,12 +77,13 @@
     height: 28px;
     outline: none;
 }
- 
+
+/* CHANGE: Lookup wrap styling - keep but adjust */
 .der-lookup-wrap {
     display: flex;
     align-items: center;
 }
- 
+
 .der-lookup-wrap input {
     padding: 4px 8px;
     border: 1px solid var(--der-border);
@@ -86,7 +93,7 @@
     outline: none;
     border-right: none;
 }
- 
+
 .der-lookup-btn {
     padding: 4px 10px;
     background: #f8f9fa;
@@ -100,12 +107,15 @@
     align-items: center;
     justify-content: center;
 }
- 
+
+/* CHANGE: Generate row - right aligned like Day End */
 .der-generate-row {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Already correct */
+    gap: 10px; /* CHANGE: Add gap for multiple buttons if needed */
+    align-items: center;
 }
- 
+
 .der-btn-generate {
     background-color: var(--der-primary);
     color: white;
@@ -118,12 +128,13 @@
     box-shadow: 0 4px 10px rgba(52, 73, 94, 0.3);
     transition: all 0.2s;
 }
- 
+
 .der-btn-generate:hover {
     background-color: var(--der-primary-hover);
     transform: translateY(-1px);
 }
- 
+
+/* CHANGE: Results heading styling */
 .der-results-heading {
     padding: 8px 0;
     font-size: 13px;
@@ -131,13 +142,13 @@
     color: var(--der-secondary);
     margin-top: 5px;
 }
- 
+
 .der-action-bar {
     display: flex;
     justify-content: flex-end;
     padding: 8px 0;
 }
- 
+
 .der-download-btn {
     background: white;
     color: var(--der-text);
@@ -151,11 +162,12 @@
     font-weight: 600;
     transition: all 0.2s;
 }
- 
+
 .der-download-btn:hover {
     background: #fdfaf7;
 }
- 
+
+/* CHANGE: Table container - centered like Day End */
 .der-table-container {
     padding: 0;
     overflow-x: auto;
@@ -163,65 +175,88 @@
     border-radius: 12px;
     border: 1px solid var(--der-border);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    margin-top: 5px;
+    margin: 5px auto 0 auto; /* CHANGE: Auto margins for centering */
+    width: 100%;
+    max-width: 1000px; /* CHANGE: Match filter container width */
 }
- 
+
 .der-table-wrapper {
     padding: 15px;
+    display: flex; /* CHANGE: Add flex for centering */
+    justify-content: center; /* CHANGE: Center table */
 }
- 
+
 /* Table Styles */
 .der-table {
     border-collapse: collapse;
-    font-size: 10px;
+    font-size: 11px; /* CHANGE: Slightly larger font */
+    margin: 0 auto; /* CHANGE: Center table */
     width: 100%;
 }
- 
+
 .der-table th {
     background-color: var(--der-table-header);
     color: #ffffff;
     font-weight: 700;
     text-align: left;
     padding: 10px 12px;
-    font-size: 10px;
+    font-size: 11px; /* CHANGE: Match Day End */
     text-transform: uppercase;
     border-bottom: 1px solid var(--der-border);
 }
- 
+
 .der-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #f0f2f5;
+    color: var(--der-text); /* CHANGE: Add color consistency */
 }
- 
+
 /* Section headers */
 .der-section-header td {
     background: #eaeff2 !important;
     font-weight: bold;
     color: #34495e;
 }
- 
+
 /* Total row */
 .der-total-row td {
     background: #f8f9fa !important;
     font-weight: bold;
 }
- 
+
+/* CHANGE: Add particulars cell style if needed */
+.der-particulars-cell {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.der-particulars-right {
+    margin-left: auto;
+}
+
 .der-text-center {
     text-align: center;
 }
- 
+
 .der-th-center {
     text-align: center !important;
 }
- 
+
 .der-empty {
     padding: 40px 20px;
     text-align: center;
     color: #888;
     font-size: 12px;
 }
- 
-/* Lookup Modal */
+
+/* CHANGE: Add content wrapper for centering */
+.der-content-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Lookup Modal - keep as is */
 .der-modal-overlay {
     position: fixed;
     top: 0;
@@ -234,7 +269,7 @@
     align-items: center;
     z-index: 1000;
 }
- 
+
 .der-modal-content {
     background: white;
     width: 400px;
@@ -244,7 +279,7 @@
     flex-direction: column;
     overflow: hidden;
 }
- 
+
 .der-modal-header {
     padding: 15px;
     border-bottom: 1px solid var(--der-border);
@@ -253,12 +288,12 @@
     align-items: center;
     font-weight: bold;
 }
- 
+
 .der-modal-body {
     padding: 15px;
     overflow-y: auto;
 }
- 
+
 .der-modal-search input {
     width: 100%;
     padding: 8px;
@@ -267,29 +302,30 @@
     margin-bottom: 10px;
     outline: none;
 }
- 
+
 .der-modal-list ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
- 
+
 .der-modal-list li {
     padding: 8px 10px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
     font-size: 12px;
 }
- 
+
 .der-modal-list li:hover {
     background: #f8f9fa;
 }
- 
+
 .der-all-option {
     font-weight: bold;
     color: var(--der-primary);
 }
- 
+
+/* CHANGE: Print styles - hide filters when printing like Day End */
 @media print {
     .der-header-title,
     .der-filter-container,
@@ -298,5 +334,3 @@
         display: none;
     }
 }
- 
- 

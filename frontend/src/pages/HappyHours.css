@@ -1,5 +1,5 @@
 /* =========================================
-   🔥 HAPPY HOURS PREMIUM DESIGN SYSTEM (Beige & Orange Style)
+   🔥 HAPPY HOURS PREMIUM DESIGN SYSTEM (Original Orange/Beige Theme - Updated Layout Only)
    ========================================= */
 
 :root {
@@ -19,26 +19,26 @@
   --hh-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Main Container */
+/* Main Container - LAYOUT CHANGES ONLY */
 .happyhours-main-full {
   min-height: 100vh;
-  background: var(--hh-bg-main);
+  background: var(--hh-bg-main); /* KEPT ORIGINAL */
   transition: all 0.3s ease;
-  font-family: 'Cambria', serif;
-  padding: 15px 30px;
-  text-align: justify;
+  font-family: 'Cambria', serif; /* KEPT ORIGINAL */
+  padding: 20px; /* CHANGED: From 15px 30px to 20px (to match Day End spacing) */
+  text-align: left; /* CHANGED: From justify to left (to match Day End alignment) */
 }
 
 .happyhours-main-full.sidebar-open {
-  padding-left: 260px;
+  padding-left: 20px; /* CHANGED: From 260px to 20px (to match Day End) */
 }
 
 .happyhours-container {
-  max-width: 1100px;
+  max-width: 1000px; /* CHANGED: From 1100px to 1000px (to match Day End max-width) */
   margin: 0 auto;
 }
 
-/* Header Section */
+/* Header Section - NO CHANGES */
 .hh-premium-header {
   display: flex;
   justify-content: space-between;
@@ -53,7 +53,7 @@
   color: #2c2c2c;
 }
 
-/* Action Buttons */
+/* Action Buttons - NO CHANGES */
 .hh-btn-group {
   display: flex;
   gap: 8px;
@@ -94,10 +94,10 @@
 }
 .hh-btn-danger:hover { background: #e04343; }
 
-/* Form Card */
+/* Form Card - BORDER RADIUS CHANGE ONLY */
 .hh-form-card {
   background: white;
-  border-radius: 15px;
+  border-radius: 12px; /* CHANGED: From 15px to 12px (to match Day End) */
   padding: 15px;
   box-shadow: var(--hh-shadow);
   border: 1px solid var(--hh-border);
@@ -158,12 +158,12 @@
 
 .hh-lookup-trigger:hover { background: #e0d6cc; }
 
-/* Days Checklist */
+/* Days Checklist - BORDER RADIUS CHANGE ONLY */
 .hh-days-card {
   background: #fdfaf7;
   border: 1px solid #f0e6dc;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px; /* CHANGED: From 10px to 8px (to match Day End) */
 }
 
 .hh-days-title {
@@ -193,10 +193,10 @@
   accent-color: var(--hh-primary);
 }
 
-/* Table Section */
+/* Table Section - BORDER RADIUS & PADDING CHANGES ONLY */
 .hh-table-card {
   background: white;
-  border-radius: 15px;
+  border-radius: 12px; /* CHANGED: From 15px to 12px (to match Day End) */
   box-shadow: var(--hh-shadow);
   overflow: hidden;
   border: 1px solid var(--hh-border);
@@ -217,9 +217,9 @@
 }
 
 .hh-table th {
-  background: #f2ece4;
-  color: #6d645e;
-  padding: 8px 12px;
+  background: #f2ece4; /* KEPT ORIGINAL */
+  color: #6d645e; /* KEPT ORIGINAL */
+  padding: 10px 12px; /* CHANGED: From 8px 12px to 10px 12px (to match Day End spacing) */
   font-size: 11px;
   font-weight: 700;
   text-align: left;
@@ -228,7 +228,7 @@
 }
 
 .hh-table td {
-  padding: 6px 12px;
+  padding: 8px 12px; /* CHANGED: From 6px 12px to 8px 12px (to match Day End spacing) */
   border-bottom: 1px solid #f0e6dc;
   font-size: 11px;
   color: #333;
@@ -238,17 +238,17 @@
   background: #fdfaf7;
 }
 
-/* Footer / Apply Promo */
+/* Footer / Apply Promo - BACKGROUND CHANGE ONLY */
 .hh-promo-footer {
   padding: 15px;
-  background: #f2ece4;
+  background: #f2ece4; /* KEPT ORIGINAL */
   border-top: 1px solid #e0d6cc;
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* Modals & Popups */
+/* Modals & Popups - BORDER RADIUS CHANGE ONLY */
 .hh-modal-overlay {
   position: fixed;
   inset: 0;
@@ -263,14 +263,14 @@
 .hh-modal-content {
   background: white;
   width: 550px;
-  border-radius: 20px;
+  border-radius: 12px; /* CHANGED: From 20px to 12px (to match Day End) */
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
 .hh-modal-header {
-  background: #f2ece4;
-  color: #6d645e;
+  background: #f2ece4; /* KEPT ORIGINAL */
+  color: #6d645e; /* KEPT ORIGINAL */
   padding: 12px 20px;
   display: flex;
   justify-content: space-between;
@@ -282,7 +282,7 @@
   padding: 15px;
 }
 
-/* Animations */
+/* Animations - NO CHANGES */
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

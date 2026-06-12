@@ -1,17 +1,22 @@
-/* ================= PAGE ================= */
+/* ================= PAGE - UPDATED TO DISCOUNT THEME (Orange/Beige) ================= */
 .vendor-page1 {
-  padding: 15px;
-  font-family: Arial;
+  padding: 20px;
+  font-family: 'Cambria', serif; /* CHANGED: To Discount font */
+  background-color: #fbf9f4; /* CHANGED: To Discount cream background */
+  min-height: 100vh;
+  transition: all 0.3s ease;
 }
 
 /* TITLE */
 .vendor-title1 {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
-  text-align: center;
+  text-align: left;
+  font-weight: bold;
+  color: #2c2c2c;
 }
 
-/* BUTTON */
+/* BUTTON - UPDATED TO DISCOUNT ORANGE STYLE */
 .vendor-btn-right1 {
   display: flex;
   justify-content: flex-end;
@@ -19,137 +24,181 @@
 }
 
 .vendor-new-btn1 {
-  padding: 6px 14px;
-  background: #6d477d;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  padding: 6px 18px;
+  background: transparent; /* CHANGED: To Discount transparent style */
+  color: #ef7f22; /* CHANGED: Orange text */
+  border: 1px solid #ef7f22; /* CHANGED: Orange border */
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-/* ================= TABLE ================= */
+.vendor-new-btn1:hover {
+  background: #ef7f22;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* ================= TABLE - UPDATED TO DISCOUNT STYLE ================= */
 .vendor-table1 {
   width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
   border-collapse: collapse;
-  border: 1.2px solid #999;   /* 🔥 slightly stronger outer */
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  border: 1px solid #dcd1c5; /* CHANGED: To Discount border */
 }
 
 .vendor-table1 th {
-  background: #6d477d;
-  color: white;
-  padding: 8px;
+  background: #f2eadb; /* CHANGED: To Discount beige header */
+  color: #6d645e; /* CHANGED: To Discount header text */
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
 }
 
-/* 🔥 DATA + HEADER LINES */
+/* DATA + HEADER LINES */
 .vendor-table1 th,
 .vendor-table1 td {
-  border: 1px solid #aaa;     /* 🔥 balanced visibility */
-  padding: 8px;
-  font-size: 13px;
+  border: none;
+  padding: 8px 12px;
+  font-size: 11px;
+}
+
+.vendor-table1 td {
+  border-bottom: 1px solid #f2f2f2; /* CHANGED: To Discount border */
+  color: #333;
+}
+
+.vendor-table1 tr:hover td {
+  background: #fdfaf7; /* CHANGED: To Discount hover color */
 }
 
 /* NO DATA CENTER */
 .vendor-table1 td[colspan] {
   text-align: center;
-  padding: 12px;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 12px;
 }
 
-/* ================= MODAL OVERLAY ================= */
-
+/* ================= MODAL OVERLAY - UPDATED TO DISCOUNT STYLE ================= */
 .vendor-modal-overlay1 {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
-  align-items: center;   /* PERFECT CENTER */
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
 }
 
-/* ================= MODAL BOX ================= */
-
+/* ================= MODAL BOX - UPDATED TO DISCOUNT STYLE ================= */
 .vendor-modal1 {
-  background: white;
-
-  width: 460px;          /* balanced width */
-  max-height: 85vh;      /* prevents cut */
-
-  padding: 16px 18px;
-  border-radius: 8px;
-
-  overflow-y: auto;      /* 🔥 scroll inside */
-
-  position: relative;  /* 🔥 important */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background: #f5f5f5; /* CHANGED: To Discount form background */
+  width: 460px;
+  max-height: 85vh;
+  padding: 20px;
+  border-radius: 12px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* ================= ROW ================= */
-
 .vendor-row1 {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;   /* compact */
+  margin-bottom: 12px;
   gap: 10px;
 }
 
 .vendor-row1 label {
   width: 140px;
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
 }
 
-/* ================= INPUT ================= */
-
+/* ================= INPUT - UPDATED TO DISCOUNT STYLE ================= */
 .vendor-form1 input,
 .vendor-form1 select {
-  width: 220px;   /* not too big */
-  height: 26px;
-
-  padding: 4px 6px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-
-  font-size: 13px;
+  width: 220px;
+  height: 28px;
+  padding: 8px 12px; /* CHANGED: To Discount padding */
+  border: 1px solid #ddd; /* CHANGED: To Discount border */
+  border-radius: 6px;
+  font-size: 11px;
   box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.vendor-form1 input:focus,
+.vendor-form1 select:focus {
+  outline: none;
+  border-color: #ef7f22; /* CHANGED: Orange focus color */
 }
 
 /* CHECKBOX */
 .vendor-form1 input[type="checkbox"] {
   width: 16px;
   height: 16px;
+  accent-color: #ef7f22; /* CHANGED: Orange checkbox accent */
 }
 
-/* ================= BUTTONS ================= */
-
+/* ================= BUTTONS - UPDATED TO DISCOUNT STYLE ================= */
 .vendor-buttons-top1 {
-  position: absolute;   /* 🔥 only buttons move */
-  top: 8px;             /* 🔥 move UP */
-  right: 12px;
-
+  position: absolute;
+  top: 15px;
+  right: 15px;
   display: flex;
   gap: 10px;
 }
+
 .vendor-save1 {
-  background: green;
+  background: green; /* CHANGED: To Discount green */
   color: white;
   border: none;
-  padding: 5px 12px;
-  border-radius: 3px;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.vendor-save1:hover {
+  background: darkgreen;
+  transform: translateY(-1px);
 }
 
 .vendor-cancel1 {
-  background: red;
+  background: crimson; /* CHANGED: To Discount crimson */
   color: white;
   border: none;
-  padding: 5px 12px;
-  border-radius: 3px;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 11px;
+  transition: all 0.2s ease;
 }
 
-/* ================= SUCCESS ================= */
+.vendor-cancel1:hover {
+  background: darkred;
+  transform: translateY(-1px);
+}
 
+/* ================= SUCCESS MESSAGE ================= */
 .vendor-top-msg1 {
   position: fixed;
   top: 90px;
@@ -159,4 +208,20 @@
   color: #155724;
   padding: 8px 16px;
   border-radius: 6px;
+  font-size: 12px;
+  z-index: 2001;
+}
+
+/* ================= SIDEBAR OPEN STATE ================= */
+.vendor-page1.sidebar-open {
+  padding-left: 20px;
+}
+
+/* ================= PRINT STYLES ================= */
+@media print {
+  .vendor-page1,
+  .vendor-btn-right1,
+  .vendor-top-msg1 {
+    display: none;
+  }
 }

@@ -1,24 +1,10 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 
-import Sidebar from "./components/Sidebar";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
-import DishGroup from "./pages/DishGroup";
-import Dish from "./pages/Dish";
-import Modifier from "./pages/Modifier";
-import Inventory from "./pages/Inventory";
-import Settlement from "./pages/Settlement";
+import Sidebar from './components/Sidebar';
 import SalesReport from "./pages/SalesReport";
-import SltReport from "./pages/SltReport";
-import Member from "./pages/Member";
-import MasterSettings from "./pages/MasterSettings";
 import VendorMaster from "./pages/VendorMaster";
 import RewardPoints from "./pages/RewardPoints";
-import UserGroup from "./pages/usergroup";
-import PrinterSettings from "./pages/PrinterSettings";
 import Paymode from "./pages/Paymode";
 import Barcode from "./pages/Barcode";
 import EmailSettings from "./pages/EmailSettings";
@@ -61,25 +47,12 @@ function Layout() {
         }}
       >
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/Contact" element={<Contact />} />
-          <Route path="/About" element={<About />} />
-          <Route path="/DishGroup" element={<DishGroup />} />
-          <Route path="/Dish" element={<Dish />} />
-          <Route path="/Modifier" element={<Modifier />} />
-          <Route path="/Inventory" element={<Inventory />} />
-          <Route path="/Settlement" element={<Settlement />} />
+          
           <Route path="/SalesReport" element={<SalesReport sidebarOpen={open} />} />
-          <Route path="/SltReport" element={<SltReport />} />
-          <Route path="/Member" element={<Member />} />
-          <Route path="/MasterSettings" element={<MasterSettings />} />
           <Route path="/VendorMaster" element={<VendorMaster />} />
           <Route path="/HappyHours" element={<HappyHours sidebarOpen={open} />} />
           <Route path="/RewardPoints" element={<RewardPoints />} />
-          <Route path="/UserGroup" element={<UserGroup />} />
-          <Route path="/PrinterSettings" element={<PrinterSettings />} />
-          <Route path="/Paymode" element={<Paymode />} />
+         <Route path="/Paymode" element={<Paymode />} />
           <Route path="/Barcode" element={<Barcode sidebarOpen={open} />} />
           <Route path="/EmailSettings" element={<EmailSettings />} />
           <Route path="/discount" element={<Discount sidebarOpen={open} />} />

@@ -567,7 +567,7 @@ if (dayEnd === "Paymode") {
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'DINERS' THEN pd.Amount ELSE 0 END), 0) AS Diners,
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'JCB' THEN pd.Amount ELSE 0 END), 0) AS JCB,
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NETS' THEN pd.Amount ELSE 0 END), 0) AS Nets,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) IN ('VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS') THEN pd.Amount ELSE 0 END), 0) AS [Total(Cards)],
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) IN ('VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS') THEN pd.Amount ELSE 0 END), 0) AS [Total],
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) NOT IN ('CASH', 'CHEQUE', 'VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS', 'NEKTAR') THEN pd.Amount ELSE 0 END), 0) AS Others,
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NEKTAR' THEN pd.Amount ELSE 0 END), 0) AS Nektar
       FROM dbo.RestaurantInvoice ri
@@ -994,7 +994,7 @@ router.get("/download-gst-pdf", async (req, res) => {
           SUM(JCB) AS JCB,
           SUM(Nets) AS Nets,
           SUM(Others) AS Others,
-          SUM([Total(Cards)]) AS TotalCards,
+          SUM([Total]) AS Total,
           SUM(CHEQUE) AS Cheque,
           SUM(Ledger) AS Ledger,
           SUM(Cashless) AS Cashless,
@@ -2432,7 +2432,7 @@ else if (req.query.dayEnd === "Paymode") {
   // Check if data is already in pivoted format (has Cash column)
   if (rawData.length > 0 && rawData[0].hasOwnProperty('Cash')) {
     // Data is already pivoted from backend
-    displayColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
+    displayColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total', 'Others', 'Nektar'];
     mappedData = rawData.map(row => ({
       Date: row.Date || '-',
       Cash: Number(row.Cash || 0).toFixed(2),
@@ -2443,7 +2443,7 @@ else if (req.query.dayEnd === "Paymode") {
       Diners: Number(row.Diners || 0).toFixed(2),
       JCB: Number(row.JCB || 0).toFixed(2),
       Nets: Number(row.Nets || 0).toFixed(2),
-      'Total(Cards)': Number(row['Total(Cards)'] || 0).toFixed(2),
+      'Total': Number(row['Total'] || 0).toFixed(2),
       Others: Number(row.Others || 0).toFixed(2),
       Nektar: Number(row.Nektar || 0).toFixed(2)
     }));
@@ -2491,12 +2491,12 @@ else if (req.query.dayEnd === "Paymode") {
       }
       
       // Calculate Total Cards
-      row['Total(Cards)'] = row.Visa + row.Master + row.Amex + row.Diners + row.JCB + row.Nets;
+      row['Total'] = row.Visa + row.Master + row.Amex + row.Diners + row.JCB + row.Nets;
       
       pivotedData.push(row);
     }
     
-    displayColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
+    displayColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total', 'Others', 'Nektar'];
     mappedData = pivotedData.map(row => ({
       Date: row.Date,
       Cash: row.Cash.toFixed(2),
@@ -2507,7 +2507,7 @@ else if (req.query.dayEnd === "Paymode") {
       Diners: row.Diners.toFixed(2),
       JCB: row.JCB.toFixed(2),
       Nets: row.Nets.toFixed(2),
-      'Total(Cards)': row['Total(Cards)'].toFixed(2),
+      'Total': row['Total'].toFixed(2),
       Others: row.Others.toFixed(2),
       Nektar: row.Nektar.toFixed(2)
     }));
