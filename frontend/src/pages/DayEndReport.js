@@ -4,7 +4,11 @@ import axios from 'axios';
 import './DayEndReport.css';
 
 const DayEndReport = ({ sidebarOpen }) => {
-    const [selectedDate, setSelectedDate] = useState("2025-11-21");
+    const singaporeToday = new Date().toLocaleDateString('en-CA', {
+        timeZone: 'Asia/Singapore'
+    });
+    const [fromDate, setFromDate] = useState(singaporeToday);
+    const [toDate, setToDate] = useState(singaporeToday);
     const [reportData, setReportData] = useState(null);
     const [orgInfo, setOrgInfo] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -17,6 +21,11 @@ const DayEndReport = ({ sidebarOpen }) => {
                 const response = await axios.get(API_BASE_URL + '/api/dayendreport/dates');
                 if (response.data.success) {
                     setAvailableDates(response.data.dates);
+                    if (response.data.dates && response.data.dates.length > 0) {
+                        const latestDate = response.data.dates[0].OrderDate?.split('T')[0] || singaporeToday;
+                        setFromDate(latestDate);
+                        setToDate(latestDate);
+                    }
                 }
             } catch (error) {
                 console.log("Could not fetch available dates");
@@ -35,7 +44,7 @@ const DayEndReport = ({ sidebarOpen }) => {
         setLoading(true);
         try {
             const response = await axios.get(API_BASE_URL + '/api/dayendreport', {
-                params: { fromDate: selectedDate, toDate: selectedDate }
+                params: { fromDate: fromDate, toDate: toDate }
             });
 
             console.log("API Response:", response.data);
@@ -78,215 +87,215 @@ const DayEndReport = ({ sidebarOpen }) => {
             return;
         }
 
-const now = new Date();
+        const now = new Date();
 
-const printDate = now.toLocaleDateString('en-GB', {
-  timeZone: 'Asia/Singapore'
-});
+        const printDate = now.toLocaleDateString('en-GB', {
+            timeZone: 'Asia/Singapore'
+        });
 
-const printTime = now.toLocaleTimeString('en-US', {
-  timeZone: 'Asia/Singapore',
-  hour12: true
-});
-        const selectedDateFormatted = formatDate(selectedDate);
+        const printTime = now.toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Singapore',
+            hour12: true
+        });
+        const dateRangeText = fromDate === toDate ? fromDate : `${fromDate}_to_${toDate}`;
+        const dateRangeFormatted = fromDate === toDate ? formatDate(fromDate) : `${formatDate(fromDate)} to ${formatDate(toDate)}`;
 
         let htmlContent = `
         <!DOCTYPE html>
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>Day End Report - ${selectedDate}</title>
+            <title>Day End Report - ${dateRangeFormatted}</title>
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-                * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', Arial, sans-serif; }
-                body {
-                    background: #dce3ea;
+                * {
                     margin: 0;
-                    padding: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: flex-start;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Cambria', 'Times New Roman', serif;
+                }
+                body { 
+                    font-family: 'Cambria', 'Times New Roman', serif; 
+                    background: #f0f2f5; 
+                    margin: 0; 
+                    padding: 20px; 
+                    display: flex; 
+                    justify-content: center; 
                 }
                 .a4-page {
-                    background: #ffffff;
+                    background: white;
                     width: 210mm;
                     min-height: 297mm;
-                    padding: 18mm 20mm 15mm 20mm;
+                    padding: 15mm 20mm 5mm 20mm;
                     box-sizing: border-box;
-                    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
-                    border-radius: 3px;
+                    box-shadow: 0 0 15px rgba(0,0,0,0.1);
                     color: #333;
+                    border: 1px solid #d1d8dd;
                     display: flex;
                     flex-direction: column;
                 }
-                .report-body { flex-grow: 1; }
+                .report-body {
+                    flex-grow: 1;
+                }
+                @media screen {
+                    .print-spacer { display: none; }
+                }
                 @media print {
-                    @page { margin: 8mm; size: A4; }
-                    body { background: white; padding: 0; margin: 0; display: block; }
-                    .a4-page { box-shadow: none; width: 100% !important; min-height: auto; padding: 5mm 8mm !important; margin: 0; border: none; display: flex; flex-direction: column; border-radius: 0; }
-                    th, td { padding: 5px 8px !important; font-size: 9px !important; }
-                    .header-container { margin-bottom: 10px; padding-bottom: 8px; }
-                    .report-title-section { margin: 8px 0; }
-                    .report-info { margin-bottom: 10px; padding: 5px 8px; font-size: 10px; }
-                    .signature { margin-top: 20px; }
-                    .footer { margin-top: 10px; }
+                    @page { margin: 0; }
+                    body { 
+                        background: white; 
+                        padding: 0; 
+                        margin: 0; 
+                        -webkit-print-color-adjust: exact; 
+                        print-color-adjust: exact; 
+                    }
+                    .a4-page { 
+                        box-shadow: none; 
+                        width: 100% !important; 
+                        margin: 0; 
+                        padding: 0 20mm !important;
+                        border: none; 
+                        display: block !important;
+                    }
+                    .print-bottom-wrapper {
+                        position: static !important;
+                        page-break-inside: avoid;
+                        padding: 10px 0 !important;
+                        margin-top: 300px !important;
+                    }
+                    th, td { padding: 4px 6px !important; font-size: 10px; }
+                    .header-container { margin-bottom: 10px; padding-bottom: 10px; }
+                    .report-title { margin: 5px 0; font-size: 14px; }
+                    .report-info { margin-bottom: 10px; padding: 5px; font-size: 11px; }
+                    .signature { margin-top: 20px; page-break-inside: avoid; }
+                    tr { page-break-inside: avoid; break-inside: avoid; }
+                    table { page-break-inside: auto; }
+                    thead { display: table-header-group; }
+                    tfoot { display: table-footer-group; }
                 }
-                /* ── HEADER ─────────────────────────────── */
-                .header-container {
-                    display: flex;
-                    align-items: center;
-                    padding-bottom: 12px;
-                    margin-bottom: 14px;
-                    border-bottom: 1.5px solid #3d6275;
+                .header-container { 
+                    position: relative; 
+                    text-align: center; 
+                    border-bottom: 1px solid #34495e; 
+                    padding-bottom: 15px; 
+                    margin-bottom: 20px; 
+                    min-height: 60px; 
+                    display: flex; 
+                    flex-direction: column; 
+                    justify-content: center; 
                 }
-                .logo-wrap { flex: 0 0 90px; }
-                .logo { max-width: 85px; max-height: 55px; }
-                .company-info { flex: 1; text-align: center; }
-                .company-name {
-                    font-size: 17px;
-                    font-weight: 700;
-                    color: #1a3a5f;
-                    letter-spacing: 0.3px;
+                .logo { 
+                    position: absolute; 
+                    left: 0; 
+                    top: 50%; 
+                    transform: translateY(-50%); 
+                    max-width: 100px; 
+                    max-height: 50px; 
                 }
-                .company-address {
-                    font-size: 10.5px;
-                    color: #7a8fa6;
-                    margin-top: 3px;
-                    line-height: 1.5;
+                .company-name { 
+                    font-size: 18px; 
+                    font-weight: bold; 
+                    color: #2c3e50; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                /* ── REPORT TITLE ───────────────────────── */
-                .report-title-section {
-                    text-align: center;
-                    margin: 12px 0 10px 0;
+                .company-address { 
+                    font-size: 11px; 
+                    color: #7f8c8d; 
+                    margin-top: 4px; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                .report-title {
-                    font-size: 13px;
-                    font-weight: 700;
-                    color: #2c3e50;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
+                .report-title { 
+                    text-align: center; 
+                    font-size: 14px; 
+                    font-weight: bold; 
+                    margin: 20px 0; 
+                    color: #34495e; 
+                    text-transform: uppercase; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                /* ── PERIOD/INFO BOX ────────────────────── */
                 .report-info {
                     text-align: center;
-                    border: 1px solid #d0dae3;
-                    background: #f7f9fb;
-                    padding: 8px 15px;
-                    font-size: 11.5px;
-                    color: #2c3e50;
-                    margin-bottom: 14px;
-                    border-radius: 2px;
+                    margin-bottom: 25px;
+                    font-size: 12px;
+                    border: 1px solid #e0e0e0;
+                    padding: 8px;
+                    background: #f8f9fa;
+                    color: #333;
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                .report-info strong { color: #2c3e50; }
-                /* ── TABLE ──────────────────────────────── */
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin: 0;
-                    font-size: 11px;
+                table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin: 15px 0; 
+                    font-size: 11px; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                /* Table header row */
-                thead tr th {
-                    background: #2d4a65;
-                    color: #ffffff;
-                    font-weight: 700;
-                    font-size: 11px;
+                th, td { 
+                    padding: 10px 12px; 
+                    border: 1px solid #e0e0e0; 
+                    text-align: left; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
+                }
+                th { 
+                    background: #34495e; 
+                    color: #ffffff; 
+                    font-weight: bold; 
                     text-transform: uppercase;
-                    padding: 9px 12px;
-                    border: none;
-                    letter-spacing: 0.3px;
+                    text-align: center;
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                thead tr th:first-child { text-align: left; }
-                thead tr th.amount-col { text-align: right; }
-                /* Section header rows */
                 .section-head td {
-                    background: #e6f0f5 !important;
-                    color: #1e6fa8;
-                    font-weight: 700;
-                    font-size: 11px;
-                    padding: 7px 12px;
-                    border-top: 1px solid #cddce8;
-                    border-bottom: 1px solid #cddce8;
+                    background-color: #eaeff2 !important;
+                    font-weight: bold;
+                    color: #34495e;
                 }
-                /* Data rows */
-                tbody tr td {
-                    padding: 7px 12px;
-                    border-bottom: 1px solid #e8edf2;
-                    color: #2980b9;
-                    font-size: 11px;
-                    vertical-align: middle;
-                }
-                tbody tr td.amount-col {
-                    text-align: right;
-                    color: #2c3e50;
-                    font-weight: 500;
-                }
-                /* Total rows */
                 .total-row td {
-                    background: #f0f4f7 !important;
-                    color: #1a3a5f !important;
-                    font-weight: 700 !important;
-                    padding: 7px 12px;
-                    border-top: 1px solid #cddce8;
-                    border-bottom: 1px solid #cddce8;
+                    background-color: #f8f9fa !important;
+                    font-weight: bold;
+                    color: #333;
                 }
-                .total-row td.amount-col {
-                    text-align: right;
-                    color: #1a3a5f !important;
+                .footer { 
+                    margin-top: 40px;
+                    font-size: 10px; 
+                    color: #95a5a6; 
+                    padding-top: 15px; 
+                    display: flex; 
+                    justify-content: space-between; 
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                /* ── SIGNATURE ──────────────────────────── */
                 .signature {
-                    margin-top: 70px;
+                    margin-top: 60px;
                     display: flex;
                     justify-content: space-between;
-                    font-size: 10.5px;
-                    color: #555;
+                    font-size: 11px;
+                    color: #333;
+                    font-family: 'Cambria', 'Times New Roman', serif;
                 }
-                .sig-block { text-align: center; }
-                .sig-line {
-                    border-top: 1px solid #555;
-                    width: 170px;
-                    padding-top: 5px;
+                .amount-col {
+                    text-align: right;
                 }
-                /* ── FOOTER ─────────────────────────────── */
-                .footer {
-                    margin-top: 18px;
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 9.5px;
-                    color: #a0b0be;
-                    padding-top: 8px;
-                    border-top: 1px solid #e8edf2;
+                th.amount-col {
+                    text-align: center;
                 }
-                .amount-col { text-align: right; }
-                .particulars-col { display: flex; justify-content: space-between; }
             </style>
         </head>
         <body>
             <div class="a4-page">
                 <div class="report-body">
                     <div class="header-container">
-                        <div class="logo-wrap">
-                            <img src="https://uniprosg.com/wp-content/uploads/2024/09/unipro-logo-green-1.png" alt="Unipro Logo" class="logo" />
+                        <img src="https://uniprosg.com/wp-content/uploads/2024/09/unipro-logo-green-1.png" alt="Unipro Logo" class="logo" />
+                        <div class="company-name">${orgInfo?.Name || "UNIPRO SOFTWARES SG PTE LTD"}</div>
+                        <div class="company-address">
+                            ${orgInfo?.Address1_Line1 || "45 KALLANG PUDDING ROAD"}, ${orgInfo?.Address1_City || "SINGAPORE"} ${orgInfo?.Address1_PostalCode || "349317"}<br/>
+                            Phone: ${orgInfo?.Address1_Telephone1 || "65130000"}
                         </div>
-                        <div class="company-info">
-                            <div class="company-name">${orgInfo?.Name || "UNIPRO SOFTWARES SG PTE LTD"}</div>
-                            <div class="company-address">
-                                ${orgInfo?.Address1_Line1 || "45 KALLANG PUDDING ROAD"}, ${orgInfo?.Address1_City || "SINGAPORE"} ${orgInfo?.Address1_PostalCode || "349317"}<br/>
-                                Phone: ${orgInfo?.Address1_Telephone1 || "65130000"}
-                            </div>
-                        </div>
-                        <div style="flex:0 0 90px;"></div>
                     </div>
                     
-                    <div class="report-title-section">
-                        <div class="report-title">DAY END REPORT</div>
-                    </div>
+                    <div class="report-title">DAY END REPORT</div>
                     
                     <div class="report-info">
-                        <strong>Date:</strong> <span style="color:#2980b9">${selectedDateFormatted}</span> &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <strong>Cashier:</strong> <span style="color:#2980b9">${reportData.cashier || "System"}</span> &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <strong>RefNo:</strong> <span style="color:#2980b9">${reportData.refNo || "1"}</span>
+                        <strong>Date:</strong> ${dateRangeFormatted} &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <strong>Cashier:</strong> ${reportData.cashier || "System"} &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <strong>RefNo:</strong> ${reportData.refNo || "1"}
                     </div>
                     
                     <table>
@@ -379,19 +388,27 @@ const printTime = now.toLocaleTimeString('en-US', {
                         </tbody>
                     </table>
                 </div>
- 
-                <div class="signature">
-                    <div class="sig-block">
-                        <div class="sig-line" style="color:#2980b9">Cashier Signature</div>
-                    </div>
-                    <div class="sig-block">
-                        <div class="sig-line" style="color:#2980b9">Authorized Signature</div>
-                    </div>
-                </div>
 
-                <div class="footer">
-                    <span>Printed On: ${printDate} ${printTime}</span>
-                    <span>Powered by UNIPRO</span>
+                <div class="print-bottom-wrapper" style="margin-top: 300px; padding: 10px 20px; page-break-inside: avoid;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; font-family: 'Cambria', 'Times New Roman', serif;">
+                        
+                        <!-- Left Side -->
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 30px;">
+                            <div style="border-top: 1px solid #333; width: 180px; padding-top: 5px; text-align: center; font-size: 11px; color: #333;">
+                                Cashier Signature
+                            </div>
+                            <span style="color: #95a5a6; font-size: 10px;">Printed On: ${printDate} ${printTime}</span>
+                        </div>
+
+                        <!-- Right Side -->
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 30px;">
+                            <div style="border-top: 1px solid #333; width: 180px; padding-top: 5px; text-align: center; font-size: 11px; color: #333;">
+                                Authorized Signature
+                            </div>
+                            <span style="color: #95a5a6; font-size: 10px;">Powered by UNIPRO</span>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </body>
@@ -402,7 +419,7 @@ const printTime = now.toLocaleTimeString('en-US', {
         const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
         link.href = url;
-        link.download = `DayEndReport_${selectedDate}.html`;
+        link.download = `DayEndReport_${dateRangeText}.html`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -414,40 +431,43 @@ const printTime = now.toLocaleTimeString('en-US', {
             <div className="dayend-header-title">Day End Report</div>
 
             <div className="dayend-filter-container">
-    <div className="dayend-filter-row">
+                <div className="dayend-filter-row">
 
-        <div className="dayend-filter-item">
-            <label>DAY END DATE</label>
-            <input
-                type="date"
-                className="dayend-date-picker"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-            />
-        </div>
+                    <div className="dayend-filter-item">
+                        <label>DAYEND DATE</label>
+                        <input
+                            type="date"
+                            className="dayend-date-picker"
+                            value={fromDate}
+                            onChange={(e) => {
+                                setFromDate(e.target.value);
+                                setToDate(e.target.value);
+                            }}
+                        />
+                    </div>
 
-        <div className="dayend-generate-row">
-            <button
-                className="dayend-btn-generate"
-                onClick={handleGenerate}
-                disabled={loading}
-            >
-                {loading ? "Loading..." : "Generate"}
-            </button>
+                    <div className="dayend-generate-row">
+                        <button
+                            className="dayend-btn-generate"
+                            onClick={handleGenerate}
+                            disabled={loading}
+                        >
+                            {loading ? "Loading..." : "Generate"}
+                        </button>
 
-            {reportData && (
-                <button
-                    className="dayend-download-btn"
-                    onClick={handleDownload}
-                >
-                    <span style={{ marginRight: "8px" }}>⬇️</span>
-                    Report
-                </button>
-            )}
-        </div>
+                        {reportData && (
+                            <button
+                                className="dayend-download-btn"
+                                onClick={handleDownload}
+                            >
+                                <span style={{ marginRight: "8px" }}>⬇️</span>
+                                Report
+                            </button>
+                        )}
+                    </div>
 
-    </div>
-</div>
+                </div>
+            </div>
 
 
 

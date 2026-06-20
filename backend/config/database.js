@@ -6,7 +6,7 @@ const dbConfig = {
   password: process.env.DB_PASSWORD || "ups",
   server: process.env.DB_SERVER || "myerpcloud.dyndns.org",
   port: parseInt(process.env.DB_PORT || "9199"),
-  database: process.env.DB_NAME || process.env.DB_DATABASE || "UCS",
+  database: process.env.DB_NAME || process.env.DB_DATABASE || "UCSPONDY",
 
   options: {
     encrypt: false,

@@ -161,19 +161,23 @@ const end = toDate || singaporeToday;
                         od.BaseAmount,
                         od.TotalDetailLineAmount,
                         pd.BillNumber,
-                    pd.PayModeName
+                        pd.PayModeName
                     FROM (
-                        ${vwRestaurantOrderUnion}
-                    ) ro
-                    INNER JOIN (
                         ${vwOrderDetailUnion}
-                    ) od ON ro.OrderId = od.OrderId
-                    INNER JOIN (
-                        ${vwPaymentDetailUnion}
-                    ) pd ON ro.OrderId = pd.OrderId
+                    ) od
+                    LEFT JOIN (
+                        SELECT 
+                            OrderId, 
+                            MAX(BillNumber) as BillNumber, 
+                            MAX(PayModeName) as PayModeName
+                        FROM (
+                            ${vwPaymentDetailUnion}
+                        ) p
+                        GROUP BY OrderId
+                    ) pd ON od.OrderId = pd.OrderId
                     INNER JOIN dbo.DishMaster dm ON od.DishId = dm.DishId
                     LEFT JOIN dbo.Dishgroupmaster dg ON dm.DishGroupId = dg.DishGroupId
-                    WHERE CAST(ro.OrderDateTime AS DATE) BETWEEN @start AND @end
+                    WHERE CAST(od.OrderDateTime AS DATE) BETWEEN @start AND @end
                     ORDER BY dm.DishGroupId
                 `;
             
@@ -186,14 +190,14 @@ const end = toDate || singaporeToday;
                 // Get Paymode Breakdown
                 const summaryPaymodeQuery = `
                     SELECT 
-                            pd.PayModeName,
+                        ISNULL(CAST(pd.PayModeName AS VARCHAR(50)), 'UNKNOWN') as PayModeName,
                         COUNT(DISTINCT BillNumber) as TransactionCount,
                         SUM(TotalAmountLessFreight) as TotalAmount
                     FROM (
                         ${vwPaymentDetailUnion}
                     ) pd
                     WHERE CAST(pd.OrderDateTime AS DATE) BETWEEN @start AND @end
-                    GROUP BY PayModeName
+                    GROUP BY pd.PayModeName
                 `;
                 const paymodeResult = await pool.request()
                     .input('start', sql.Date, start)
@@ -375,6 +379,7 @@ const end = toDate || singaporeToday;
     NETS: { amount: 0, count: 0 },
     CDC: { amount: 0, count: 0 },
     VOUCHER: { amount: 0, count: 0 },
+    UNKNOWN: { amount: 0, count: 0 },
     OTHERS: { amount: 0, count: 0 }
 };
                 
@@ -398,6 +403,9 @@ const end = toDate || singaporeToday;
         } else if (mode.includes('VOUCHER')) {
             paymodeBreakdown.VOUCHER.amount += row.TotalAmount || 0;
             paymodeBreakdown.VOUCHER.count += count;
+        } else if (mode.includes('UNKNOWN')) {
+            paymodeBreakdown.UNKNOWN.amount += row.TotalAmount || 0;
+            paymodeBreakdown.UNKNOWN.count += count;
         } else {
             paymodeBreakdown.OTHERS.amount += row.TotalAmount || 0;
             paymodeBreakdown.OTHERS.count += count;
@@ -431,21 +439,25 @@ const end = toDate || singaporeToday;
                 const summaryQuery = `
                     SELECT
                         ISNULL(SUM(vrod.TotalDetailLineAmount), 0) as NetSales,
-                     MAX(CAST(dg.DishGroupName AS VARCHAR(50))) as DishGroupName,
-                     0 as ServiceCharge,
+                        MAX(CAST(dg.DishGroupName AS VARCHAR(50))) as DishGroupName,
+                        0 as ServiceCharge,
                         0 as TaxCollected,
-                        ISNULL(SUM(vpd.RoundedBy), 0) as Rounding,
-                        ISNULL(SUM(vpd.TotalDiscountAmount), 0) as TotalDiscount,
-                        ISNULL(SUM(vrod.TotalDetailLineAmount), 0) + ISNULL(SUM(vpd.RoundedBy), 0) as TotalRevenue
+                        (SELECT ISNULL(SUM(RoundedBy), 0) FROM (
+                            ${vwPaymentDetailUnion}
+                        ) pd WHERE CAST(pd.OrderDateTime AS DATE) BETWEEN @start AND @end) as Rounding,
+                        (SELECT ISNULL(SUM(TotalDiscountAmount), 0) FROM (
+                            ${vwPaymentDetailUnion}
+                        ) pd WHERE CAST(pd.OrderDateTime AS DATE) BETWEEN @start AND @end) as TotalDiscount,
+                        ISNULL(SUM(vrod.TotalDetailLineAmount), 0) + 
+                        (SELECT ISNULL(SUM(RoundedBy), 0) FROM (
+                            ${vwPaymentDetailUnion}
+                        ) pd WHERE CAST(pd.OrderDateTime AS DATE) BETWEEN @start AND @end) as TotalRevenue
                     FROM (
-                        ${vwPaymentDetailUnion}
-                    ) vpd
-                    INNER JOIN (
                         ${vwOrderDetailUnion}
-                    ) vrod ON vpd.OrderId = vrod.OrderId
+                    ) vrod
                     INNER JOIN dbo.DishMaster dm ON vrod.DishId = dm.DishId
                     LEFT JOIN dbo.Dishgroupmaster dg ON dm.DishGroupId = dg.DishGroupId
-                    WHERE CAST(vpd.OrderDateTime AS DATE) BETWEEN @start AND @end
+                    WHERE CAST(vrod.OrderDateTime AS DATE) BETWEEN @start AND @end
                 `;
     
                 console.log("Executing Legacy Summary Query...");
@@ -454,10 +466,9 @@ const end = toDate || singaporeToday;
                     .input('end', sql.Date, end)
                     .query(summaryQuery);
 
-                    // Paymode Query
     const paymodeQuery = `
         SELECT 
-        pd.PayModeName,
+            ISNULL(CAST(pd.PayModeName AS VARCHAR(50)), 'UNKNOWN') as PayModeName,
             COUNT(DISTINCT pd.BillNumber) as TransactionCount,
             SUM(pd.TotalAmountLessFreight) as TotalAmount
         FROM (
@@ -465,8 +476,8 @@ const end = toDate || singaporeToday;
         ) pd
         WHERE CAST(pd.OrderDateTime AS DATE) 
             BETWEEN @start AND @end
-    GROUP BY pd.PayModeName
-    ORDER BY pd.PayModeName
+        GROUP BY pd.PayModeName
+        ORDER BY pd.PayModeName
     `;
 
     const paymodeResult = await pool.request()
@@ -481,12 +492,13 @@ const end = toDate || singaporeToday;
     NETS: { amount: 0, count: 0 },
     CDC: { amount: 0, count: 0 },
     VOUCHER: { amount: 0, count: 0 },
+    UNKNOWN: { amount: 0, count: 0 },
     OTHERS: { amount: 0, count: 0 }
 };
     paymodeResult.recordset.forEach(row => {
-
     const mode = row.PayModeName?.toUpperCase() || '';
     const count = row.TransactionCount || 0;
+    console.log(`DEBUG: row.PayModeName="${row.PayModeName}", mode="${mode}", count=${count}, TotalAmount=${row.TotalAmount}`);
 
     if (mode.includes('CASH')) {
         paymodeBreakdown.CASH.amount += row.TotalAmount || 0;
@@ -507,6 +519,10 @@ const end = toDate || singaporeToday;
     } else if (mode.includes('VOUCHER')) {
         paymodeBreakdown.VOUCHER.amount += row.TotalAmount || 0;
         paymodeBreakdown.VOUCHER.count += count;
+
+    } else if (mode.includes('UNKNOWN')) {
+        paymodeBreakdown.UNKNOWN.amount += row.TotalAmount || 0;
+        paymodeBreakdown.UNKNOWN.count += count;
 
     } else {
         paymodeBreakdown.OTHERS.amount += row.TotalAmount || 0;

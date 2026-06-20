@@ -88,7 +88,7 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
 
                     {/* 1. PAYMODE BREAKDOWN - FIRST */}
                     <tr className="console-section-header"><td colSpan="2">Paymode Breakdown</td></tr>
-                    {['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER'].map((mode) => (
+                    {['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'].map((mode) => (
                         <tr key={mode}>
                             <td style={{ paddingLeft: '20px' }}>{mode}</td>
                             <td className="console-text-right">
@@ -308,10 +308,10 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                 </thead>
                                 <tbody>
                                     {(() => {
-                                        const paymodes = ['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER'];
+                                        const paymodes = ['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'];
                                         const totalAmount = Object.values(reportData.paymodeBreakdown).reduce((sum, mode) => sum + (mode?.amount || 0), 0);
                                         return paymodes.map(mode => {
-                                            const data = reportData.paymodeBreakdown[mode] || { amount: 0, count: 0 };
+                                            const data = reportData.paymodeBreakdown[mode.toUpperCase()] || { amount: 0, count: 0 };
                                             const percentage = totalAmount > 0 ? ((data.amount / totalAmount) * 100).toFixed(2) : '0.00';
                                             return (
                                                 <tr key={mode}>
@@ -846,8 +846,8 @@ const printTime = now.toLocaleTimeString('en-US', {
                         
                         <!-- 1. PAYMODE BREAKDOWN -->
                         <tr class="section-head"><td colspan="2">Paymode Breakdown</td></tr>
-                        ${['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER'].map(mode => `
-                        <tr><td>${mode}</td><td class="amount-col">${(reportData?.paymodeBreakdown?.[mode]?.amount || 0).toFixed(2)}</td></tr>
+                        ${['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'].map(mode => `
+                        <tr><td>${mode}</td><td class="amount-col">${(reportData?.paymodeBreakdown?.[mode.toUpperCase()]?.amount || 0).toFixed(2)}</td></tr>
                         `).join('')}
                         
                         <!-- 2. SALES BREAKDOWN -->
@@ -995,11 +995,11 @@ const printTime = now.toLocaleTimeString('en-US', {
                     <tbody>
                         ${(() => {
                             if (!reportData.paymodeBreakdown) return '';
-                            const paymodes = ['Cash', 'Card', 'NETS', 'CDC', 'Voucher'];
+                            const paymodes = ['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'];
                             const totalAmount = Object.values(reportData.paymodeBreakdown).reduce((sum, mode) => sum + (mode?.amount || 0), 0);
                             
                             const rows = paymodes.map(mode => {
-                                const data = reportData.paymodeBreakdown[mode];
+                                const data = reportData.paymodeBreakdown[mode.toUpperCase()];
                                 if (data && data.amount > 0) {
                                     const percentage = totalAmount > 0 ? ((data.amount / totalAmount) * 100).toFixed(2) : '0.00';
                                     return `

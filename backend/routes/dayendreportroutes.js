@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { sql, poolPromise } = require('../db');
- 
+
 router.get('/', async (req, res) => {
     try {
         const { fromDate, toDate } = req.query;
         console.log(`📅 Day End Report - From: ${fromDate}, To: ${toDate}`);
-       
+
         const pool = await poolPromise;
- 
+
         // Organization Info
         const orgQuery = `
             SELECT TOP 1
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         `;
         const orgResult = await pool.request().query(orgQuery);
         const orgInfo = orgResult.recordset[0] || {};
- 
+
         // 1. Get SettlementHeader data
         let headerQuery = `
             SELECT
@@ -41,26 +41,26 @@ router.get('/', async (req, res) => {
             FROM SettlementHeader
            
         `;
- 
+
         if (fromDate && toDate) {
-      headerQuery += `
+            headerQuery += `
 WHERE CAST(
     DATEADD(HOUR, 8, LastSettlementDate)
 AS DATE) BETWEEN @start AND @end
 `;
         }
- 
+
         const headerRequest = pool.request();
         if (fromDate && toDate) {
             headerRequest.input('start', sql.Date, fromDate);
             headerRequest.input('end', sql.Date, toDate);
         }
-       
+
         const headerResult = await headerRequest.query(headerQuery);
         const headers = headerResult.recordset;
- 
+
         console.log(`📊 Found ${headers.length} settlement records`);
- 
+
         if (headers.length === 0) {
             return res.json({
                 success: true,
@@ -77,16 +77,16 @@ AS DATE) BETWEEN @start AND @end
                 }
             });
         }
- 
+
         // Get SettlementID
         const settlementId = headers[0]?.SettlementID;
-       
+
         // 2. Get Cash Amount and ReceiptCount from SettlementDetail table
         let cashTotal = 0;
         let cardTotal = 0;
         let receiptCount = 0;
         const paymodeDetail = {};
-       
+
         if (settlementId) {
             const detailQuery = `
                 SELECT
@@ -96,14 +96,14 @@ AS DATE) BETWEEN @start AND @end
                 FROM SettlementDetail
                 WHERE SettlementId = @settlementId
             `;
-           
+
             const detailRequest = pool.request();
             detailRequest.input('settlementId', sql.UniqueIdentifier, settlementId);
             const detailResult = await detailRequest.query(detailQuery);
             const details = detailResult.recordset;
-           
+
             console.log("SettlementDetail Records:", details);
-           
+
             details.forEach(detail => {
                 if (detail.Amount > 0) {
                     paymodeDetail[detail.Paymode] = detail.Amount;
@@ -118,7 +118,7 @@ AS DATE) BETWEEN @start AND @end
                 }
             });
         }
- 
+
         // Calculate totals from SettlementHeader
         const totalSales = headers.reduce((sum, s) => sum + (s.TotalSales || 0), 0);
         const totalRoundOff = headers.reduce((sum, s) => sum + (s.RoundOff || 0), 0);
@@ -127,14 +127,14 @@ AS DATE) BETWEEN @start AND @end
         const totalServiceCharge = headers.reduce((sum, s) => sum + (s.ServiceCharge || 0), 0);
         const totalVoidQty = headers.reduce((sum, s) => sum + (s.VoidQty || 0), 0);
         const totalVoidItemAmount = headers.reduce((sum, s) => sum + (s.VoidItemAmount || 0), 0);
-       
+
         const netTotal = totalSales + totalRoundOff;
         const noOfBills = headers.reduce((sum, s) => sum + (s.NoOfBills || 0), 0);
         const avgPerBill = noOfBills > 0 ? (totalSales / noOfBills).toFixed(2) : 0;
- 
+
         const terminalCode = headers[0]?.TerminalCode || "";
         const dayendRefNo = headers[0]?.DayendRefNo || "";
- 
+
         const reportData = {
             cashier: terminalCode,
             receiptCount: receiptCount,
@@ -163,9 +163,9 @@ AS DATE) BETWEEN @start AND @end
                 voidItemAmount: totalVoidItemAmount
             }
         };
- 
+
         console.log(`FINAL - Cash: ${cashTotal}, ReceiptCount: ${receiptCount}, Bills: ${noOfBills}, RefNo: ${dayendRefNo}`);
- 
+
         res.json({
             success: true,
             orgInfo: orgInfo,
@@ -173,7 +173,7 @@ AS DATE) BETWEEN @start AND @end
             fromDate: fromDate,
             toDate: toDate
         });
- 
+
     } catch (err) {
         console.error("Dayend Report Error:", err);
         res.status(500).json({
@@ -182,12 +182,12 @@ AS DATE) BETWEEN @start AND @end
         });
     }
 });
- 
+
 // Get available dates
 router.get('/dates', async (req, res) => {
     try {
         const pool = await poolPromise;
-       
+
         const result = await pool.request().query(`
             SELECT DISTINCT
                 CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE) as OrderDate,
@@ -200,12 +200,12 @@ router.get('/dates', async (req, res) => {
 
 ORDER BY CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE) DESC
         `);
-       
+
         res.json({
             success: true,
             dates: result.recordset
         });
-       
+
     } catch (err) {
         console.error("Error fetching dates:", err);
         res.status(500).json({
@@ -214,7 +214,6 @@ ORDER BY CAST(DATEADD(HOUR, 8, LastSettlementDate) AS DATE) DESC
         });
     }
 });
- 
+
 module.exports = router;
- 
- 
+
