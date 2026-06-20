@@ -2,12 +2,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import "./Sidebar.css";
 
-function Sidebar({ open, setOpen }) {
+function Sidebar({ open, setOpen, onLogout }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/"); // ✅ back to login page
+    if (onLogout) {
+      onLogout();
+    } else {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authUsername");
+      localStorage.removeItem("authRole");
+    }
+    navigate("/login");
   };
+
 
   return (
     <>
@@ -42,6 +50,7 @@ function Sidebar({ open, setOpen }) {
         <Link className="menu" to="/RewardPoints" onClick={() => setOpen(false)}>Reward Points</Link>
         <Link className="menu" to="/EmailSettings" onClick={() => setOpen(false)}>Email Settings</Link>
         <Link className="menu" to="/Organization" onClick={() => setOpen(false)}>Organization</Link>
+        <div className="menu logout-link" onClick={handleLogout} style={{ cursor: "pointer", color: "#e74c3c", fontWeight: "bold", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "15px", marginTop: "15px" }}>Logout</div>
       </div>
     </>
   );
