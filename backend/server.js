@@ -40,6 +40,8 @@ const dayEndReportRoutes = require("./routes/dayendreportroutes");
 const serverMasterRoutes = require("./routes/serverMasterRoutes");
 const dishOrderItemShareRoutes = require("./routes/dishOrderItemShareRoutes");
 const salesReportRoutes = require("./routes/salesreportRoutes");
+const authRoutes = require("./routes/authRoutes");
+
 
 
 
@@ -60,6 +62,8 @@ app.use("/api/dishmovement", dishMovementRoutes);
 app.use("/api/dayendreport", dayEndReportRoutes);
 app.use("/api/server", serverMasterRoutes);
 app.use("/api/salesreport", salesReportRoutes);
+app.use("/api/auth", authRoutes);
+
 
 
 app.get("/api/ping", (req, res) => {
