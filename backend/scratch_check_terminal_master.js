@@ -1,13 +1,14 @@
 const { poolPromise } = require("./db");
 
-async function listTables() {
+async function checkTerminalMaster() {
     try {
         const pool = await poolPromise;
         const res = await pool.request().query(`
-            SELECT name FROM sys.tables ORDER BY name;
+            SELECT TerminalCode, TerminalName, TerminalType FROM dbo.TerminalMaster;
         `);
-        console.log("=== All Tables ===");
-        console.log(res.recordset.map(r => r.name));
+        console.log("=== TerminalMaster ===");
+        console.log(res.recordset);
+
         process.exit(0);
     } catch(e) {
         console.error(e);
@@ -15,4 +16,4 @@ async function listTables() {
     }
 }
 
-listTables();
+checkTerminalMaster();

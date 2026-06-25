@@ -1,18 +1,17 @@
 const { poolPromise } = require("./db");
 
-async function listTables() {
+async function checkPaymentView() {
     try {
         const pool = await poolPromise;
         const res = await pool.request().query(`
-            SELECT name FROM sys.tables ORDER BY name;
+            SELECT TOP 1 * FROM dbo.vw_PaymentDetail
         `);
-        console.log("=== All Tables ===");
-        console.log(res.recordset.map(r => r.name));
+        console.log("vw_PaymentDetail row:", res.recordset[0]);
         process.exit(0);
     } catch(e) {
-        console.error(e);
+        console.error("View Query Failed:", e.message);
         process.exit(1);
     }
 }
 
-listTables();
+checkPaymentView();

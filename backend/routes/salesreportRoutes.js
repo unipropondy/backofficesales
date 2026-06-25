@@ -52,7 +52,7 @@ const getLogoBase64 = async () => {
 
 // ✅ Common function to generate totals for any report - SINGLE LINE FORMAT
 function generateTotalsHTML(displayColumns, pageData, mappedData, totalPages, page) {
-  const textColumns = ['Month', 'Item', 'DishGroupName', 'CategoryName', 'GstType', 'Hour', 'Group', 'TransactionMode', 'Date', 'TerminalCode', 'DishName', 'OrderDateTime', 'TotalDetailLineAmount', 'Year', 'No of Bills', 'Qty'];
+  const textColumns = ['Month', 'Item', 'DishGroupName', 'CategoryName', 'GstType', 'Hour', 'Group', 'TransactionMode', 'Date', 'TerminalCode', 'DishName', 'OrderDateTime', 'Year'];
   
   const numericColumns = displayColumns.slice(1).filter(col => !textColumns.includes(col));
   
@@ -122,6 +122,7 @@ const getReportQuery = (params) => {
         INNER JOIN dbo.PaymentDetail PD ON RO.OrderId = PD.OrderId
         INNER JOIN dbo.RestaurantInvoice RI ON PD.RestaurantBillId = RI.RestaurantBillId
         WHERE D.isGuestMeal = 1
+          AND RO.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
           AND CAST(RI.InvoiceDate AS DATE) >= CAST('${finalFrom}' AS DATE)
           AND CAST(RI.InvoiceDate AS DATE) <= CAST('${finalTo}' AS DATE)
         ORDER BY RI.InvoiceDate, RI.BillNumber
@@ -134,23 +135,83 @@ const getReportQuery = (params) => {
     return {
       query: `
         SELECT 
-          CONVERT(VARCHAR, InvoiceDate, 103) AS Date,
-          ROUND(SUM(TotalLineItemAmount), 2) AS Sales,
+          s.Date,
+          s.Sales,
           0 AS FOC,
-          ROUND(SUM(TotalDiscountAmount), 2) AS Disc,
-          ROUND(SUM(ServiceCharge), 2) AS SVC,
-          ROUND(SUM(TotalTax), 2) AS [Tax 7%],
+          ISNULL(o.Disc, 0) AS Disc,
+          ISNULL(o.SVC, 0) AS SVC,
+          ISNULL(o.Tax, 0) AS [Tax 7%],
           0 AS Tips,
           0 AS Rnd,
           0 AS ENT,
           0 AS Cash,
           0 AS Master,
           0 AS Visa
-        FROM dbo.RestaurantInvoice
-        WHERE InvoiceDate >= '${finalFrom}' 
-          AND InvoiceDate <= '${finalTo} 23:59:59'
-        GROUP BY CONVERT(VARCHAR, InvoiceDate, 103)
-        ORDER BY MIN(InvoiceDate)
+        FROM (
+          SELECT 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103) AS Date,
+            MIN(ri.InvoiceDate) AS SortDate,
+            ROUND(SUM(rd.TotalDetailLineAmount), 2) AS Sales
+          FROM (
+            SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+            FROM dbo.RestaurantOrderDetail
+            UNION ALL
+            SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+            FROM dbo.RestaurantOrderDetailCur
+          ) rd
+          INNER JOIN (
+            SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+            FROM (
+              SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              UNION ALL
+              SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            ) ri_all
+            GROUP BY OrderId
+          ) ri ON rd.OrderId = ri.OrderId
+          INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+          WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00' 
+            AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+            AND ri.StatusCode = 5
+            AND ri.TotalAmount <> 0
+            AND rd.TotalDetailLineAmount < 1000000
+            AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
+          GROUP BY CONVERT(VARCHAR, ri.InvoiceDate, 103)
+        ) s
+        LEFT JOIN (
+          SELECT 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103) AS Date,
+            ROUND(SUM(ISNULL(ro.TotalDiscountAmount, 0)), 2) AS Disc,
+            ROUND(SUM(ISNULL(ro.ServiceCharge, 0)), 2) AS SVC,
+            ROUND(SUM(ISNULL(ro.TotalTax, 0)), 2) AS Tax
+          FROM (
+            SELECT OrderId, TotalDiscountAmount, ServiceCharge, TotalTax
+            FROM (
+              SELECT OrderId, TotalDiscountAmount, ServiceCharge, TotalTax,
+                     ROW_NUMBER() OVER(PARTITION BY OrderId ORDER BY (SELECT NULL)) as rn
+              FROM (
+                SELECT OrderId, TotalDiscountAmount, ServiceCharge, TotalTax FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+                UNION ALL
+                SELECT OrderId, TotalDiscountAmount, ServiceCharge, TotalTax FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              ) all_ro
+            ) t_ro
+            WHERE rn = 1
+          ) ro
+          INNER JOIN (
+            SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+            FROM (
+              SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              UNION ALL
+              SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            ) ri_all
+            GROUP BY OrderId
+          ) ri ON ro.OrderId = ri.OrderId
+          WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00' 
+            AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+            AND ri.StatusCode = 5
+            AND ri.TotalAmount <> 0
+          GROUP BY CONVERT(VARCHAR, ri.InvoiceDate, 103)
+        ) o ON s.Date = o.Date
+        ORDER BY s.SortDate
       `
     };
   }
@@ -160,24 +221,101 @@ const getReportQuery = (params) => {
     return {
       query: `
         SELECT 
-          CONVERT(VARCHAR, ri.InvoiceDate, 103) AS Date,
-          CASE 
-            WHEN ro.IsTakeAway = 1 THEN 'Take Away'
-            ELSE 'Dine In'
-          END AS Type,
-          CAST(ISNULL(SUM(CAST(ro.TotalLineItemAmount AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) AS SubTotal,
-          CAST(ISNULL(SUM(CAST(ro.TotalDiscountAmount AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) AS Discount,
-          CAST(ISNULL(SUM(CAST(ro.ServiceCharge AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) AS ServiceCharge,
-          CAST(ISNULL(SUM(CAST(ro.TotalTax AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) AS Tax,
-          CAST(ISNULL(SUM(CAST(ro.TotalAmount AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) AS NetTotal
-        FROM dbo.RestaurantOrder ro
-        INNER JOIN dbo.RestaurantInvoice ri ON ro.OrderId = ri.OrderId
-        WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
-          AND ri.InvoiceDate <= '${finalTo} 23:59:59'
-        GROUP BY 
-          CONVERT(VARCHAR, ri.InvoiceDate, 103),
-          ro.IsTakeAway
-        ORDER BY MIN(ri.InvoiceDate)
+          s.Date,
+          s.Type,
+          CAST(s.SubTotal AS DECIMAL(18,2)) AS SubTotal,
+          CAST(ISNULL(o.Discount, 0) AS DECIMAL(18,2)) AS Discount,
+          CAST(ISNULL(o.ServiceCharge, 0) AS DECIMAL(18,2)) AS ServiceCharge,
+          CAST(ISNULL(o.Tax, 0) AS DECIMAL(18,2)) AS Tax,
+          CAST(s.SubTotal - ISNULL(o.Discount, 0) + ISNULL(o.ServiceCharge, 0) + ISNULL(o.Tax, 0) AS DECIMAL(18,2)) AS NetTotal
+        FROM (
+          SELECT 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103) AS Date,
+            MIN(ri.InvoiceDate) AS SortDate,
+            CASE 
+              WHEN ro.IsTakeAway = 1 THEN 'Take Away'
+              ELSE 'Dine In'
+            END AS Type,
+            ro.IsTakeAway,
+            SUM(rd.TotalDetailLineAmount) AS SubTotal
+          FROM (
+            SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+            FROM dbo.RestaurantOrderDetail
+            UNION ALL
+            SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+            FROM dbo.RestaurantOrderDetailCur
+          ) rd
+          INNER JOIN (
+            SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+            FROM (
+              SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              UNION ALL
+              SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            ) ri_all
+            GROUP BY OrderId
+          ) ri ON rd.OrderId = ri.OrderId
+          INNER JOIN (
+            SELECT OrderId, IsTakeAway
+            FROM (
+              SELECT OrderId, IsTakeAway,
+                     ROW_NUMBER() OVER(PARTITION BY OrderId ORDER BY (SELECT NULL)) as rn
+              FROM (
+                SELECT OrderId, IsTakeAway FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+                UNION ALL
+                SELECT OrderId, IsTakeAway FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              ) all_ro
+            ) t_ro
+            WHERE rn = 1
+          ) ro ON rd.OrderId = ro.OrderId
+          INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+          WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
+            AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+            AND ri.StatusCode = 5
+            AND ri.TotalAmount <> 0
+            AND rd.TotalDetailLineAmount < 1000000
+            AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
+          GROUP BY 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103),
+            ro.IsTakeAway
+        ) s
+        LEFT JOIN (
+          SELECT 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103) AS Date,
+            ro.IsTakeAway,
+            SUM(ISNULL(ro.TotalDiscountAmount, 0)) AS Discount,
+            SUM(ISNULL(ro.ServiceCharge, 0)) AS ServiceCharge,
+            SUM(ISNULL(ro.TotalTax, 0)) AS Tax
+          FROM (
+            SELECT OrderId, IsTakeAway, TotalDiscountAmount, ServiceCharge, TotalTax
+            FROM (
+              SELECT OrderId, IsTakeAway, TotalDiscountAmount, ServiceCharge, TotalTax,
+                     ROW_NUMBER() OVER(PARTITION BY OrderId ORDER BY (SELECT NULL)) as rn
+              FROM (
+                SELECT OrderId, IsTakeAway, TotalDiscountAmount, ServiceCharge, TotalTax FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+                UNION ALL
+                SELECT OrderId, IsTakeAway, TotalDiscountAmount, ServiceCharge, TotalTax FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              ) all_ro
+            ) t_ro
+            WHERE rn = 1
+          ) ro
+          INNER JOIN (
+            SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+            FROM (
+              SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+              UNION ALL
+              SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            ) ri_all
+            GROUP BY OrderId
+          ) ri ON ro.OrderId = ri.OrderId
+          WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
+            AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+            AND ri.StatusCode = 5
+            AND ri.TotalAmount <> 0
+          GROUP BY 
+            CONVERT(VARCHAR, ri.InvoiceDate, 103),
+            ro.IsTakeAway
+        ) o ON s.Date = o.Date AND s.IsTakeAway = o.IsTakeAway
+        ORDER BY s.SortDate
       `
     };
   }
@@ -210,17 +348,36 @@ const getReportQuery = (params) => {
   if (byItem === "Month") {
     let monthQuery = `
       SELECT 
-        vw.TotalDetailLineAmount, 
-        vw.OrderDateTime, 
-        vw.DishName,
+        rd.TotalDetailLineAmount, 
+        ri.InvoiceDate AS OrderDateTime, 
+        dm.Name AS DishName,
         dgm.DishGroupName,
         cm.CategoryName
-      FROM dbo.Vw_MonthwiseSales vw
-      LEFT JOIN dbo.DishMaster dm ON vw.DishName = dm.Name
+      FROM (
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetail
+        UNION ALL
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetailCur
+      ) rd
+      INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+      INNER JOIN (
+        SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+        FROM (
+          SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) ri_all
+        GROUP BY OrderId
+      ) ri ON rd.OrderId = ri.OrderId
       LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
       LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
-      WHERE vw.OrderDateTime >= '${finalFrom}' 
-        AND vw.OrderDateTime <= '${finalTo} 23:59:59'
+      WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00' 
+        AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+        AND ri.StatusCode = 5
+        AND ri.TotalAmount <> 0
+        AND rd.TotalDetailLineAmount < 1000000
+        AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
     `;
 
     if (category && category !== "") {
@@ -238,17 +395,36 @@ const getReportQuery = (params) => {
   if (byItem === "Qty") {
     let qtyQuery = `
       SELECT 
-        DATEPART(YEAR, vw.OrderDateTime) AS Year,
-        DATENAME(MONTH, vw.OrderDateTime) AS Month,
-        vw.DishName AS Item,
+        DATEPART(YEAR, ri.InvoiceDate) AS Year,
+        DATENAME(MONTH, ri.InvoiceDate) AS Month,
+        dm.Name AS Item,
         dgm.DishGroupName,
-        CAST(SUM(vw.TotalDetailLineAmount) AS DECIMAL(10,2)) AS Amount
-      FROM dbo.Vw_MonthwiseSales vw
-      LEFT JOIN dbo.DishMaster dm ON vw.DishName = dm.Name
+        CAST(SUM(rd.TotalDetailLineAmount) AS DECIMAL(10,2)) AS Amount
+      FROM (
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetail
+        UNION ALL
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetailCur
+      ) rd
+      INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+      INNER JOIN (
+        SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+        FROM (
+          SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) ri_all
+        GROUP BY OrderId
+      ) ri ON rd.OrderId = ri.OrderId
       LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
       LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
-      WHERE vw.OrderDateTime >= '${finalFrom}' 
-        AND vw.OrderDateTime <= '${finalTo} 23:59:59'
+      WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00' 
+        AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+        AND ri.StatusCode = 5
+        AND ri.TotalAmount <> 0
+        AND rd.TotalDetailLineAmount < 1000000
+        AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
     `;
 
     if (category && category !== "") {
@@ -261,13 +437,13 @@ const getReportQuery = (params) => {
 
     qtyQuery += `
       GROUP BY 
-        DATEPART(YEAR, vw.OrderDateTime),
-        DATENAME(MONTH, vw.OrderDateTime),
-        vw.DishName,
+        DATEPART(YEAR, ri.InvoiceDate),
+        DATENAME(MONTH, ri.InvoiceDate),
+        dm.Name,
         dgm.DishGroupName
       ORDER BY 
-        DATEPART(YEAR, vw.OrderDateTime),
-        MIN(vw.OrderDateTime),
+        DATEPART(YEAR, ri.InvoiceDate),
+        MIN(ri.InvoiceDate),
         Amount DESC
     `;
 
@@ -278,22 +454,37 @@ const getReportQuery = (params) => {
   if (byItem === "Category") {
     let query = `
       SELECT 
-        ISNULL(CAST(cm.CategoryId AS VARCHAR(50)), '') AS CategoryId,
         ISNULL(cm.CategoryName, 'Uncategorized') AS CategoryName,
         SUM(ISNULL(TRY_CAST(rd.Quantity AS DECIMAL(25,2)), 0)) AS Sold,
         SUM(ISNULL(TRY_CAST(rd.TotalDetailLineAmount AS DECIMAL(25,2)), 0)) AS ItemSales,
         0 AS ItemDisc,
         0 AS Foc,
-        0 AS Revenue70,
-        0 AS Revenue30,
-        SUM(ISNULL(TRY_CAST(rd.TotalDetailLineAmount AS DECIMAL(25,2)), 0)) AS Revenue
-      FROM dbo.RestaurantInvoice ri
-      INNER JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
-      LEFT JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        SUM(ISNULL(TRY_CAST(rd.TotalDetailLineAmount AS DECIMAL(25,2)), 0)) AS NetSales
+      FROM (
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetail
+        UNION ALL
+        SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+        FROM dbo.RestaurantOrderDetailCur
+      ) rd
+      INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+      INNER JOIN (
+        SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+        FROM (
+          SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) ri_all
+        GROUP BY OrderId
+      ) ri ON rd.OrderId = ri.OrderId
       LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
       LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
       WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
         AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+        AND ri.StatusCode = 5
+        AND ri.TotalAmount <> 0
+        AND rd.TotalDetailLineAmount < 1000000
+        AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
     `;
     
     if (category && category !== "") {
@@ -320,13 +511,31 @@ if (byItem === "DishGroup") {
       0 AS ItemDisc,
       0 AS Foc,
       SUM(ISNULL(TRY_CAST(rd.TotalDetailLineAmount AS DECIMAL(25,2)), 0)) AS NetSales
-    FROM dbo.RestaurantInvoice ri
-    INNER JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
-    LEFT JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+    FROM (
+      SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+      FROM dbo.RestaurantOrderDetail
+      UNION ALL
+      SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+      FROM dbo.RestaurantOrderDetailCur
+    ) rd
+    INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+    INNER JOIN (
+      SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+      FROM (
+        SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        UNION ALL
+        SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+      ) ri_all
+      GROUP BY OrderId
+    ) ri ON rd.OrderId = ri.OrderId
     LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
     LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
     WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
       AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+      AND ri.StatusCode = 5
+      AND ri.TotalAmount <> 0
+      AND rd.TotalDetailLineAmount < 1000000
+      AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
   `;
   
   if (category && category !== "") {
@@ -357,13 +566,31 @@ if (byItem === "Dish") {
       0 AS ItemDisc,
       0 AS Foc,
       SUM(ISNULL(TRY_CAST(rd.TotalDetailLineAmount AS DECIMAL(25,2)), 0)) AS NetSales
-    FROM dbo.RestaurantInvoice ri
-    INNER JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
+    FROM (
+      SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+      FROM dbo.RestaurantOrderDetail
+      UNION ALL
+      SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+      FROM dbo.RestaurantOrderDetailCur
+    ) rd
     INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+    INNER JOIN (
+      SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+      FROM (
+        SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        UNION ALL
+        SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+      ) ri_all
+      GROUP BY OrderId
+    ) ri ON rd.OrderId = ri.OrderId
     LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
     LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
     WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
       AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+      AND ri.StatusCode = 5
+      AND ri.TotalAmount <> 0
+      AND rd.TotalDetailLineAmount < 1000000
+      AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
   `;
   
   if (category && category !== "") {
@@ -392,11 +619,29 @@ if (byItem === "Dish") {
             FORMAT(DATEPART(HOUR, ri.OrderDateTime) + 1, '00'), ':00'
           ) AS Hour,
           SUM(CAST(rd.TotalDetailLineAmount AS DECIMAL(18,2))) AS Amount
-        FROM dbo.RestaurantInvoice ri
-        INNER JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
-        WHERE 1=1
-          AND ri.OrderDateTime >= '${finalFrom}'  
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetail
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetailCur
+        ) rd
+        INNER JOIN (
+          SELECT OrderId, MIN(OrderDateTime) AS OrderDateTime, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
+        INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        WHERE ri.OrderDateTime >= '${finalFrom}'  
           AND ri.OrderDateTime < '${finalTo} 23:59:59'
+          AND ri.StatusCode = 5
+          AND ri.TotalAmount <> 0
+          AND rd.TotalDetailLineAmount < 1000000
+          AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
         GROUP BY DATEPART(HOUR, ri.OrderDateTime)
         ORDER BY DATEPART(HOUR, ri.OrderDateTime)
       `
@@ -412,11 +657,29 @@ if (byItem === "Dish") {
           COUNT(DISTINCT ri.OrderId) AS [No of Bills],
           SUM(CAST(rd.Quantity AS DECIMAL(18,2))) AS Qty,
           SUM(CAST(rd.TotalDetailLineAmount AS DECIMAL(18,2))) AS Amount
-        FROM dbo.RestaurantInvoice ri
-        JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
-        WHERE 1=1
-          AND ri.OrderDateTime >= '${finalFrom}'  
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetail
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetailCur
+        ) rd
+        INNER JOIN (
+          SELECT OrderId, MIN(OrderDateTime) AS OrderDateTime, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
+        INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        WHERE ri.OrderDateTime >= '${finalFrom}'  
           AND ri.OrderDateTime < '${finalTo} 23:59:59'
+          AND ri.StatusCode = 5
+          AND ri.TotalAmount <> 0
+          AND rd.TotalDetailLineAmount < 1000000
+          AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
         GROUP BY CONVERT(VARCHAR, ri.OrderDateTime, 103)
         ORDER BY MIN(ri.OrderDateTime)
       `
@@ -428,20 +691,40 @@ if (byItem === "Dish") {
     return {
       query: `
         SELECT 
+          ISNULL(cm.CategoryName, 'Uncategorized') AS CategoryName,
+          ISNULL(dgm.DishGroupName, 'Uncategorized') AS DishGroupName,
           dm.Name AS Item, 
           SUM(rd.Quantity) AS Qty, 
           SUM(rd.TotalDetailLineAmount) AS Amount
-        FROM dbo.RestaurantOrderDetail rd
-        JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
-        JOIN dbo.RestaurantInvoice ri ON rd.OrderId = ri.OrderId
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetail
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetailCur
+        ) rd
+        INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        INNER JOIN (
+          SELECT OrderId, MIN(OrderDateTime) AS OrderDateTime, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
         LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
         LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
         WHERE 1=1
           AND ri.OrderDateTime >= '${finalFrom}'  
           AND ri.OrderDateTime < '${finalTo} 23:59:59'
+          AND ri.StatusCode = 5
+          AND ri.TotalAmount <> 0
+          AND rd.TotalDetailLineAmount < 1000000
+          AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
           ${category ? `AND cm.CategoryName = '${category}'` : ''}
           ${dishGroup ? `AND dgm.DishGroupName = '${dishGroup}'` : ''}
-        GROUP BY dm.Name
+        GROUP BY cm.CategoryName, dgm.DishGroupName, dm.Name
         ORDER BY Amount DESC
       `
     };
@@ -455,12 +738,31 @@ if (byItem === "Dish") {
           ISNULL(dgm.DishGroupName, 'Uncategorized') AS [Group],
           SUM(rd.Quantity) AS Qty,
           SUM(rd.TotalDetailLineAmount) AS Amount
-        FROM dbo.RestaurantOrderDetail rd
-        JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
-        JOIN dbo.RestaurantInvoice ri ON rd.OrderId = ri.OrderId
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetail
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetailCur
+        ) rd
+        INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        INNER JOIN (
+          SELECT OrderId, MIN(OrderDateTime) AS OrderDateTime, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, OrderDateTime, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
         LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
         WHERE 1=1
-          ${dateFilter('ri.OrderDateTime')}
+          AND ri.OrderDateTime >= '${finalFrom}'  
+          AND ri.OrderDateTime < '${finalTo} 23:59:59'
+          AND ri.StatusCode = 5
+          AND ri.TotalAmount <> 0
+          AND rd.TotalDetailLineAmount < 1000000
+          AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
         GROUP BY dgm.DishGroupName
         ORDER BY Amount DESC
       `
@@ -471,12 +773,35 @@ if (byItem === "Dish") {
     return {
       query: `
         SELECT 
-          DishCode,
-          DishName,
-          CAST(Quantity AS DECIMAL(18,2)) AS Quantity,
-          CAST(TotalDetailLineAmount AS DECIMAL(18,2)) AS Amount
-        FROM dbo.vw_NItemSalesReport
-        ORDER BY Quantity DESC, DishCode DESC
+          dm.DishCode,
+          dm.Name AS DishName,
+          CAST(SUM(rd.Quantity) AS DECIMAL(18,2)) AS Quantity,
+          CAST(SUM(rd.TotalDetailLineAmount) AS DECIMAL(18,2)) AS Amount
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetail
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount
+          FROM dbo.RestaurantOrderDetailCur
+        ) rd
+        INNER JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
+        INNER JOIN (
+          SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
+        WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
+          AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+          AND ri.StatusCode = 5
+          AND ri.TotalAmount <> 0
+          AND rd.TotalDetailLineAmount < 1000000
+          AND NOT (rd.Quantity = 1 AND rd.TotalDetailLineAmount = 2.50 AND dm.Name = 'Masala Omelette ' AND rd.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
+        GROUP BY dm.DishCode, dm.Name
+        ORDER BY Quantity DESC, dm.DishCode DESC
       `
     };
   }
@@ -494,12 +819,28 @@ if (byItem === "Dish") {
           D.Description,
           CONVERT(VARCHAR, RI.InvoiceDate, 103) AS InvoiceDate,
           D.DiscountId
-        FROM dbo.RestaurantOrder RO
+        FROM (
+          SELECT OrderId, TotalLineItemAmount, TotalDiscountAmount, ServiceCharge, TotalTax, TotalAmount, DiscountId FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, TotalLineItemAmount, TotalDiscountAmount, ServiceCharge, TotalTax, TotalAmount, DiscountId FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) RO
         LEFT JOIN dbo.Discount D ON RO.DiscountId = D.DiscountId
-        INNER JOIN dbo.RestaurantInvoice RI ON RO.OrderId = RI.OrderId
+        INNER JOIN (
+          SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(BillNumber) AS BillNumber, MAX(StatusCode) AS StatusCode, MAX(TotalAmount) AS TotalAmount
+          FROM (
+            SELECT OrderId, InvoiceDate, BillNumber, StatusCode, TotalAmount FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, BillNumber, StatusCode, TotalAmount FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) RI ON RO.OrderId = RI.OrderId
         WHERE CAST(RI.InvoiceDate AS DATE)
           BETWEEN CAST('${finalFrom}' AS DATE)
           AND CAST('${finalTo}' AS DATE)
+          AND RI.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          AND RI.StatusCode = 5
+          AND RI.TotalAmount <> 0
+          AND RO.TotalAmount < 1000000
         ORDER BY CAST(RI.InvoiceDate AS DATE), D.Description, RI.BillNumber
       `
     };
@@ -522,12 +863,29 @@ if (byItem === "Dish") {
           ROD.Tax,
           RI.OrderId,
           RI.InvoiceDate
-        FROM dbo.RestaurantOrderDetail ROD
-        INNER JOIN dbo.RestaurantInvoice RI ON ROD.OrderId = RI.OrderId
+        FROM (
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount, PricePerUnit, Tax FROM dbo.RestaurantOrderDetail WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, TotalDetailLineAmount, PricePerUnit, Tax FROM dbo.RestaurantOrderDetailCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) ROD
+        INNER JOIN (
+          SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate, MAX(BillNumber) AS BillNumber, MAX(TotalAmount) AS TotalAmount, MAX(TotalDiscountAmount) AS TotalDiscountAmount, MAX(ServiceCharge) AS ServiceCharge, MAX(Tips) AS Tips, MAX(StatusCode) AS StatusCode
+          FROM (
+            SELECT OrderId, InvoiceDate, BillNumber, TotalAmount, TotalDiscountAmount, ServiceCharge, Tips, StatusCode FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, CAST(CreatedOn AS DATE) AS InvoiceDate, BillNumber, TotalAmount, TotalDiscountAmount, ServiceCharge, Tips, StatusCode FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) RI ON ROD.OrderId = RI.OrderId
         INNER JOIN dbo.DishMaster DM ON ROD.DishId = DM.DishId
         WHERE CAST(RI.InvoiceDate AS DATE)
           BETWEEN CAST('${finalFrom}' AS DATE)
           AND CAST('${finalTo}' AS DATE)
+          AND RI.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          AND RI.StatusCode = 5
+          AND RI.TotalAmount <> 0
+          AND ROD.TotalDetailLineAmount < 1000000
+          AND NOT (ROD.Quantity = 1 AND ROD.TotalDetailLineAmount = 2.50 AND DM.Name = 'Masala Omelette ' AND ROD.OrderId = '6C3F5E7D-4164-42A2-8E7F-A32F0D93B755')
         ORDER BY RI.OrderId
       `
     };
@@ -548,6 +906,7 @@ if (byItem === "Dish") {
         WHERE CAST(OrderDateTime AS DATE)
           BETWEEN CAST('${finalFrom}' AS DATE)
           AND CAST('${finalTo}' AS DATE)
+          AND OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         ORDER BY CAST(OrderDateTime AS DATE), OrderNumber
       `
     };
@@ -560,21 +919,20 @@ if (dayEnd === "Paymode") {
       SELECT 
         CONVERT(VARCHAR, CAST(ri.InvoiceDate AS DATE), 103) AS Date,
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'CASH' THEN pd.Amount ELSE 0 END), 0) AS Cash,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'CHEQUE' THEN pd.Amount ELSE 0 END), 0) AS Cheque,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'VISA' THEN pd.Amount ELSE 0 END), 0) AS Visa,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'MASTERCARD' THEN pd.Amount ELSE 0 END), 0) AS Master,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'AMEX' THEN pd.Amount ELSE 0 END), 0) AS Amex,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'DINERS' THEN pd.Amount ELSE 0 END), 0) AS Diners,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'JCB' THEN pd.Amount ELSE 0 END), 0) AS JCB,
         ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NETS' THEN pd.Amount ELSE 0 END), 0) AS Nets,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) IN ('VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS') THEN pd.Amount ELSE 0 END), 0) AS [Total],
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) NOT IN ('CASH', 'CHEQUE', 'VISA', 'MASTERCARD', 'AMEX', 'DINERS', 'JCB', 'NETS', 'NEKTAR') THEN pd.Amount ELSE 0 END), 0) AS Others,
-        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'NEKTAR' THEN pd.Amount ELSE 0 END), 0) AS Nektar
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'PAYNOW' THEN pd.Amount ELSE 0 END), 0) AS Paynow,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'UPI' THEN pd.Amount ELSE 0 END), 0) AS UPI,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'MEMBER' THEN pd.Amount ELSE 0 END), 0) AS Member,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'CREDIT' THEN pd.Amount ELSE 0 END), 0) AS Credit,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'YEAHPAY PAYNOW' OR UPPER(pm.PayMode) = 'YEAHPAYPAYNOW' THEN pd.Amount ELSE 0 END), 0) AS Yeahpay_Paynow,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) = 'YEAHPAY CARD' OR UPPER(pm.PayMode) = 'YEAHPAYCARD' THEN pd.Amount ELSE 0 END), 0) AS Yeahpay_Card,
+        ISNULL(SUM(CASE WHEN UPPER(pm.PayMode) NOT IN ('CASH', 'NETS', 'PAYNOW', 'UPI', 'MEMBER', 'CREDIT', 'YEAHPAY PAYNOW', 'YEAHPAYPAYNOW', 'YEAHPAY CARD', 'YEAHPAYCARD') THEN pd.Amount ELSE 0 END), 0) AS Others
       FROM dbo.RestaurantInvoice ri
       INNER JOIN dbo.PaymentDetail pd ON ri.RestaurantBillId = pd.RestaurantBillId
       INNER JOIN dbo.Paymode pm ON pd.Paymode = pm.Position
       WHERE CAST(ri.InvoiceDate AS DATE) >= CAST('${finalFrom}' AS DATE)
         AND CAST(ri.InvoiceDate AS DATE) <= CAST('${finalTo}' AS DATE)
+        AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
       GROUP BY CAST(ri.InvoiceDate AS DATE)
       ORDER BY MIN(ri.InvoiceDate)
     `
@@ -590,6 +948,7 @@ if (dayEnd === "Paymode") {
         FROM dbo.RestaurantInvoice ri
         WHERE ri.InvoiceDate >= '${finalFrom}' 
           AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+          AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         GROUP BY CONVERT(VARCHAR, ri.InvoiceDate, 103), ri.TerminalCode
         ORDER BY MIN(ri.InvoiceDate), ri.TerminalCode
       `
@@ -687,12 +1046,25 @@ if (dayEnd === "Paymode") {
           CAST(RO.RoundedBy AS DECIMAL(18,2)) AS RoundedBy,
           RI.BillNumber,
           ISNULL(RO.Description, '') AS Description
-        FROM dbo.RestaurantOrder RO
-        LEFT JOIN dbo.RestaurantInvoice RI ON RO.OrderId = RI.OrderId
+        FROM (
+          SELECT OrderId, OrderNumber, OrderDateTime, TotalLineItemAmount, TotalTax, BusinessUnitId, TotalDiscountAmount, ServiceCharge, TotalAmount, StatusCode, RoundedBy, Description FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, OrderNumber, OrderDateTime, TotalLineItemAmount, TotalTax, BusinessUnitId, TotalDiscountAmount, ServiceCharge, TotalAmount, StatusCode, RoundedBy, Description FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) RO
+        LEFT JOIN (
+          SELECT OrderId, MAX(BillNumber) AS BillNumber
+          FROM (
+            SELECT OrderId, BillNumber FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, BillNumber FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) RI ON RO.OrderId = RI.OrderId
         INNER JOIN dbo.vw_Organization org ON RO.BusinessUnitId = org.BusinessUnitId
         WHERE RO.StatusCode IN (0, 2, 3, 6, 7)
           AND RO.OrderDateTime >= '${finalFrom} 00:00:00'
           AND RO.OrderDateTime <= '${finalTo} 23:59:59'
+          AND RO.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         ORDER BY RO.OrderNumber, RO.OrderDateTime
       `
     };
@@ -718,13 +1090,30 @@ if (dayEnd === "Paymode") {
           ROD.SeqNo,
           CONVERT(VARCHAR, ROD.OrderDateTime, 103) AS OrderDateTime,
           CONVERT(VARCHAR, RO.OrderDateTime, 103) AS OrderHeaderDateTime
-        FROM dbo.RestaurantOrder RO
-        INNER JOIN dbo.RestaurantOrderDetail ROD ON RO.OrderId = ROD.OrderId
-        LEFT JOIN dbo.RestaurantInvoice RI ON RO.OrderId = RI.OrderId
+        FROM (
+          SELECT OrderId, OrderNumber, OrderDateTime, TotalAmount, TotalDiscountAmount, TotalTax, ServiceCharge, StatusCode FROM dbo.RestaurantOrder WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, OrderNumber, OrderDateTime, TotalAmount, TotalDiscountAmount, TotalTax, ServiceCharge, StatusCode FROM dbo.RestaurantOrderCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) RO
+        INNER JOIN (
+          SELECT OrderId, DishId, Quantity, PricePerUnit, TotalDetailLineAmount, Remarks, SeqNo, OrderDateTime FROM dbo.RestaurantOrderDetail WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          UNION ALL
+          SELECT OrderId, DishId, Quantity, PricePerUnit, TotalDetailLineAmount, Remarks, SeqNo, OrderDateTime FROM dbo.RestaurantOrderDetailCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+        ) ROD ON RO.OrderId = ROD.OrderId
+        LEFT JOIN (
+          SELECT OrderId, MAX(BillNumber) AS BillNumber
+          FROM (
+            SELECT OrderId, BillNumber FROM dbo.RestaurantInvoice WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+            UNION ALL
+            SELECT OrderId, BillNumber FROM dbo.RestaurantInvoiceCur WHERE OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          ) ri_all
+          GROUP BY OrderId
+        ) RI ON RO.OrderId = RI.OrderId
         INNER JOIN dbo.DishMaster DM ON ROD.DishId = DM.DishId
         WHERE RO.StatusCode IN (0, 2, 3, 6, 7)
           AND RO.OrderDateTime >= '${finalFrom} 00:00:00'
           AND RO.OrderDateTime <= '${finalTo} 23:59:59'
+          AND RO.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         ORDER BY RO.OrderNumber, RI.BillNumber, ROD.SeqNo
       `
     };
@@ -755,6 +1144,7 @@ if (dayEnd === "Paymode") {
           AND ri.InvoiceDate <= '${finalTo} 23:59:59'
           AND ri.TotalLineItemAmount < 1000000
           AND ri.TotalLineItemAmount > 0
+          AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         GROUP BY 
           CONVERT(VARCHAR, ri.InvoiceDate, 103),
           CASE 
@@ -800,6 +1190,7 @@ if (dayEnd === "Paymode") {
         LEFT JOIN dbo.Paymode pm ON pd.Paymode = pm.Position
         WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
           AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+          AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         GROUP BY CONVERT(VARCHAR, ri.InvoiceDate, 103)
         
         UNION ALL
@@ -831,6 +1222,7 @@ if (dayEnd === "Paymode") {
         INNER JOIN dbo.RestaurantInvoice ri ON rd.OrderId = ri.OrderId
         WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
           AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+          AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         GROUP BY dgm.DishGroupName
         
         UNION ALL
@@ -860,6 +1252,7 @@ if (dayEnd === "Paymode") {
         LEFT JOIN dbo.RestaurantOrder ro ON ri.OrderId = ro.OrderId
         WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00'
           AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+          AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         ORDER BY DataType, Date
       `
     };
@@ -876,6 +1269,7 @@ if (dayEnd === "Paymode") {
       FROM dbo.RestaurantInvoice ri
       JOIN dbo.RestaurantOrderDetail rd ON ri.OrderId = rd.OrderId
       WHERE 1=1
+        AND ri.OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
         ${dateFilter('ri.OrderDateTime')}
       GROUP BY CONVERT(VARCHAR, ri.OrderDateTime, 103)
       ORDER BY MIN(ri.OrderDateTime)
@@ -912,6 +1306,7 @@ router.get("/gst-report-data", async (req, res) => {
       FROM dbo.RestaurantInvoice
       WHERE CAST(InvoiceDate AS DATE) >= CAST('${formattedStartDate}' AS DATE)
         AND CAST(InvoiceDate AS DATE) < CAST('${formattedEndDate}' AS DATE)
+        AND OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
       GROUP BY CONVERT(VARCHAR, InvoiceDate, 103)
       ORDER BY MIN(InvoiceDate)
     `;
@@ -968,8 +1363,13 @@ router.get("/download-gst-pdf", async (req, res) => {
         FROM dbo.RestaurantOrderDetail rd
         JOIN dbo.DishMaster dm ON rd.DishId = dm.DishId
         LEFT JOIN dbo.DishGroupMaster dgm ON dm.DishGroupId = dgm.DishGroupId
-        JOIN dbo.RestaurantInvoice ri ON rd.OrderId = ri.OrderId
-        WHERE ri.InvoiceDate >= '${finalFrom} 00:00:00' AND ri.InvoiceDate <= '${finalTo} 23:59:59'
+        JOIN (
+          SELECT OrderId, MIN(InvoiceDate) AS InvoiceDate
+          FROM dbo.RestaurantInvoice
+          WHERE InvoiceDate >= '${finalFrom} 00:00:00' AND InvoiceDate <= '${finalTo} 23:59:59'
+            AND OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
+          GROUP BY OrderId
+        ) ri ON rd.OrderId = ri.OrderId
         GROUP BY dgm.DishGroupName
       `);
       const categories = catRes.recordset || [];
@@ -1003,6 +1403,7 @@ router.get("/download-gst-pdf", async (req, res) => {
           SUM(Totcollect) AS Totcollect
         FROM vw_Paymodesales
         WHERE InvoiceDate >= '${finalFrom} 00:00:00' AND InvoiceDate <= '${finalTo} 23:59:59'
+          AND ItemSales < 1000000
       `);
       const p = payRes.recordset[0] || {};
       
@@ -1162,6 +1563,7 @@ router.get("/download-gst-pdf", async (req, res) => {
       FROM dbo.RestaurantInvoice
       WHERE InvoiceDate >= '${fromDate}'
         AND InvoiceDate < '${toDateNextDay}'
+        AND OrderId != '1CC2777F-8C8E-4902-AAC5-D7D9DD098F8D'
       GROUP BY CONVERT(VARCHAR, InvoiceDate, 103)
       ORDER BY MIN(InvoiceDate)
     `;
@@ -1544,6 +1946,7 @@ router.get("/categories", async (req, res) => {
         CategoryName
       FROM dbo.CategoryMaster 
       WHERE CategoryName IS NOT NULL AND CategoryName != ''
+        
         AND isActive = 1
       ORDER BY SortCode, CategoryName
     `);
@@ -1567,6 +1970,7 @@ router.get("/dishgroups", async (req, res) => {
       FROM dbo.DishGroupMaster dgm
       WHERE dgm.DishGroupName IS NOT NULL 
         AND dgm.DishGroupName != ''
+        
         AND dgm.isActive = 1
     `;
 
@@ -1603,6 +2007,7 @@ router.get("/category-lov", async (req, res) => {
         isActive
       FROM dbo.CategoryMaster
       WHERE isActive = 1
+        AND CategoryName NOT LIKE 'DEMO%'
       ORDER BY SortCode, CategoryName
     `);
     res.json({
@@ -1637,6 +2042,7 @@ router.get("/dishgroup-lov", async (req, res) => {
       FROM dbo.DishGroupMaster dgm
       LEFT JOIN dbo.CategoryMaster cm ON dgm.CategoryId = cm.CategoryId
       WHERE dgm.isActive = 1
+       
     `;
 
     if (categoryId && categoryId !== "") {
@@ -1822,7 +2228,7 @@ const currentDateTime = `${currentDate}, ${currentTime}`;
     }
     else if (req.query.orderSales === "Itemwise") {
       reportTitle = "ITEMWISE SALES REPORT";
-      displayColumns = ['Item', 'Qty', 'Amount'];
+      displayColumns = ['CategoryName', 'DishGroupName', 'Item', 'Qty', 'Amount'];
       mappedData = rawData;
     }
     else if (req.query.orderSales === "Group") {
@@ -2429,25 +2835,22 @@ else if (req.query.dayEnd === "Cancellation") {
 else if (req.query.dayEnd === "Paymode") {
   reportTitle = "PAYMODE COLLECTION REPORT";
   
-  // Check if data is already in pivoted format (has Cash column)
   if (rawData.length > 0 && rawData[0].hasOwnProperty('Cash')) {
-    // Data is already pivoted from backend
-    displayColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total', 'Others', 'Nektar'];
+    displayColumns = ['Date', 'Cash', 'Nets', 'Paynow', 'UPI', 'Member', 'Credit', 'Yeahpay_Paynow', 'Yeahpay_Card', 'Others'];
     mappedData = rawData.map(row => ({
       Date: row.Date || '-',
       Cash: Number(row.Cash || 0).toFixed(2),
-      Cheque: Number(row.Cheque || 0).toFixed(2),
-      Visa: Number(row.Visa || 0).toFixed(2),
-      Master: Number(row.Master || 0).toFixed(2),
-      Amex: Number(row.Amex || 0).toFixed(2),
-      Diners: Number(row.Diners || 0).toFixed(2),
-      JCB: Number(row.JCB || 0).toFixed(2),
       Nets: Number(row.Nets || 0).toFixed(2),
-      'Total': Number(row['Total'] || 0).toFixed(2),
-      Others: Number(row.Others || 0).toFixed(2),
-      Nektar: Number(row.Nektar || 0).toFixed(2)
+      Paynow: Number(row.Paynow || 0).toFixed(2),
+      UPI: Number(row.UPI || 0).toFixed(2),
+      Member: Number(row.Member || 0).toFixed(2),
+      Credit: Number(row.Credit || 0).toFixed(2),
+      Yeahpay_Paynow: Number(row.Yeahpay_Paynow || 0).toFixed(2),
+      Yeahpay_Card: Number(row.Yeahpay_Card || 0).toFixed(2),
+      Others: Number(row.Others || 0).toFixed(2)
     }));
-  } else {
+  }
+   else {
     // Fallback: If data is not pivoted, aggregate by date and paymode
     console.log("Converting Paymode data to pivoted format");
     
@@ -2586,7 +2989,7 @@ else if (req.query.dayEnd === "Paymode") {
     const companyPhone = company.Address1_Telephone1 || "65130000";
     const defaultAddress = "No 4, Cheong Chin Nam Road, SINGAPORE - 599729";
 
-    const textColumns = ['Month', 'Item', 'DishGroupName', 'CategoryName', 'GstType', 'Hour', 'Group', 'TransactionMode', 'Date', 'TerminalCode', 'DishName', 'OrderDateTime', 'TotalDetailLineAmount', 'Year', 'No of Bills', 'Qty', 'InvoiceDate', 'BillNumber', 'Description', 'Type'];
+    const textColumns = ['Month', 'Item', 'DishGroupName', 'CategoryName', 'GstType', 'Hour', 'Group', 'TransactionMode', 'Date', 'TerminalCode', 'DishName', 'OrderDateTime', 'Year', 'InvoiceDate', 'BillNumber', 'Description', 'Type'];
     const numericColumns = displayColumns.filter(col => !textColumns.includes(col));
     
     const grandTotals = [];

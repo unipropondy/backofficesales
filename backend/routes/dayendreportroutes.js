@@ -78,8 +78,7 @@ AS DATE) BETWEEN @start AND @end
             });
         }
 
-        // Get SettlementID
-        const settlementId = headers[0]?.SettlementID;
+        const settlementIds = headers.map(h => h.SettlementID).filter(Boolean);
 
         // 2. Get Cash Amount and ReceiptCount from SettlementDetail table
         let cashTotal = 0;
@@ -87,26 +86,33 @@ AS DATE) BETWEEN @start AND @end
         let receiptCount = 0;
         const paymodeDetail = {};
 
-        if (settlementId) {
+        if (settlementIds.length > 0) {
+            const placeholders = settlementIds.map((_, i) => `@id${i}`).join(', ');
             const detailQuery = `
                 SELECT
                     Paymode,
-                    ISNULL(SysAmount, 0) as Amount,
-                    ISNULL(ReceiptCount, 0) as ReceiptCount
+                    SUM(ISNULL(SysAmount, 0)) as Amount,
+                    SUM(ISNULL(ReceiptCount, 0)) as ReceiptCount
                 FROM SettlementDetail
-                WHERE SettlementId = @settlementId
+                WHERE SettlementId IN (${placeholders})
+                GROUP BY Paymode
             `;
 
             const detailRequest = pool.request();
-            detailRequest.input('settlementId', sql.UniqueIdentifier, settlementId);
+            settlementIds.forEach((id, i) => {
+                detailRequest.input(`id${i}`, sql.UniqueIdentifier, id);
+            });
             const detailResult = await detailRequest.query(detailQuery);
             const details = detailResult.recordset;
 
             console.log("SettlementDetail Records:", details);
 
             details.forEach(detail => {
-                if (detail.Amount > 0) {
-                    paymodeDetail[detail.Paymode] = detail.Amount;
+                if (detail.Amount > 0 || detail.ReceiptCount > 0) {
+                    paymodeDetail[detail.Paymode] = {
+                        amount: detail.Amount,
+                        receiptCount: detail.ReceiptCount
+                    };
                     if (detail.Paymode === 'CASH') {
                         cashTotal = detail.Amount;
                         receiptCount = detail.ReceiptCount;
@@ -129,7 +135,11 @@ AS DATE) BETWEEN @start AND @end
         const totalVoidItemAmount = headers.reduce((sum, s) => sum + (s.VoidItemAmount || 0), 0);
 
         const netTotal = totalSales + totalRoundOff;
-        const noOfBills = headers.reduce((sum, s) => sum + (s.NoOfBills || 0), 0);
+        let noOfBills = headers.reduce((sum, s) => sum + (s.NoOfBills || 0), 0);
+        const totalDetailReceipts = Object.values(paymodeDetail).reduce((sum, item) => sum + (item.receiptCount || 0), 0);
+        if (noOfBills === 0 && totalDetailReceipts > 0) {
+            noOfBills = totalDetailReceipts;
+        }
         const avgPerBill = noOfBills > 0 ? (totalSales / noOfBills).toFixed(2) : 0;
 
         const terminalCode = headers[0]?.TerminalCode || "";

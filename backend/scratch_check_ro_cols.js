@@ -1,13 +1,12 @@
 const { poolPromise } = require("./db");
 
-async function listTables() {
+async function checkColumns() {
     try {
         const pool = await poolPromise;
         const res = await pool.request().query(`
-            SELECT name FROM sys.tables ORDER BY name;
+            SELECT TOP 1 * FROM RestaurantOrder
         `);
-        console.log("=== All Tables ===");
-        console.log(res.recordset.map(r => r.name));
+        console.log("RestaurantOrder Columns:", Object.keys(res.recordset[0]));
         process.exit(0);
     } catch(e) {
         console.error(e);
@@ -15,4 +14,4 @@ async function listTables() {
     }
 }
 
-listTables();
+checkColumns();
