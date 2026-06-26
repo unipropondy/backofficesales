@@ -327,20 +327,26 @@ const DayEndReport = ({ sidebarOpen }) => {
                             <tr class="section-head">
                                 <td colspan="2">Paymode Detail</td>
                             </tr>
-                            <tr>
-                            <td>
-                                <table style="width: 100%; border: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important;">
-                                    <tr>
-                                        <td style="border: none !important; padding: 0 !important; text-align: left !important; background: transparent !important; color: inherit !important; font-weight: inherit !important;">CASH</td>
-                                        <td style="border: none !important; padding: 0 !important; text-align: right !important; background: transparent !important; color: inherit !important; font-weight: inherit !important;">${reportData.receiptCount || 0}</td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td class="amount-col">${Object.values(reportData.paymodeDetail || {})[0]?.toFixed(2) || 0}</td>
-                        </tr>
+                            ${Object.entries(reportData.paymodeDetail || {}).map(([key, item]) => {
+                                const amt = typeof item === 'object' ? item.amount : item;
+                                const count = typeof item === 'object' ? item.receiptCount : 0;
+                                return `
+                                <tr>
+                                    <td>
+                                        <table style="width: 100%; border: none !important; margin: 0 !important; padding: 0 !important; background: transparent !important;">
+                                            <tr>
+                                                <td style="border: none !important; padding: 0 !important; text-align: left !important; background: transparent !important; color: inherit !important; font-weight: inherit !important;">${key}</td>
+                                                <td style="border: none !important; padding: 0 !important; text-align: right !important; background: transparent !important; color: inherit !important; font-weight: inherit !important;">${count}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="amount-col">${(amt || 0).toFixed(2)}</td>
+                                </tr>
+                                `;
+                            }).join('')}
                             <tr class="total-row">
                                 <td>Total</td>
-                                <td class="amount-col">${Object.values(reportData.paymodeDetail || {}).reduce((a, b) => a + b, 0).toFixed(2)}</td>
+                                <td class="amount-col">${Object.values(reportData.paymodeDetail || {}).reduce((sum, item) => sum + (typeof item === 'object' ? item.amount : item), 0).toFixed(2)}</td>
                             </tr>
                             
                             <!-- Settlement Detail Section -->
@@ -505,18 +511,22 @@ const DayEndReport = ({ sidebarOpen }) => {
                                 <tr className="dayend-section-header">
                                     <td colSpan="2">Paymode Detail</td>
                                 </tr>
-                                {Object.entries(reportData.paymodeDetail || {}).map(([key, value]) => (
-                                    <tr key={key}>
-                                        <td className="dayend-particulars-cell">
-                                            <span>{key}</span>
-                                            <span className="dayend-particulars-right">{reportData.receiptCount || 0}</span>
-                                        </td>
-                                        <td className="dayend-text-center">{(value || 0).toFixed(2)}</td>
-                                    </tr>
-                                ))}
+                                {Object.entries(reportData.paymodeDetail || {}).map(([key, item]) => {
+                                    const amt = typeof item === 'object' ? item.amount : item;
+                                    const count = typeof item === 'object' ? item.receiptCount : 0;
+                                    return (
+                                        <tr key={key}>
+                                            <td className="dayend-particulars-cell">
+                                                <span>{key}</span>
+                                                <span className="dayend-particulars-right">{count}</span>
+                                            </td>
+                                            <td className="dayend-text-center">{(amt || 0).toFixed(2)}</td>
+                                        </tr>
+                                    );
+                                })}
                                 <tr className="dayend-total-row">
                                     <td><strong>Total</strong></td>
-                                    <td className="dayend-text-center"><strong>{Object.values(reportData.paymodeDetail || {}).reduce((a, b) => a + b, 0).toFixed(2)}</strong></td>
+                                    <td className="dayend-text-center"><strong>{Object.values(reportData.paymodeDetail || {}).reduce((sum, item) => sum + (typeof item === 'object' ? item.amount : item), 0).toFixed(2)}</strong></td>
                                 </tr>
 
                                 {/* Settlement Detail Section */}

@@ -88,11 +88,11 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
 
                     {/* 1. PAYMODE BREAKDOWN - FIRST */}
                     <tr className="console-section-header"><td colSpan="2">Paymode Breakdown</td></tr>
-                    {['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'].map((mode) => (
+                    {Object.entries(reportData?.paymodeBreakdown || {}).map(([mode, item]) => (
                         <tr key={mode}>
                             <td style={{ paddingLeft: '20px' }}>{mode}</td>
                             <td className="console-text-right">
-                                {(reportData?.paymodeBreakdown?.[mode]?.amount || 0).toFixed(2)}
+                                {(item?.amount || 0).toFixed(2)}
                             </td>
                         </tr>
                     ))}
@@ -308,16 +308,14 @@ const ConsoleSalesReport = ({ sidebarOpen }) => {
                                 </thead>
                                 <tbody>
                                     {(() => {
-                                        const paymodes = ['CASH', 'CARD', 'NETS', 'CDC', 'VOUCHER', 'UNKNOWN', 'OTHERS'];
                                         const totalAmount = Object.values(reportData.paymodeBreakdown).reduce((sum, mode) => sum + (mode?.amount || 0), 0);
-                                        return paymodes.map(mode => {
-                                            const data = reportData.paymodeBreakdown[mode.toUpperCase()] || { amount: 0, count: 0 };
-                                            const percentage = totalAmount > 0 ? ((data.amount / totalAmount) * 100).toFixed(2) : '0.00';
+                                        return Object.entries(reportData.paymodeBreakdown).map(([mode, item]) => {
+                                            const percentage = totalAmount > 0 ? ((item.amount / totalAmount) * 100).toFixed(2) : '0.00';
                                             return (
                                                 <tr key={mode}>
                                                     <td><strong>{mode}</strong></td>
-                                                    <td className="console-text-right">{data.count || 0}</td>
-                                                    <td className="console-text-right">{(data.amount || 0).toFixed(2)}</td>
+                                                    <td className="console-text-right">{item.count || 0}</td>
+                                                    <td className="console-text-right">{(item.amount || 0).toFixed(2)}</td>
                                                     <td className="console-text-right">{percentage}%</td>
                                                 </tr>
                                             );
@@ -554,7 +552,7 @@ new Date().toLocaleTimeString('en-US', {
         );
     };
 
-    const handleGenerate = async () => {
+    const handleGenerate = async (overrideType) => {
         if (!fromDate || !toDate) {
             alert("Please select From Date and To Date");
             return;
@@ -562,9 +560,10 @@ new Date().toLocaleTimeString('en-US', {
 
         setLoading(true);
         try {
+            const activeType = overrideType !== undefined ? overrideType : reportType;
             const response = await axios.get(API_BASE_URL + "/api/consolesales", {
                 params: {
-                    type: reportType,
+                    type: activeType,
                     fromDate,
                     toDate
                 }
@@ -1231,7 +1230,11 @@ const printTime = now.toLocaleTimeString('en-US', {
 
             <div className="console-filter-container">
                 <div className="console-filter-row">
-                    <div className="console-filter-item"><label>Report Type</label><select value={reportType} onChange={(e) => setReportType(e.target.value)} className="console-date-picker" style={{ width: '120px' }}><option value="summary">Summary</option><option value="detail">Detail</option></select></div>
+                    <div className="console-filter-item"><label>Report Type</label><select value={reportType} onChange={async (e) => {
+                        const newVal = e.target.value;
+                        setReportType(newVal);
+                        await handleGenerate(newVal);
+                    }} className="console-date-picker" style={{ width: '120px' }}><option value="summary">Summary</option><option value="detail">Detail</option></select></div>
                     <div className="console-filter-item"><label>From Date</label><input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="console-date-picker" /></div>
                     <div className="console-filter-item"><label>To Date</label><input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="console-date-picker" /></div>
                 </div>

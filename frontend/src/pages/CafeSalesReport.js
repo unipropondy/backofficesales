@@ -1083,96 +1083,96 @@
   }
 
         // ✅ PAYMODE COLLECTION REPORT - PIVOTED SUMMARY FORMAT (Like Crystal Report)
-  else if (dayEnd === "Paymode") {
-    console.log("Processing Paymode Collection Report - Pivoted Format");
+  // ✅ PAYMODE COLLECTION REPORT - PIVOTED SUMMARY FORMAT
+else if (dayEnd === "Paymode") {
+  console.log("Processing Paymode Collection Report - Pivoted Format");
+  
+  // Check if data is already in pivoted format (has Cash column)
+  if (rawData.length > 0 && rawData[0].hasOwnProperty('Cash')) {
+    // Data is already pivoted from backend
+    forcedColumns = ['Date', 'Cash', 'Nets', 'Paynow', 'UPI', 'Member', 'Credit', 'Yeahpay_Paynow', 'Yeahpay_Card', 'Others'];
+    forcedData = rawData.map(row => ({
+      Date: row.Date || '-',
+      Cash: Number(row.Cash || 0).toFixed(2),
+      Nets: Number(row.Nets || 0).toFixed(2),
+      Paynow: Number(row.Paynow || 0).toFixed(2),
+      UPI: Number(row.UPI || 0).toFixed(2),
+      Member: Number(row.Member || 0).toFixed(2),
+      Credit: Number(row.Credit || 0).toFixed(2),
+      Yeahpay_Paynow: Number(row.Yeahpay_Paynow || 0).toFixed(2),
+      Yeahpay_Card: Number(row.Yeahpay_Card || 0).toFixed(2),
+      Others: Number(row.Others || 0).toFixed(2)
+    }));
+  } else {
+    // Fallback: If data is in old format, aggregate by date and paymode
+    console.log("Converting raw data to pivoted format");
     
-    // Check if data is already in pivoted format (has Cash column)
-    if (rawData.length > 0 && rawData[0].hasOwnProperty('Cash')) {
-      // Data is already pivoted from backend
-      forcedColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
-      forcedData = rawData.map(row => ({
-        Date: row.Date || '-',
-        Cash: Number(row.Cash || 0).toFixed(2),
-        Cheque: Number(row.Cheque || 0).toFixed(2),
-        Visa: Number(row.Visa || 0).toFixed(2),
-        Master: Number(row.Master || 0).toFixed(2),
-        Amex: Number(row.Amex || 0).toFixed(2),
-        Diners: Number(row.Diners || 0).toFixed(2),
-        JCB: Number(row.JCB || 0).toFixed(2),
-        Nets: Number(row.Nets || 0).toFixed(2),
-        'Total(Cards)': Number(row['Total(Cards)'] || 0).toFixed(2),
-        Others: Number(row.Others || 0).toFixed(2),
-        Nektar: Number(row.Nektar || 0).toFixed(2)
-      }));
-    } else {
-      // Fallback: If data is in old format, aggregate by date and paymode
-      console.log("Converting raw data to pivoted format");
+    // Group by Date and PayMode
+    const datePayModeMap = new Map();
+    
+    rawData.forEach(row => {
+      const date = row.Date || '-';
+      const payMode = row.PayMode || row.Paymode || 'Unknown';
+      const amount = Number(row.Amount || row.SysAmount || 0);
       
-      // Group by Date and PayMode
-      const datePayModeMap = new Map();
+      if (!datePayModeMap.has(date)) {
+        datePayModeMap.set(date, new Map());
+      }
+      const payModeMap = datePayModeMap.get(date);
+      const currentAmount = payModeMap.get(payMode) || 0;
+      payModeMap.set(payMode, currentAmount + amount);
+    });
+    
+    // Convert to array format
+    const pivotedData = [];
+    for (const [date, payModeMap] of datePayModeMap.entries()) {
+      const row = {
+        Date: date,
+        Cash: 0,
+        Nets: 0,
+        Paynow: 0,
+        UPI: 0,
+        Member: 0,
+        Credit: 0,
+        Yeahpay_Paynow: 0,
+        Yeahpay_Card: 0,
+        Others: 0
+      };
       
-      rawData.forEach(row => {
-        const date = row.Date || '-';
-        const payMode = row.PayMode || row.Paymode || 'Unknown';
-        const amount = Number(row.Amount || row.SysAmount || 0);
-        
-        if (!datePayModeMap.has(date)) {
-          datePayModeMap.set(date, new Map());
-        }
-        const payModeMap = datePayModeMap.get(date);
-        const currentAmount = payModeMap.get(payMode) || 0;
-        payModeMap.set(payMode, currentAmount + amount);
-      });
-      
-      // Convert to array format
-      const pivotedData = [];
-      for (const [date, payModeMap] of datePayModeMap.entries()) {
-        const row = {
-          Date: date,
-          Cash: 0, Cheque: 0, Visa: 0, Master: 0, Amex: 0,
-          Diners: 0, JCB: 0, Nets: 0, Others: 0, Nektar: 0
-        };
-        
-        for (const [payMode, amount] of payModeMap.entries()) {
-          const upperPayMode = payMode.toUpperCase();
-          if (upperPayMode === 'CASH') row.Cash = amount;
-          else if (upperPayMode === 'CHEQUE') row.Cheque = amount;
-          else if (upperPayMode === 'VISA') row.Visa = amount;
-          else if (upperPayMode === 'MASTERCARD') row.Master = amount;
-          else if (upperPayMode === 'AMEX') row.Amex = amount;
-          else if (upperPayMode === 'DINERS') row.Diners = amount;
-          else if (upperPayMode === 'JCB') row.JCB = amount;
-          else if (upperPayMode === 'NETS') row.Nets = amount;
-          else if (upperPayMode === 'NEKTAR') row.Nektar = amount;
-          else row.Others += amount;
-        }
-        
-        // Calculate Total Cards
-        row['Total(Cards)'] = row.Visa + row.Master + row.Amex + row.Diners + row.JCB + row.Nets;
-        
-        pivotedData.push(row);
+      for (const [payMode, amount] of payModeMap.entries()) {
+        const upperPayMode = payMode.toUpperCase();
+        if (upperPayMode === 'CASH') row.Cash = amount;
+        else if (upperPayMode === 'NETS') row.Nets = amount;
+        else if (upperPayMode === 'PAYNOW') row.Paynow = amount;
+        else if (upperPayMode === 'UPI' || upperPayMode === 'UPI/GPAY') row.UPI = amount;
+        else if (upperPayMode === 'MEMBER') row.Member = amount;
+        else if (upperPayMode === 'CREDIT') row.Credit = amount;
+        else if (upperPayMode === 'YEAHPAY PAYNOW' || upperPayMode === 'YEAHPAYPAYNOW') row.Yeahpay_Paynow = amount;
+        else if (upperPayMode === 'YEAHPAY CARD' || upperPayMode === 'YEAHPAYCARD') row.Yeahpay_Card = amount;
+        else row.Others += amount;
       }
       
-      forcedColumns = ['Date', 'Cash', 'Cheque', 'Visa', 'Master', 'Amex', 'Diners', 'JCB', 'Nets', 'Total(Cards)', 'Others', 'Nektar'];
-      forcedData = pivotedData.map(row => ({
-        Date: row.Date,
-        Cash: row.Cash.toFixed(2),
-        Cheque: row.Cheque.toFixed(2),
-        Visa: row.Visa.toFixed(2),
-        Master: row.Master.toFixed(2),
-        Amex: row.Amex.toFixed(2),
-        Diners: row.Diners.toFixed(2),
-        JCB: row.JCB.toFixed(2),
-        Nets: row.Nets.toFixed(2),
-        'Total(Cards)': row['Total(Cards)'].toFixed(2),
-        Others: row.Others.toFixed(2),
-        Nektar: row.Nektar.toFixed(2)
-      }));
+      pivotedData.push(row);
     }
     
-    console.log("Paymode Data Processed, rows:", forcedData.length);
-    console.log("Columns:", forcedColumns);
+    forcedColumns = ['Date', 'Cash', 'Nets', 'Paynow', 'UPI', 'Member', 'Credit', 'Yeahpay_Paynow', 'Yeahpay_Card', 'Others'];
+    forcedData = pivotedData.map(row => ({
+      Date: row.Date,
+      Cash: row.Cash.toFixed(2),
+      Nets: row.Nets.toFixed(2),
+      Paynow: row.Paynow.toFixed(2),
+      UPI: row.UPI.toFixed(2),
+      Member: row.Member.toFixed(2),
+      Credit: row.Credit.toFixed(2),
+      Yeahpay_Paynow: row.Yeahpay_Paynow.toFixed(2),
+      Yeahpay_Card: row.Yeahpay_Card.toFixed(2),
+      Others: row.Others.toFixed(2)
+    }));
   }
+  
+  console.log("Paymode Data Processed, rows:", forcedData.length);
+  console.log("Columns:", forcedColumns);
+}
           // Sales Summary / Paymode report
           else if (data.columns && (data.columns.includes('Sales') || data.columns.includes('Cash'))) {
             forcedColumns = ['Date', 'Sales', 'FOC', 'Disc', 'SVC', 'Tax 7%', 'Tips', 'Rnd', 'ENT', 'Cash', 'Master', 'Visa'];
@@ -1413,7 +1413,11 @@
                                         ? 'Sub Total'
                                         : col === 'NetTotal'
                                           ? 'Net Total'
-                                          : col
+                                          : col === 'CategoryName'
+                                            ? 'Category'
+                                            : col === 'DishGroupName'
+                                              ? 'Dish Group'
+                                              : col
                                   }
                                 </th>
                               );
